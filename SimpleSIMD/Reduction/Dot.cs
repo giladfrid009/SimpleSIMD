@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd.Reduction
+namespace SimpleSimd
 {
-    public static partial class ReductionExt
+    public static partial class Extensions
     {
         public static T Dot<T>(this T[] source, T value) where T : unmanaged
         {

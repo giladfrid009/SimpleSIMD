@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd.Elementwise
+namespace SimpleSimd
 {
-    public static partial class ElementwiseExt
+    public static partial class Extensions
     {
         public static void Select<T, U>(this T[] source, Func<Vector<T>, Vector<U>> vSelector, Func<T, U> selector, U[] result) where T : unmanaged where U : unmanaged
         {

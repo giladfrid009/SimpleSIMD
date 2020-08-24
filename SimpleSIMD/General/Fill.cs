@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd.General
+namespace SimpleSimd
 {
-    public static partial class GeneralExt
+    public static partial class Extensions
     {
         public static void Fill<T>(this T[] source, T value) where T : unmanaged
         {

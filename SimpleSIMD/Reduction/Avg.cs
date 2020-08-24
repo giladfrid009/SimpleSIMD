@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd.Reduction
+namespace SimpleSimd
 {
-    public static partial class ReductionExt
+    public static partial class Extensions
     {
         public static T Avg<T>(this T[] source) where T : unmanaged
         {

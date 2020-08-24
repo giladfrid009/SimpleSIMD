@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd.Reduction
+namespace SimpleSimd
 {
-    public static partial class ReductionExt
+    public static partial class Extensions
     {
         public static T Accum<T>(this T[] source, T seed, Func<Vector<T>, Vector<T>, Vector<T>> vAccum, Func<T, T, T> accumu) where T : unmanaged
         {

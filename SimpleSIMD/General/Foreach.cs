@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd.General
+namespace SimpleSimd
 {
-    public static partial class GeneralExt
+    public static partial class Extensions
     {
         public static void Foreach<T>(this T[] source, Action<Vector<T>> vAction, Action<T> action) where T : unmanaged
         {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd.Comparison
+namespace SimpleSimd
 {
-    public static partial class ComparisonExt
+    public static partial class Extensions
     {
         public static bool Less<T>(this T[] source, T value) where T : unmanaged
         {

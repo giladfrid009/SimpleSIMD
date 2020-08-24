@@ -1,8 +1,8 @@
 ﻿using System.Numerics;
 
-namespace SimpleSimd.Elementwise
+namespace SimpleSimd
 {
-    public static partial class ElementwiseExt
+    public static partial class Extensions
     {
         public static void Neg<T>(this T[] source, T[] result) where T : unmanaged
         {
