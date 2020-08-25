@@ -1,15 +1,10 @@
-﻿using System;
-
-namespace SimpleSimd
+﻿namespace SimpleSimd
 {
-    [Serializable]
-    public abstract class BaseOps<T> where T : unmanaged
+    public abstract class IOperation<T> where T : unmanaged
     {
-        public abstract T One { get; }
         public abstract T MinVal { get; }
         public abstract T MaxVal { get; }
 
-        public abstract T Neg(T value);
         public abstract T FromInt(int value);
 
         public abstract T Add(T left, T right);

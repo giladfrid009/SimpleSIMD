@@ -1,15 +1,10 @@
-﻿using System;
-
-namespace SimpleSimd.Operations
+﻿namespace SimpleSimd.Operations
 {
-    [Serializable]
-    public class IntOps : BaseOps<int>
+    public sealed class Int32 : IOperation<int>
     {
-        public override int One { get; } = 1;
         public override int MinVal { get; } = int.MinValue;
         public override int MaxVal { get; } = int.MaxValue;
 
-        public override int Neg(int value) => -value;
         public override int FromInt(int value) => value;
 
         public override int Add(int left, int right) => left + right;

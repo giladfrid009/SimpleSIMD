@@ -7,8 +7,8 @@ namespace SimpleSimd
     {
         public static T Max<T>(this T[] source) where T : unmanaged
         {
-            var vMax = new Vector<T>(Ops<T>.MinVal);
-            T max = Ops<T>.MinVal;
+            var vMax = new Vector<T>(Operations<T>.MinVal);
+            T max = Operations<T>.MinVal;
 
             int vLength = Vector<T>.Count;
             int i;
@@ -20,12 +20,12 @@ namespace SimpleSimd
 
             for (int j = 0; j < vLength; ++j)
             {
-                max = Ops<T>.Max(max, vMax[j]);
+                max = Operations<T>.Max(max, vMax[j]);
             }
 
             for (; i < source.Length; i++)
             {
-                max = Ops<T>.Max(max, source[i]);
+                max = Operations<T>.Max(max, source[i]);
             }
 
             return max;
@@ -33,8 +33,8 @@ namespace SimpleSimd
 
         public static T Max<T>(this T[] source, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector) where T : unmanaged
         {
-            var vMax = new Vector<T>(Ops<T>.MinVal);
-            T max = Ops<T>.MinVal;
+            var vMax = new Vector<T>(Operations<T>.MinVal);
+            T max = Operations<T>.MinVal;
 
             int vLength = Vector<T>.Count;
             int i;
@@ -46,12 +46,12 @@ namespace SimpleSimd
 
             for (int j = 0; j < vLength; ++j)
             {
-                max = Ops<T>.Max(max, vMax[j]);
+                max = Operations<T>.Max(max, vMax[j]);
             }
 
             for (; i < source.Length; i++)
             {
-                max = Ops<T>.Max(max, selector(source[i]));
+                max = Operations<T>.Max(max, selector(source[i]));
             }
 
             return max;

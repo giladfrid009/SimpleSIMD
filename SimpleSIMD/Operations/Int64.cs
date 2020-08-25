@@ -1,15 +1,10 @@
-﻿using System;
-
-namespace SimpleSimd.Operations
+﻿namespace SimpleSimd.Operations
 {
-    [Serializable]
-    public class LongOps : BaseOps<long>
+    public sealed class Int64 : IOperation<long>
     {
-        public override long One { get; } = 1L;
         public override long MinVal { get; } = long.MinValue;
         public override long MaxVal { get; } = long.MaxValue;
 
-        public override long Neg(long value) => -value;
         public override long FromInt(int value) => value;
 
         public override long Add(long left, long right) => left + right;

@@ -23,7 +23,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                result[i] = Ops<T>.Div(source[i], value);
+                result[i] = Operations<T>.Div(source[i], value);
             }
         }
 
@@ -49,7 +49,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                result[i] = Ops<T>.Div(source[i], other[i]);
+                result[i] = Operations<T>.Div(source[i], other[i]);
             }
         }
 

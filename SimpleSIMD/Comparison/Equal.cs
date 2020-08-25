@@ -20,7 +20,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                if (Ops<T>.Equal(source[i], value) == false)
+                if (Operations<T>.Equal(source[i], value) == false)
                 {
                     return false;
                 }
@@ -54,7 +54,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                if (Ops<T>.Equal(source[i], other[i]) == false)
+                if (Operations<T>.Equal(source[i], other[i]) == false)
                 {
                     return false;
                 }

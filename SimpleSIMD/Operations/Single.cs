@@ -1,15 +1,10 @@
-﻿using System;
-
-namespace SimpleSimd.Operations
+﻿namespace SimpleSimd.Operations
 {
-    [Serializable]
-    public class FloatOps : BaseOps<float>
+    public sealed class Single : IOperation<float>
     {
-        public override float One { get; } = 1f;
         public override float MinVal { get; } = float.MinValue;
         public override float MaxVal { get; } = float.MaxValue;
 
-        public override float Neg(float value) => -value;
         public override float FromInt(int value) => value;
 
         public override float Add(float left, float right) => left + right;

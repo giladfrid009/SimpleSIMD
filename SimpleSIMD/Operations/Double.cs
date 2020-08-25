@@ -1,15 +1,10 @@
-﻿using System;
-
-namespace SimpleSimd.Operations
+﻿namespace SimpleSimd.Operations
 {
-    [Serializable]
-    public class DoubleOps : BaseOps<double>
+    public sealed class Double : IOperation<double>
     {
-        public override double One { get; } = 1.0;
         public override double MinVal { get; } = double.MinValue;
         public override double MaxVal { get; } = double.MaxValue;
 
-        public override double Neg(double value) => -value;
         public override double FromInt(int value) => value;
 
         public override double Add(double left, double right) => left + right;
