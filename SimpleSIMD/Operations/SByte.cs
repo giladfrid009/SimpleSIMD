@@ -5,8 +5,6 @@
         public override sbyte MinVal { get; } = sbyte.MinValue;
         public override sbyte MaxVal { get; } = sbyte.MaxValue;
 
-        public override sbyte FromInt(int value) => (sbyte)value;
-
         public override sbyte Add(sbyte left, sbyte right) => (sbyte)(left + right);
         public override sbyte Sub(sbyte left, sbyte right) => (sbyte)(left - right);
         public override sbyte Mul(sbyte left, sbyte right) => (sbyte)(left * right);

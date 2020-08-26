@@ -2,11 +2,11 @@
 
 namespace SimpleSimd
 {
-    class Program
+    internal class Program
     {
         public static void Main()
         {
             Console.ReadLine();
         }
-    }  
+    }
 }

@@ -5,8 +5,6 @@
         public override long MinVal { get; } = long.MinValue;
         public override long MaxVal { get; } = long.MaxValue;
 
-        public override long FromInt(int value) => value;
-
         public override long Add(long left, long right) => left + right;
         public override long Sub(long left, long right) => left - right;
         public override long Mul(long left, long right) => left * right;

@@ -5,8 +5,6 @@
         public override byte MinVal { get; } = byte.MinValue;
         public override byte MaxVal { get; } = byte.MaxValue;
 
-        public override byte FromInt(int value) => (byte)value;
-
         public override byte Add(byte left, byte right) => (byte)(left + right);
         public override byte Sub(byte left, byte right) => (byte)(left - right);
         public override byte Mul(byte left, byte right) => (byte)(left * right);

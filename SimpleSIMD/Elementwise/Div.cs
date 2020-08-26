@@ -10,7 +10,7 @@ namespace SimpleSimd
             if (result.Length != source.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(result));
-            }          
+            }
 
             var vVal = new Vector<T>(value);
             int vLength = Vector<T>.Count;

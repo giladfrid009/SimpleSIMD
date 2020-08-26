@@ -5,8 +5,6 @@
         public override double MinVal { get; } = double.MinValue;
         public override double MaxVal { get; } = double.MaxValue;
 
-        public override double FromInt(int value) => value;
-
         public override double Add(double left, double right) => left + right;
         public override double Sub(double left, double right) => left - right;
         public override double Mul(double left, double right) => left * right;

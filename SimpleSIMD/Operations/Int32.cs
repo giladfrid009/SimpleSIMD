@@ -5,8 +5,6 @@
         public override int MinVal { get; } = int.MinValue;
         public override int MaxVal { get; } = int.MaxValue;
 
-        public override int FromInt(int value) => value;
-
         public override int Add(int left, int right) => left + right;
         public override int Sub(int left, int right) => left - right;
         public override int Mul(int left, int right) => left * right;

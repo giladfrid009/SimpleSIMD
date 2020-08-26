@@ -5,8 +5,6 @@
         public override short MinVal { get; } = short.MinValue;
         public override short MaxVal { get; } = short.MaxValue;
 
-        public override short FromInt(int value) => (short)value;
-
         public override short Add(short left, short right) => (short)(left + right);
         public override short Sub(short left, short right) => (short)(left - right);
         public override short Mul(short left, short right) => (short)(left * right);
