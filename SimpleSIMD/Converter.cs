@@ -3,7 +3,6 @@ using System.Linq.Expressions;
 
 namespace SimpleSimd
 {
-    //todo: bad performance
     public static class Converter<T, U> where T : unmanaged where U : unmanaged
     {
         private static readonly Func<T, U> ConvFunc;
