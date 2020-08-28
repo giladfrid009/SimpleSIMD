@@ -7,6 +7,6 @@ namespace SimpleSimd
         public static void Main()
         {
             Console.ReadLine();
-        }
+        }    
     }
 }

@@ -13,10 +13,10 @@ namespace SimpleSimd
             }
 
             var vVal = new Vector<T>(value);
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 Vector.Subtract(new Vector<T>(source, i), vVal).CopyTo(result, i);
             }
@@ -39,10 +39,10 @@ namespace SimpleSimd
                 throw new ArgumentOutOfRangeException(nameof(result));
             }
 
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 Vector.Subtract(new Vector<T>(source, i), new Vector<T>(other, i)).CopyTo(result, i);
             }

@@ -12,10 +12,10 @@ namespace SimpleSimd
                 throw new ArgumentOutOfRangeException(nameof(result));
             }
 
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 Vector.Abs(new Vector<T>(source, i)).CopyTo(result, i);
             }

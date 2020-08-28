@@ -8,10 +8,10 @@ namespace SimpleSimd
         public static void Fill<T>(this T[] source, T value) where T : unmanaged
         {
             var vVal = new Vector<T>(value);
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 vVal.CopyTo(source, i);
             }
@@ -24,10 +24,10 @@ namespace SimpleSimd
 
         public static void Fill<T>(this T[] source, Func<Vector<T>> vFunc, Func<T> func) where T : unmanaged
         {
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 vFunc().CopyTo(source, i);
             }

@@ -11,10 +11,10 @@ namespace SimpleSimd
             Vector<T> vDot = Vector<T>.Zero;
             T dot;
 
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 vDot += new Vector<T>(source, i) * vVal;
             }
@@ -39,10 +39,10 @@ namespace SimpleSimd
             Vector<T> vDot = Vector<T>.Zero;
             T dot;
 
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 vDot += new Vector<T>(source, i) * new Vector<T>(other, i);
             }

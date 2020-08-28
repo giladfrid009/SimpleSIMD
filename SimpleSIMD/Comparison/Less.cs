@@ -8,10 +8,10 @@ namespace SimpleSimd
         public static bool Less<T>(this T[] source, T value) where T : unmanaged
         {
             var vVal = new Vector<T>(value);
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 if (Vector.GreaterThanOrEqualAll(new Vector<T>(source, i), vVal))
                 {
@@ -37,10 +37,10 @@ namespace SimpleSimd
                 throw new ArgumentOutOfRangeException();
             }
 
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 if (Vector.GreaterThanOrEqualAll(new Vector<T>(source, i), new Vector<T>(other, i)))
                 {

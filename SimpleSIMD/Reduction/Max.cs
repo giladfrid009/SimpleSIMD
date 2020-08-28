@@ -10,15 +10,15 @@ namespace SimpleSimd
             var vMax = new Vector<T>(Operations<T>.MinVal);
             T max = Operations<T>.MinVal;
 
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 vMax = Vector.Max(vMax, new Vector<T>(source, i));
             }
 
-            for (int j = 0; j < vLength; ++j)
+            for (int j = 0; j < vLen; ++j)
             {
                 max = Operations<T>.Max(max, vMax[j]);
             }
@@ -36,15 +36,15 @@ namespace SimpleSimd
             var vMax = new Vector<T>(Operations<T>.MinVal);
             T max = Operations<T>.MinVal;
 
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 vMax = Vector.Max(vMax, vSelector(new Vector<T>(source, i)));
             }
 
-            for (int j = 0; j < vLength; ++j)
+            for (int j = 0; j < vLen; ++j)
             {
                 max = Operations<T>.Max(max, vMax[j]);
             }

@@ -10,15 +10,15 @@ namespace SimpleSimd
             var vRes = new Vector<T>(seed);
             T res = seed;
 
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 vRes = vAccum(vRes, new Vector<T>(source[i]));
             }
 
-            for (int j = 0; j < vLength; j++)
+            for (int j = 0; j < vLen; j++)
             {
                 res = accumu(res, vRes[j]);
             }

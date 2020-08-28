@@ -7,10 +7,10 @@ namespace SimpleSimd
     {
         public static void Foreach<T>(this T[] source, Action<Vector<T>> vAction, Action<T> action) where T : unmanaged
         {
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 vAction(new Vector<T>(source, i));
             }
@@ -23,10 +23,10 @@ namespace SimpleSimd
 
         public static void Foreach<T>(this T[] source, Action<Vector<T>, int> vAction, Action<T, int> action) where T : unmanaged
         {
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 vAction(new Vector<T>(source, i), i);
             }

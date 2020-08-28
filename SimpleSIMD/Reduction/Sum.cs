@@ -10,10 +10,10 @@ namespace SimpleSimd
             Vector<T> vSum = Vector<T>.Zero;
             T sum;
 
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 vSum += new Vector<T>(source, i);
             }
@@ -33,10 +33,10 @@ namespace SimpleSimd
             Vector<T> vSum = Vector<T>.Zero;
             T sum;
 
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 vSum += vSelector(new Vector<T>(source, i));
             }
@@ -55,10 +55,10 @@ namespace SimpleSimd
         {
             Vector<T> vSum = Vector<T>.Zero;
             T sum;
-            int vLength = Vector<T>.Count;
+            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLength; i += vLength)
+            for (i = 0; i <= source.Length - vLen; i += vLen)
             {
                 vSum += vSelector(new Vector<T>(source, i), i);
             }
