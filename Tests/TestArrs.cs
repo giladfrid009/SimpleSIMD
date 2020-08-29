@@ -32,11 +32,11 @@ namespace Tests
             Arr6 = new T[length];
             ArrAsc = new T[length];
 
-            T negOne = Converter<int, T>.Convert(-1);
-            T one = Converter<int, T>.Convert(1);
-            T two = Converter<int, T>.Convert(2);
-            T three = Converter<int, T>.Convert(3);
-            T six = Converter<int, T>.Convert(6);
+            T negOne = Converter<int, T>.Change(-1);
+            T one = Converter<int, T>.Change(1);
+            T two = Converter<int, T>.Change(2);
+            T three = Converter<int, T>.Change(3);
+            T six = Converter<int, T>.Change(6);
 
             Arr1N.Fill(negOne);
             Arr1.Fill(one);
@@ -46,7 +46,7 @@ namespace Tests
 
             for (int i = 0; i < length; i++)
             {
-                ArrAsc[i] = Converter<int, T>.Convert(i + 1);
+                ArrAsc[i] = Converter<int, T>.Change(i + 1);
             }
         }
     }

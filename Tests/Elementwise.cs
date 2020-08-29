@@ -19,6 +19,9 @@ namespace Tests
         public void Add2() => Assert.True(Arr1.Add(2).Equal(Arr3));
 
         [Fact]
+        public void Copy() => Assert.True(Arr1.Copy().Equal(Arr1));
+
+        [Fact]
         public void Sub1() => Assert.True(Arr3.Sub(Arr2).Equal(Arr1));
 
         [Fact]
