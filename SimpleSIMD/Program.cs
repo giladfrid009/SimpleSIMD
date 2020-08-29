@@ -8,5 +8,5 @@ namespace SimpleSimd
         {
             Console.ReadLine();
         }
-    }
+    }    
 }

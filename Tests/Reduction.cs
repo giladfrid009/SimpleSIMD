@@ -37,6 +37,6 @@ namespace Tests
         public void Min2() => Assert.True(ArrAsc.Min(X => X * 2, X => X * 2) == 2);
 
         [Fact]
-        public void Accum() => Assert.True(Arr1.Accum(0, (R, X) => R + X, (R, X) => R + X) == Length);
+        public void Accumulate() => Assert.True(Arr1.Accumulate(0, (R, X) => R + X, (R, X) => R + X) == Length);
     }
 }

@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class Extensions
     {
-        public static T Accum<T>(this T[] source, T seed, Func<Vector<T>, Vector<T>, Vector<T>> vAccum, Func<T, T, T> accumu) where T : unmanaged
+        public static T Accumulate<T>(this T[] source, T seed, Func<Vector<T>, Vector<T>, Vector<T>> vAccum, Func<T, T, T> accumu) where T : unmanaged
         {
             var vRes = new Vector<T>(seed);
             T res = seed;
