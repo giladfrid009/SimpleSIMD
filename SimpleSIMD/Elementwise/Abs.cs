@@ -30,7 +30,7 @@ namespace SimpleSimd
         {
             var result = new T[source.Length];
 
-            result.Abs(result);
+            source.Abs(result);
 
             return result;
         }

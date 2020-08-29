@@ -26,7 +26,6 @@ namespace SimpleSimd
             Ops = opsObj as IOperation<T> ?? throw new NotSupportedException(typeof(T).Name);
         }
 
-        
         public static T Zero { get; } = default;
         public static T One { get; } = Converter<int, T>.Convert(1);
         public static T MinVal => Ops.MinVal;

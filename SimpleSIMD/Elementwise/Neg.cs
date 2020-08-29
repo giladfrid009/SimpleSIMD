@@ -24,7 +24,7 @@ namespace SimpleSimd
         {
             var result = new T[source.Length];
 
-            result.Neg(result);
+            source.Neg(result);
 
             return result;
         }

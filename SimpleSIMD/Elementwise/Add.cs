@@ -57,7 +57,7 @@ namespace SimpleSimd
         {
             var result = new T[source.Length];
 
-            result.Add(value, result);
+            source.Add(value, result);
 
             return result;
         }
@@ -66,7 +66,7 @@ namespace SimpleSimd
         {
             var result = new T[source.Length];
 
-            result.Add(other, result);
+            source.Add(other, result);
 
             return result;
         }

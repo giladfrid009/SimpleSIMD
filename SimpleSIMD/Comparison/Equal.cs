@@ -61,6 +61,6 @@ namespace SimpleSimd
             }
 
             return true;
-        }        
+        }
     }
 }
