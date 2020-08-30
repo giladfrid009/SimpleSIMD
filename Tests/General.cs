@@ -13,18 +13,26 @@ namespace Tests
             var vOne = new Vector<int>(1);
             var vTwo = new Vector<int>(2);
 
-            Assert.True(ArrAsc.Any(X => Vector.LessThanAll(X, vOne), X => X < 1) == false);
-            Assert.True(ArrAsc.Any(X => Vector.LessThanAny(X, vTwo), X => X < 2) == true);
+            Assert.False(ArrAsc.Any(X => Vector.LessThanAll(X, vOne), X => X < 1));
+            Assert.True(ArrAsc.Any(X => Vector.LessThanAny(X, vTwo), X => X < 2));
         }
 
         [Fact]
         public void All()
         {
+            var vZero = Vector<int>.Zero;
             var vOne = new Vector<int>(1);
 
-            Assert.True(ArrAsc.All(X => Vector.LessThanAll(X, vOne), X => X < 1) == false);
-            Assert.True(ArrAsc.All(X => Vector.GreaterThanOrEqualAll(X, vOne), X => X  >= 1) == true);
+            Assert.True(ArrAsc.All(X => Vector.GreaterThanAll(X, vZero), X => X > 0));
+            Assert.False(ArrAsc.All(X => Vector.LessThanAll(X, vOne), X => X < 1));
         }
+
+        [Fact]
+        public void Contains()
+        {
+            Assert.True(ArrAsc.Contains(Length));
+            Assert.False(ArrAsc.Contains(0));
+        }        
 
         [Fact]
         public void Fill()
