@@ -32,7 +32,13 @@ namespace Tests
         {
             Assert.True(ArrAsc.Contains(Length));
             Assert.False(ArrAsc.Contains(0));
-        }        
+        }
+
+        [Fact]
+        public void Copy()
+        {
+            Assert.True(Arr1.Copy().Equal(Arr1));
+        }
 
         [Fact]
         public void Fill()

@@ -2,11 +2,11 @@
 
 namespace SimpleSimd
 {
-    public static class Operations<T> where T : unmanaged
+    public static class NOperations<T> where T : unmanaged
     {
         private static readonly IOperation<T> Ops;
 
-        static Operations()
+        static NOperations()
         {
             object? opsObj = Type.GetTypeCode(typeof(T)) switch
             {
@@ -26,8 +26,8 @@ namespace SimpleSimd
             Ops = opsObj as IOperation<T> ?? throw new NotSupportedException(typeof(T).Name);
         }
 
-        public static T Zero { get; } = Converter<int, T>.Change(0);
-        public static T One { get; } = Converter<int, T>.Change(1);
+        public static T Zero { get; } = NConverter<int, T>.Convert(0);
+        public static T One { get; } = NConverter<int, T>.Convert(1);
         public static T MinVal => Ops.MinVal;
         public static T MaxVal => Ops.MaxVal;
 

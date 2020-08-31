@@ -23,7 +23,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                dot = Operations<T>.Add(dot, Operations<T>.Mul(source[i], value));
+                dot = NOperations<T>.Add(dot, NOperations<T>.Mul(source[i], value));
             }
 
             return dot;
@@ -51,7 +51,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                dot = Operations<T>.Add(dot, Operations<T>.Mul(source[i], other[i]));
+                dot = NOperations<T>.Add(dot, NOperations<T>.Mul(source[i], other[i]));
             }
 
             return dot;

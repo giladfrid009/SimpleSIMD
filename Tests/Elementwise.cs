@@ -1,6 +1,5 @@
 using SimpleSimd;
 using System.Linq;
-using System.Numerics;
 using Xunit;
 using static Tests.TestArrs<int>;
 
@@ -19,12 +18,6 @@ namespace Tests
 
         [Fact]
         public void Add2() => Assert.True(Arr1.Add(2).Equal(Arr3));
-
-        [Fact]
-        public void Copy() => Assert.True(Arr1.Copy().Equal(Arr1));
-
-        [Fact]
-        public void Convert() => Assert.True(ArrAsc.Convert(Vector.ConvertToSingle).Equal(ArrAsc.Select(x => (float)x).ToArray()));
 
         [Fact]
         public void Sub1() => Assert.True(Arr3.Sub(Arr2).Equal(Arr1));
