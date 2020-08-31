@@ -48,7 +48,7 @@ It Performs less allocations compared to standard LINQ implementations.
 
 ## Limitations
 * Benefitial only for hardware which supports SIMD instructions
-* Only work for collections of type ```Array```
+* Only work for collections of type ```T[] where T: unmanaged```
 * Could perform worse than simple for loop approach, for very small arrays
 * Supports only **Primitive Numeric Types** as array elements. Supported types are:
   * ```byte, sbyte```
