@@ -9,28 +9,25 @@ namespace Benchmarks
         public static T[] Arr1 { get; private set; }
         public static T[] Arr2 { get; private set; }
         public static T[] Arr3 { get; private set; }
-        public static int Scale { get; } = 10;
-
-        private static Random Rnd = new Random();
-
-        public static int Length
-        {
-            get => Arr1.Length;
-            set => Generate(value);
-        }
+        public static int Scale { get; set; } = 100;
+        public static int Length { get; private set; }
 
         public static int Seed
         {
             set => Rnd = new Random(value);
         }
 
+        private static Random Rnd = new Random();
+
         static RndArrs()
         {
             Generate(Rnd.Next(20, 100));
         }
 
-        private static void Generate(int length)
+        public static void Generate(int length)
         {
+            Length = length;
+
             Arr1 = new T[length];
             Arr2 = new T[length];
             Arr3 = new T[length];
