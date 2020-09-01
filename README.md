@@ -22,6 +22,7 @@ This approach could be combined with standard multithreading for massive perform
 #### Elementwise:
 * Abs
 * Add
+* Concat
 * Div
 * Mul
 * Neg
