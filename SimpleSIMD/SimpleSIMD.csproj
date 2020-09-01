@@ -4,6 +4,15 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>SimpleSimd</RootNamespace>
     <nullable>enable</nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Gilad Freidkin</Authors>
+    <PackageProjectUrl>https://github.com/giladfrid009/SimpleSIMD</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/giladfrid009/SimpleSIMD</RepositoryUrl>
+    <PackageTags>SIMD, Library, Performance, Parallel, Math, Generic, Allocation</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>Easy to use SIMD accelerated array extensions</Description>
+    <Copyright></Copyright>
+    <Company />
   </PropertyGroup>
 
 </Project>
