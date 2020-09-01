@@ -46,6 +46,7 @@ This approach could be combined with standard multithreading for massive perform
 * ToVector 
 
 ## Limitations
+* Is not lazily evaluated as IEnumerable
 * Benefitial only for hardware which supports SIMD instructions
 * Only work for collections of type ```T[] where T : unmanaged```
 * Could perform worse than simple for loop approach, for very small arrays
