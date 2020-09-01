@@ -16,7 +16,7 @@ namespace SimpleSimd
                 {
                     for (int j = i; j < i + vLen; j++)
                     {
-                        if (NOperations<T>.Equal(source[j], value))
+                        if (Operations<T>.Equal(source[j], value))
                         {
                             return j;
                         }
@@ -26,7 +26,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                if (NOperations<T>.Equal(source[i], value))
+                if (Operations<T>.Equal(source[i], value))
                 {
                     return i;
                 }

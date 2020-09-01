@@ -7,12 +7,12 @@ namespace SimpleSimd
     {
         public static T Avg<T>(this T[] source) where T : unmanaged
         {
-            return NOperations<T>.Div(source.Sum(), NConverter<int, T>.Convert(source.Length));
+            return Operations<T>.Div(source.Sum(), Operations<int, T>.Convert(source.Length));
         }
 
         public static T Avg<T>(this T[] source, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector) where T : unmanaged
         {
-            return NOperations<T>.Div(source.Sum(vSelector, selector), NConverter<int, T>.Convert(source.Length));
+            return Operations<T>.Div(source.Sum(vSelector, selector), Operations<int, T>.Convert(source.Length));
         }
     }
 }

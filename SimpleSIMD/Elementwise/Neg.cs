@@ -16,7 +16,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                result[i] = NOperations<T>.Neg(source[i]);
+                result[i] = Operations<T>.Neg(source[i]);
             }
         }
 

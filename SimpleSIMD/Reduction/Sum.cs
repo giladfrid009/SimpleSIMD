@@ -22,7 +22,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                sum = NOperations<T>.Add(sum, source[i]);
+                sum = Operations<T>.Add(sum, source[i]);
             }
 
             return sum;
@@ -45,7 +45,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                sum = NOperations<T>.Add(sum, selector(source[i]));
+                sum = Operations<T>.Add(sum, selector(source[i]));
             }
 
             return sum;
@@ -67,7 +67,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                sum = NOperations<T>.Add(sum, selector(source[i], i));
+                sum = Operations<T>.Add(sum, selector(source[i], i));
             }
 
             return sum;

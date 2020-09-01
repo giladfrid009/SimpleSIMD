@@ -22,7 +22,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                result[i] = NOperations<T>.Abs(source[i]);
+                result[i] = Operations<T>.Abs(source[i]);
             }
         }
 
