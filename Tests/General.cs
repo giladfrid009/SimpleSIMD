@@ -35,6 +35,13 @@ namespace Tests
         }
 
         [Fact]
+        public void IndexOf()
+        {
+            Assert.True(ArrAsc.IndexOf(0) == -1);
+            Assert.True(ArrAsc.IndexOf(Length) == Length - 1);
+        }
+
+        [Fact]
         public void Copy()
         {
             Assert.True(Arr1.Copy().Equal(Arr1));

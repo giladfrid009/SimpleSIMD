@@ -5,9 +5,7 @@ VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{BE0D01E0-FAEC-4CE9-9A53-88880F8F9B9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleSIMD", "SimpleSIMD\SimpleSIMD.csproj", "{B8C57B9A-F7FC-4F91-B28B-974A1DA0BC78}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks", "Benchmarks\Benchmarks.csproj", "{98C65880-9391-4BB8-9ED5-060547686E4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleSIMD", "SimpleSIMD\SimpleSIMD.csproj", "{B8C57B9A-F7FC-4F91-B28B-974A1DA0BC78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		{B8C57B9A-F7FC-4F91-B28B-974A1DA0BC78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8C57B9A-F7FC-4F91-B28B-974A1DA0BC78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8C57B9A-F7FC-4F91-B28B-974A1DA0BC78}.Release|Any CPU.Build.0 = Release|Any CPU
-		{98C65880-9391-4BB8-9ED5-060547686E4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{98C65880-9391-4BB8-9ED5-060547686E4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{98C65880-9391-4BB8-9ED5-060547686E4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{98C65880-9391-4BB8-9ED5-060547686E4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
