@@ -42,5 +42,8 @@ namespace Tests
 
         [Fact]
         public void Select2() => Assert.True(Arr6.Select((X, i) => X / Arr3.ToVector(i), (X, i) => X / Arr3[i]).Equal(Arr2));
+
+        [Fact]
+        public void Concat() => Assert.True(Arr1.Concat(Arr2, (X, Y) => X + Y, (X, Y) => X + Y).Equal(Arr3));
     }
 }
