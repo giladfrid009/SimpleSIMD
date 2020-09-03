@@ -21,7 +21,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                if (Operations<T>.GreaterEqual(source[i], value))
+                if (Operations<T>.GreaterOrEqual(source[i], value))
                 {
                     return false;
                 }
@@ -50,7 +50,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                if (Operations<T>.GreaterEqual(source[i], other[i]))
+                if (Operations<T>.GreaterOrEqual(source[i], other[i]))
                 {
                     return false;
                 }

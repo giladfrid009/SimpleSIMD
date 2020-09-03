@@ -6,10 +6,9 @@
         public override short MaxVal { get; } = short.MaxValue;
 
         public override short Add(short left, short right) => (short)(left + right);
-        public override short Sub(short left, short right) => (short)(left - right);
-        public override short Mul(short left, short right) => (short)(left * right);
-        public override short Div(short left, short right) => (short)(left / right);
-        public override short Mod(short left, short right) => (short)(left % right);
+        public override short Subtract(short left, short right) => (short)(left - right);
+        public override short Multiply(short left, short right) => (short)(left * right);
+        public override short Divide(short left, short right) => (short)(left / right);
 
         public override bool Equal(short left, short right) => left == right;
         public override bool Less(short left, short right) => left < right;

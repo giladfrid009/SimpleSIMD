@@ -6,10 +6,9 @@
         public override ushort MaxVal { get; } = ushort.MaxValue;
 
         public override ushort Add(ushort left, ushort right) => (ushort)(left + right);
-        public override ushort Sub(ushort left, ushort right) => (ushort)(left - right);
-        public override ushort Mul(ushort left, ushort right) => (ushort)(left * right);
-        public override ushort Div(ushort left, ushort right) => (ushort)(left / right);
-        public override ushort Mod(ushort left, ushort right) => (ushort)(left % right);
+        public override ushort Subtract(ushort left, ushort right) => (ushort)(left - right);
+        public override ushort Multiply(ushort left, ushort right) => (ushort)(left * right);
+        public override ushort Divide(ushort left, ushort right) => (ushort)(left / right);
 
         public override bool Equal(ushort left, ushort right) => left == right;
         public override bool Less(ushort left, ushort right) => left < right;

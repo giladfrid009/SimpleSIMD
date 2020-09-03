@@ -6,10 +6,9 @@
         public override float MaxVal { get; } = float.MaxValue;
 
         public override float Add(float left, float right) => left + right;
-        public override float Sub(float left, float right) => left - right;
-        public override float Mul(float left, float right) => left * right;
-        public override float Div(float left, float right) => left / right;
-        public override float Mod(float left, float right) => left % right;
+        public override float Subtract(float left, float right) => left - right;
+        public override float Multiply(float left, float right) => left * right;
+        public override float Divide(float left, float right) => left / right;
 
         public override bool Equal(float left, float right) => left == right;
         public override bool Less(float left, float right) => left < right;

@@ -6,7 +6,7 @@ namespace SimpleSimd
 
     public static class Operations<T> where T : unmanaged
     {
-        private static readonly IOperation<T> ops;
+        private static readonly IOperation<T> Ops;
 
         static Operations()
         {
@@ -25,30 +25,28 @@ namespace SimpleSimd
                 _ => null
             };
 
-            ops = opsObj as IOperation<T> ?? throw new NotSupportedException(typeof(T).Name);
+            Ops = opsObj as IOperation<T> ?? throw new NotSupportedException(typeof(T).Name);
         }
 
-        public static T Zero { get; } = Operations<int, T>.Convert(0);
-        public static T One { get; } = Operations<int, T>.Convert(1);
-        public static T MinVal => ops.MinVal;
-        public static T MaxVal => ops.MaxVal;
+        public static T Zero { get; } = default;
+        public static T MinVal => Ops.MinVal;
+        public static T MaxVal => Ops.MaxVal;
 
-        public static T Neg(T value) => Sub(Zero, value);
-        public static T Abs(T value) => Less(value, Zero) ? Neg(value) : value;
+        public static T Negate(T value) => Subtract(Zero, value);
+        public static T Abs(T value) => Less(value, Zero) ? Negate(value) : value;
 
-        public static T Add(T left, T right) => ops.Add(left, right);
-        public static T Sub(T left, T right) => ops.Sub(left, right);
-        public static T Mul(T left, T right) => ops.Mul(left, right);
-        public static T Div(T left, T right) => ops.Div(left, right);
-        public static T Mod(T left, T right) => ops.Mod(left, right);
+        public static T Add(T left, T right) => Ops.Add(left, right);
+        public static T Subtract(T left, T right) => Ops.Subtract(left, right);
+        public static T Multiply(T left, T right) => Ops.Multiply(left, right);
+        public static T Divide(T left, T right) => Ops.Divide(left, right);
         public static T Min(T left, T right) => Less(left, right) ? left : right;
         public static T Max(T left, T right) => Greater(left, right) ? left : right;
 
-        public static bool Equal(T left, T right) => ops.Equal(left, right);
-        public static bool Less(T left, T right) => ops.Less(left, right);
-        public static bool Greater(T left, T right) => ops.Greater(left, right);
-        public static bool LessEqual(T left, T right) => !Greater(left, right);
-        public static bool GreaterEqual(T left, T right) => !Less(left, right);
+        public static bool Equal(T left, T right) => Ops.Equal(left, right);
+        public static bool Less(T left, T right) => Ops.Less(left, right);
+        public static bool Greater(T left, T right) => Ops.Greater(left, right);
+        public static bool LessOrEqual(T left, T right) => !Greater(left, right);
+        public static bool GreaterOrEqual(T left, T right) => !Less(left, right);
     }
 
     public static class Operations<TIn, TOut> where TIn : unmanaged where TOut : unmanaged

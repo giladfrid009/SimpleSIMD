@@ -6,10 +6,9 @@
         public override long MaxVal { get; } = long.MaxValue;
 
         public override long Add(long left, long right) => left + right;
-        public override long Sub(long left, long right) => left - right;
-        public override long Mul(long left, long right) => left * right;
-        public override long Div(long left, long right) => left / right;
-        public override long Mod(long left, long right) => left % right;
+        public override long Subtract(long left, long right) => left - right;
+        public override long Multiply(long left, long right) => left * right;
+        public override long Divide(long left, long right) => left / right;
 
         public override bool Equal(long left, long right) => left == right;
         public override bool Less(long left, long right) => left < right;

@@ -53,35 +53,35 @@ namespace Tests
         }
 
         [Fact]
-        public void GreaterEqual1()
+        public void GreaterOrEqual1()
         {
-            Assert.True(Arr2.GreaterEqual(Arr1));
-            Assert.True(Arr2.GreaterEqual(Arr2));
-            Assert.False(Arr2.GreaterEqual(Arr3));
+            Assert.True(Arr2.GreaterOrEqual(Arr1));
+            Assert.True(Arr2.GreaterOrEqual(Arr2));
+            Assert.False(Arr2.GreaterOrEqual(Arr3));
         }
 
         [Fact]
-        public void GreaterEqual2()
+        public void GreaterOrEqual2()
         {
-            Assert.True(Arr2.GreaterEqual(1));
-            Assert.True(Arr2.GreaterEqual(2));
-            Assert.False(Arr2.GreaterEqual(3));
+            Assert.True(Arr2.GreaterOrEqual(1));
+            Assert.True(Arr2.GreaterOrEqual(2));
+            Assert.False(Arr2.GreaterOrEqual(3));
         }
 
         [Fact]
-        public void LessEqual1()
+        public void LessOrEqual1()
         {
-            Assert.True(Arr2.LessEqual(Arr3));
-            Assert.True(Arr2.LessEqual(Arr2));
-            Assert.False(Arr2.LessEqual(Arr1));
+            Assert.True(Arr2.LessOrEqual(Arr3));
+            Assert.True(Arr2.LessOrEqual(Arr2));
+            Assert.False(Arr2.LessOrEqual(Arr1));
         }
 
         [Fact]
-        public void LessEqual2()
+        public void LessOrEqual2()
         {
-            Assert.True(Arr2.LessEqual(3));
-            Assert.True(Arr2.LessEqual(2));
-            Assert.False(Arr2.LessEqual(1));
+            Assert.True(Arr2.LessOrEqual(3));
+            Assert.True(Arr2.LessOrEqual(2));
+            Assert.False(Arr2.LessOrEqual(1));
         }
     }
 }

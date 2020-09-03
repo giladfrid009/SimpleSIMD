@@ -6,10 +6,9 @@
         public override int MaxVal { get; } = int.MaxValue;
 
         public override int Add(int left, int right) => left + right;
-        public override int Sub(int left, int right) => left - right;
-        public override int Mul(int left, int right) => left * right;
-        public override int Div(int left, int right) => left / right;
-        public override int Mod(int left, int right) => left % right;
+        public override int Subtract(int left, int right) => left - right;
+        public override int Multiply(int left, int right) => left * right;
+        public override int Divide(int left, int right) => left / right;
 
         public override bool Equal(int left, int right) => left == right;
         public override bool Less(int left, int right) => left < right;

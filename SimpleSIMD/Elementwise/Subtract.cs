@@ -23,7 +23,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                result[i] = Operations<T>.Sub(source[i], value);
+                result[i] = Operations<T>.Subtract(source[i], value);
             }
         }
 
@@ -49,7 +49,7 @@ namespace SimpleSimd
 
             for (; i < source.Length; i++)
             {
-                result[i] = Operations<T>.Sub(source[i], other[i]);
+                result[i] = Operations<T>.Subtract(source[i], other[i]);
             }
         }
 
