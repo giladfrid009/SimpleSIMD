@@ -11,7 +11,7 @@ namespace Tests
         public void Abs() => Assert.True(Arr1N.Abs().Equal(Arr1));
 
         [Fact]
-        public void Neg() => Assert.True(Arr1.Neg().Equal(Arr1N));
+        public void Negate() => Assert.True(Arr1.Negate().Equal(Arr1N));
 
         [Fact]
         public void Add1() => Assert.True(Arr1.Add(Arr2).Equal(Arr3));
@@ -20,22 +20,22 @@ namespace Tests
         public void Add2() => Assert.True(Arr1.Add(2).Equal(Arr3));
 
         [Fact]
-        public void Sub1() => Assert.True(Arr3.Sub(Arr2).Equal(Arr1));
+        public void Subtract1() => Assert.True(Arr3.Subtract(Arr2).Equal(Arr1));
 
         [Fact]
-        public void Sub2() => Assert.True(Arr3.Sub(2).Equal(Arr1));
+        public void Subtract2() => Assert.True(Arr3.Subtract(2).Equal(Arr1));
 
         [Fact]
-        public void Mul1() => Assert.True(Arr2.Mul(Arr3).Equal(Arr6));
+        public void Multiply1() => Assert.True(Arr2.Multiply(Arr3).Equal(Arr6));
 
         [Fact]
-        public void Mul2() => Assert.True(Arr2.Mul(3).Equal(Arr6));
+        public void Multiply2() => Assert.True(Arr2.Multiply(3).Equal(Arr6));
 
         [Fact]
-        public void Div1() => Assert.True(Arr6.Div(Arr3).Equal(Arr2));
+        public void Divide1() => Assert.True(Arr6.Divide(Arr3).Equal(Arr2));
 
         [Fact]
-        public void Div2() => Assert.True(Arr6.Div(3).Equal(Arr2));
+        public void Divide2() => Assert.True(Arr6.Divide(3).Equal(Arr2));
 
         [Fact]
         public void Select1() => Assert.True(Arr1.Select(X => X * 2, X => X * 2).Equal(Arr2));

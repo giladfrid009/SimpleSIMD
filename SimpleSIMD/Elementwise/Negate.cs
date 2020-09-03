@@ -4,7 +4,7 @@ namespace SimpleSimd
 {
     public static partial class Extensions
     {
-        public static void Neg<T>(this T[] source, T[] result) where T : unmanaged
+        public static void Negate<T>(this T[] source, T[] result) where T : unmanaged
         {
             int vLen = Vector<T>.Count;
             int i;
@@ -20,11 +20,11 @@ namespace SimpleSimd
             }
         }
 
-        public static T[] Neg<T>(this T[] source) where T : unmanaged
+        public static T[] Negate<T>(this T[] source) where T : unmanaged
         {
             var result = new T[source.Length];
 
-            source.Neg(result);
+            source.Negate(result);
 
             return result;
         }

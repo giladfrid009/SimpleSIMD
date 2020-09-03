@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class Extensions
     {
-        public static T Accumulate<T>(this T[] source, T seed, Func<Vector<T>, Vector<T>, Vector<T>> vAccum, Func<T, T, T> accumu) where T : unmanaged
+        public static T Aggregate<T>(this T[] source, T seed, Func<Vector<T>, Vector<T>, Vector<T>> vAccumulator, Func<T, T, T> accumulator) where T : unmanaged
         {
             var vRes = new Vector<T>(seed);
             T res = seed;
@@ -15,17 +15,17 @@ namespace SimpleSimd
 
             for (i = 0; i <= source.Length - vLen; i += vLen)
             {
-                vRes = vAccum(vRes, new Vector<T>(source[i]));
+                vRes = vAccumulator(vRes, new Vector<T>(source[i]));
             }
 
             for (int j = 0; j < vLen; j++)
             {
-                res = accumu(res, vRes[j]);
+                res = accumulator(res, vRes[j]);
             }
 
             for (; i < source.Length; i++)
             {
-                res = accumu(res, source[i]);
+                res = accumulator(res, source[i]);
             }
 
             return res;

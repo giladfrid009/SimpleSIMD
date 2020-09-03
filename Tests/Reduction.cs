@@ -13,10 +13,10 @@ namespace Tests
         public void Sum2() => Assert.True(Arr1.Sum(X => X * 2, X => X * 2) == Length * 2);
 
         [Fact]
-        public void Avg1() => Assert.True(ArrAsc.Avg() == (ArrAsc[Length - 1] + ArrAsc[0]) / 2);
+        public void Average1() => Assert.True(ArrAsc.Average() == (ArrAsc[Length - 1] + ArrAsc[0]) / 2);
 
         [Fact]
-        public void Avg2() => Assert.True(ArrAsc.Avg(X => X * 2, X => X * 2) == (ArrAsc[Length - 1] + ArrAsc[0]));
+        public void Average2() => Assert.True(ArrAsc.Average(X => X * 2, X => X * 2) == (ArrAsc[Length - 1] + ArrAsc[0]));
 
         [Fact]
         public void Dot1() => Assert.True(Arr2.Dot(Arr3) == Length * 6);
@@ -37,6 +37,6 @@ namespace Tests
         public void Min2() => Assert.True(ArrAsc.Min(X => X * 2, X => X * 2) == 2);
 
         [Fact]
-        public void Accumulate() => Assert.True(Arr1.Accumulate(0, (R, X) => R + X, (R, X) => R + X) == Length);
+        public void Aggregate() => Assert.True(Arr1.Aggregate(0, (R, X) => R + X, (R, X) => R + X) == Length);
     }
 }

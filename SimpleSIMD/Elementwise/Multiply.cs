@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class Extensions
     {
-        public static void Sub<T>(this T[] source, T value, T[] result) where T : unmanaged
+        public static void Multiply<T>(this T[] source, T value, T[] result) where T : unmanaged
         {
             if (result.Length != source.Length)
             {
@@ -18,16 +18,16 @@ namespace SimpleSimd
 
             for (i = 0; i <= source.Length - vLen; i += vLen)
             {
-                Vector.Subtract(new Vector<T>(source, i), vVal).CopyTo(result, i);
+                Vector.Multiply(new Vector<T>(source, i), vVal).CopyTo(result, i);
             }
 
             for (; i < source.Length; i++)
             {
-                result[i] = Operations<T>.Sub(source[i], value);
+                result[i] = Operations<T>.Mul(source[i], value);
             }
         }
 
-        public static void Sub<T>(this T[] source, T[] other, T[] result) where T : unmanaged
+        public static void Multiply<T>(this T[] source, T[] other, T[] result) where T : unmanaged
         {
             if (other.Length != source.Length)
             {
@@ -44,29 +44,29 @@ namespace SimpleSimd
 
             for (i = 0; i <= source.Length - vLen; i += vLen)
             {
-                Vector.Subtract(new Vector<T>(source, i), new Vector<T>(other, i)).CopyTo(result, i);
+                Vector.Multiply(new Vector<T>(source, i), new Vector<T>(other, i)).CopyTo(result, i);
             }
 
             for (; i < source.Length; i++)
             {
-                result[i] = Operations<T>.Sub(source[i], other[i]);
+                result[i] = Operations<T>.Mul(source[i], other[i]);
             }
         }
 
-        public static T[] Sub<T>(this T[] source, T value) where T : unmanaged
+        public static T[] Multiply<T>(this T[] source, T value) where T : unmanaged
         {
             var result = new T[source.Length];
 
-            source.Sub(value, result);
+            source.Multiply(value, result);
 
             return result;
         }
 
-        public static T[] Sub<T>(this T[] source, T[] other) where T : unmanaged
+        public static T[] Multiply<T>(this T[] source, T[] other) where T : unmanaged
         {
             var result = new T[source.Length];
 
-            source.Sub(other, result);
+            source.Multiply(other, result);
 
             return result;
         }
