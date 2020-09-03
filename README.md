@@ -23,15 +23,15 @@ This approach could be combined with standard multithreading for massive perform
 * Abs
 * Add
 * Concat
-* Div
-* Mul
-* Neg
+* Divide
+* Multiply
+* Negate
 * Select
-* Sub
+* Subtract
 
 #### Reduction:
-* Accumulate
-* Avg
+* Aggregate
+* Average
 * Dot
 * Max
 * Min
