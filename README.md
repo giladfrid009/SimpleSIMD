@@ -1,5 +1,7 @@
 # SimpleSIMD
 
+[![NuGet version (SimpleSIMD)](https://img.shields.io/nuget/v/SimpleSIMD.svg?style=flat-square)](https://www.nuget.org/packages/SimpleSIMD/)
+
 ### What is SIMD?
 Single Instruction, Multiple Data (SIMD) units refer to hardware components that perform the same operation on multiple data operands concurrently.
 The concurrency is performed on a single thread, while utilizing the full size of the processor register to perform several operations at one.  
