@@ -15,18 +15,18 @@ This approach could be combined with standard multithreading for massive perform
 #### Comparison:
 * Equal
 * Greater
-* GreaterEqual
 * Less
-* LessEqual
+* GreaterOrEqual
+* LessOrEqual
 
 #### Elementwise:
 * Abs
 * Add
-* Concat
 * Divide
 * Multiply
 * Negate
 * Select
+* Concat
 * Subtract
 
 #### Reduction:
@@ -50,8 +50,8 @@ This approach could be combined with standard multithreading for massive perform
 ## Limitations
 * Is not lazily evaluated as IEnumerable
 * Benefitial only for hardware which supports SIMD instructions
-* Only work for collections of type ```T[] where T : unmanaged```
 * Could perform worse than simple for loop approach, for very small arrays
+* Only work for collections of type ```T[] where T : unmanaged```
 * Supports only **Primitive Numeric Types** as array elements. Supported types are:
   * ```byte, sbyte```
   * ```short, ushort```
