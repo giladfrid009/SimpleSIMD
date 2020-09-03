@@ -42,6 +42,7 @@ This approach could be combined with standard multithreading for massive perform
 * Any
 * Contains
 * Copy
+* IndexOf
 * Fill
 * Foreach
 * ToVector 
