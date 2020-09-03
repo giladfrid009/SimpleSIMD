@@ -11,8 +11,9 @@
     <PackageTags>SIMD, Library, Performance, Parallel, Math, Generic, Allocation</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Easy to use SIMD accelerated array extensions</Description>
-    <Copyright></Copyright>
+    <Copyright>Copyright 2020 (c) Gilad Freidkin. All rights reserved.</Copyright>
     <Company />
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
 </Project>
