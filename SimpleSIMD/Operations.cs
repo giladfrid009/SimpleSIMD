@@ -2,7 +2,7 @@
 
 namespace SimpleSimd
 {
-    #pragma warning disable IDE0011
+#pragma warning disable IDE0011
     public static class Operations<T> where T : unmanaged
     {
         public static T Zero => default;
