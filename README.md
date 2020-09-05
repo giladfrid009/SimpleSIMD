@@ -15,7 +15,7 @@ This approach could be combined with standard multithreading for massive perform
 
 ## Available Functions
 #### Comparison:
-* Equal
+* Equals
 * Greater
 * Less
 * GreaterOrEqual
@@ -47,10 +47,9 @@ This approach could be combined with standard multithreading for massive perform
 * IndexOf
 * Fill
 * Foreach
-* ToVector 
 
 ## Limitations
-* Is not lazily evaluated as IEnumerable
+* Methods are not lazily evaluated as IEnumerable
 * Benefitial only for hardware which supports SIMD instructions
 * Could perform worse than simple for loop approach, for very small arrays
 * Only work for collections of type ```T[] where T : unmanaged```
