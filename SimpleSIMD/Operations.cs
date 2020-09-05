@@ -21,7 +21,6 @@ namespace SimpleSimd
                 if (typeof(T) == typeof(long)) return (T)(object)long.MinValue;
                 if (typeof(T) == typeof(float)) return (T)(object)float.MinValue;
                 if (typeof(T) == typeof(double)) return (T)(object)double.MinValue;
-                if (typeof(T) == typeof(decimal)) return (T)(object)decimal.MinValue;
 
                 throw new NotSupportedException(typeof(T).Name);
             }
@@ -41,7 +40,6 @@ namespace SimpleSimd
                 if (typeof(T) == typeof(long)) return (T)(object)long.MaxValue;
                 if (typeof(T) == typeof(float)) return (T)(object)float.MaxValue;
                 if (typeof(T) == typeof(double)) return (T)(object)double.MaxValue;
-                if (typeof(T) == typeof(decimal)) return (T)(object)decimal.MaxValue;
 
                 throw new NotSupportedException(typeof(T).Name);
             }
@@ -59,7 +57,6 @@ namespace SimpleSimd
             if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left + (long)(object)right);
             if (typeof(T) == typeof(float)) return (T)(object)((float)(object)left + (float)(object)right);
             if (typeof(T) == typeof(double)) return (T)(object)((double)(object)left + (double)(object)right);
-            if (typeof(T) == typeof(decimal)) return (T)(object)((decimal)(object)left + (decimal)(object)right);
 
             throw new NotSupportedException(typeof(T).Name);
         }
@@ -76,7 +73,6 @@ namespace SimpleSimd
             if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left - (long)(object)right);
             if (typeof(T) == typeof(float)) return (T)(object)((float)(object)left - (float)(object)right);
             if (typeof(T) == typeof(double)) return (T)(object)((double)(object)left - (double)(object)right);
-            if (typeof(T) == typeof(decimal)) return (T)(object)((decimal)(object)left - (decimal)(object)right);
 
             throw new NotSupportedException(typeof(T).Name);
         }
@@ -93,7 +89,6 @@ namespace SimpleSimd
             if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left * (long)(object)right);
             if (typeof(T) == typeof(float)) return (T)(object)((float)(object)left * (float)(object)right);
             if (typeof(T) == typeof(double)) return (T)(object)((double)(object)left * (double)(object)right);
-            if (typeof(T) == typeof(decimal)) return (T)(object)((decimal)(object)left * (decimal)(object)right);
 
             throw new NotSupportedException(typeof(T).Name);
         }
@@ -110,7 +105,6 @@ namespace SimpleSimd
             if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left / (long)(object)right);
             if (typeof(T) == typeof(float)) return (T)(object)((float)(object)left / (float)(object)right);
             if (typeof(T) == typeof(double)) return (T)(object)((double)(object)left / (double)(object)right);
-            if (typeof(T) == typeof(decimal)) return (T)(object)((decimal)(object)left / (decimal)(object)right);
 
             throw new NotSupportedException(typeof(T).Name);
         }
@@ -127,7 +121,6 @@ namespace SimpleSimd
             if (typeof(T) == typeof(long)) return (long)(object)left == (long)(object)right;
             if (typeof(T) == typeof(float)) return (float)(object)left == (float)(object)right;
             if (typeof(T) == typeof(double)) return (double)(object)left == (double)(object)right;
-            if (typeof(T) == typeof(decimal)) return (decimal)(object)left == (decimal)(object)right;
 
             throw new NotSupportedException(typeof(T).Name);
         }
@@ -144,7 +137,6 @@ namespace SimpleSimd
             if (typeof(T) == typeof(long)) return (long)(object)left > (long)(object)right;
             if (typeof(T) == typeof(float)) return (float)(object)left > (float)(object)right;
             if (typeof(T) == typeof(double)) return (double)(object)left > (double)(object)right;
-            if (typeof(T) == typeof(decimal)) return (decimal)(object)left > (decimal)(object)right;
 
             throw new NotSupportedException(typeof(T).Name);
         }
@@ -161,7 +153,6 @@ namespace SimpleSimd
             if (typeof(T) == typeof(long)) return (long)(object)left < (long)(object)right;
             if (typeof(T) == typeof(float)) return (float)(object)left < (float)(object)right;
             if (typeof(T) == typeof(double)) return (double)(object)left < (double)(object)right;
-            if (typeof(T) == typeof(decimal)) return (decimal)(object)left < (decimal)(object)right;
 
             throw new NotSupportedException(typeof(T).Name);
         }
