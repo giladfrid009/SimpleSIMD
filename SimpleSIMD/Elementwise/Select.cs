@@ -3,84 +3,72 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class Extensions
+    public static partial class ArrayOps<T>
     {
-        public static void Select<TIn, TOut>(this TIn[] source, Func<Vector<TIn>, Vector<TOut>> vSelector, Func<TIn, TOut> selector, TOut[] result)
-        where TIn : unmanaged
-        where TOut : unmanaged
+        public static void Select<U>(T[] array, Func<Vector<T>, Vector<U>> vSelector, Func<T, U> selector, U[] result) where U : unmanaged
         {
-            if (result.Length != source.Length)
+            if (result.Length != array.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(result));
             }       
 
-            int vLen = Vector<TIn>.Count;
-
-            if (Vector<TOut>.Count != vLen)
+            if (Vector<U>.Count != vLen)
             {
-                throw new InvalidCastException(typeof(TOut).Name);
+                throw new InvalidCastException(typeof(U).Name);
             }
 
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= array.Length - vLen; i += vLen)
             {
-                vSelector(new Vector<TIn>(source, i)).CopyTo(result, i);
+                vSelector(new Vector<T>(array, i)).CopyTo(result, i);
             }
 
-            for (; i < source.Length; i++)
+            for (; i < array.Length; i++)
             {
-                result[i] = selector(source[i]);
+                result[i] = selector(array[i]);
             }
         }
 
-        public static void Select<TIn, TOut>(this TIn[] source, Func<Vector<TIn>, int, Vector<TOut>> vSelector, Func<TIn, int, TOut> selector, TOut[] result) 
-        where TIn : unmanaged 
-        where TOut : unmanaged
+        public static void Select<U>(T[] array, Func<Vector<T>, int, Vector<U>> vSelector, Func<T, int, U> selector, U[] result) where U : unmanaged
         {
-            if (result.Length != source.Length)
+            if (result.Length != array.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(result));
             }
 
-            int vLen = Vector<TIn>.Count;
-
-            if (Vector<TOut>.Count != vLen)
+            if (Vector<U>.Count != vLen)
             {
-                throw new InvalidCastException(typeof(TOut).Name);
+                throw new InvalidCastException(typeof(U).Name);
             }
 
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= array.Length - vLen; i += vLen)
             {
-                vSelector(new Vector<TIn>(source, i), i).CopyTo(result, i);
+                vSelector(new Vector<T>(array, i), i).CopyTo(result, i);
             }
 
-            for (; i < source.Length; i++)
+            for (; i < array.Length; i++)
             {
-                result[i] = selector(source[i], i);
+                result[i] = selector(array[i], i);
             }
         }
 
-        public static TOut[] Select<TIn, TOut>(this TIn[] source, Func<Vector<TIn>, Vector<TOut>> vSelector, Func<TIn, TOut> selector) 
-        where TIn : unmanaged 
-        where TOut : unmanaged
+        public static U[] Select<U>(T[] array, Func<Vector<T>, Vector<U>> vSelector, Func<T, U> selector) where U : unmanaged
         {
-            var result = new TOut[source.Length];
+            var result = new U[array.Length];
 
-            source.Select(vSelector, selector, result);
+            Select(array, vSelector, selector, result);
 
             return result;
         }
 
-        public static TOut[] Select<TIn, TOut>(this TIn[] source, Func<Vector<TIn>, int, Vector<TOut>> vSelector, Func<TIn, int, TOut> selector) 
-        where TIn : unmanaged 
-        where TOut : unmanaged
+        public static U[] Select<U>(T[] array, Func<Vector<T>, int, Vector<U>> vSelector, Func<T, int, U> selector) where U : unmanaged
         {
-            var result = new TOut[source.Length];
+            var result = new U[array.Length];
 
-            source.Select(vSelector, selector, result);
+            Select(array, vSelector, selector, result);
 
             return result;
         }

@@ -3,7 +3,7 @@
 namespace SimpleSimd
 {
 #pragma warning disable IDE0011
-    public static class Operations<T> where T : unmanaged
+    public static class MathOps<T> where T : unmanaged
     {
         public static T Zero => default;
 
@@ -109,7 +109,7 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
-        public static bool Equal(T left, T right)
+        public static bool Equals(T left, T right)
         {
             if (typeof(T) == typeof(byte)) return (byte)(object)left == (byte)(object)right;
             if (typeof(T) == typeof(sbyte)) return (sbyte)(object)left == (sbyte)(object)right;
@@ -157,10 +157,24 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
-        public static T Negate(T value) => Subtract(Zero, value);
-        public static T Abs(T value) => Less(value, Zero) ? Negate(value) : value;
+        public static T Negate(T value)
+        {
+            return Subtract(Zero, value);
+        }
 
-        public static bool LessOrEqual(T left, T right) => !Greater(left, right);
-        public static bool GreaterOrEqual(T left, T right) => !Less(left, right);
+        public static T Abs(T value)
+        {
+            return Less(value, Zero) ? Negate(value) : value;
+        }
+
+        public static bool LessOrEqual(T left, T right)
+        {
+            return !Greater(left, right);
+        }
+
+        public static bool GreaterOrEqual(T left, T right)
+        {
+            return !Less(left, right);
+        }
     }
 }

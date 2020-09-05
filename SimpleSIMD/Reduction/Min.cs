@@ -3,66 +3,62 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class Extensions
+    public static partial class ArrayOps<T>
     {
-        public static T Min<T>(this T[] source) where T : unmanaged
+        public static T Min(T[] array)
         {
-            var vMin = new Vector<T>(Operations<T>.MaxValue);
-            T min = Operations<T>.MaxValue;
-
-            int vLen = Vector<T>.Count;
+            var vMin = new Vector<T>(MathOps<T>.MaxValue);
+            T min = MathOps<T>.MaxValue;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= array.Length - vLen; i += vLen)
             {
-                vMin = Vector.Min(vMin, new Vector<T>(source, i));
+                vMin = Vector.Min(vMin, new Vector<T>(array, i));
             }
 
             for (int j = 0; j < vLen; ++j)
             {
-                if (Operations<T>.Less(vMin[j], min))
+                if (MathOps<T>.Less(vMin[j], min))
                 {
                     min = vMin[j];
                 }
             }
 
-            for (; i < source.Length; i++)
+            for (; i < array.Length; i++)
             {
-                if (Operations<T>.Less(source[i], min))
+                if (MathOps<T>.Less(array[i], min))
                 {
-                    min = source[i];
+                    min = array[i];
                 }
             }
 
             return min;
         }
 
-        public static T Min<T>(this T[] source, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector) where T : unmanaged
+        public static T Min(T[] array, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector)
         {
-            var vMin = new Vector<T>(Operations<T>.MaxValue);
-            T min = Operations<T>.MaxValue;
-
-            int vLen = Vector<T>.Count;
+            var vMin = new Vector<T>(MathOps<T>.MaxValue);
+            T min = MathOps<T>.MaxValue;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= array.Length - vLen; i += vLen)
             {
-                vMin = Vector.Min(vMin, vSelector(new Vector<T>(source, i)));
+                vMin = Vector.Min(vMin, vSelector(new Vector<T>(array, i)));
             }
 
             for (int j = 0; j < vLen; ++j)
             {
-                if (Operations<T>.Less(vMin[j], min))
+                if (MathOps<T>.Less(vMin[j], min))
                 {
                     min = vMin[j];
                 }
             }
 
-            for (; i < source.Length; i++)
+            for (; i < array.Length; i++)
             {
-                T res = selector(source[i]);
+                T res = selector(array[i]);
 
-                if (Operations<T>.Less(res, min))
+                if (MathOps<T>.Less(res, min))
                 {
                     min = res;
                 }

@@ -3,11 +3,11 @@ using System.Linq.Expressions;
 
 namespace SimpleSimd
 {
-    public static class Operations<TIn, TOut> where TIn : unmanaged where TOut : unmanaged
+    public static class MathOps<TIn, TOut> where TIn : unmanaged where TOut : unmanaged
     {
         private static readonly Func<TIn, TOut> ConvFunc;
 
-        static Operations()
+        static MathOps()
         {
             ParameterExpression X = Expression.Parameter(typeof(TIn));
             ConvFunc = Expression.Lambda<Func<TIn, TOut>>(Expression.Convert(X, typeof(TOut)), X).Compile();

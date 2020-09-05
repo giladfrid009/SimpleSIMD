@@ -3,55 +3,51 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class Extensions
+    public static partial class ArrayOps<T>
     {
-        public static T Dot<T>(this T[] source, T value) where T : unmanaged
+        public static T Dot(T[] left, T right)
         {
-            var vVal = new Vector<T>(value);
+            var vVal = new Vector<T>(right);
             Vector<T> vDot = Vector<T>.Zero;
             T dot;
-
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= left.Length - vLen; i += vLen)
             {
-                vDot += new Vector<T>(source, i) * vVal;
+                vDot += new Vector<T>(left, i) * vVal;
             }
 
             dot = Vector.Dot(vDot, Vector<T>.One);
 
-            for (; i < source.Length; i++)
+            for (; i < left.Length; i++)
             {
-                dot = Operations<T>.Add(dot, Operations<T>.Multiply(source[i], value));
+                dot = MathOps<T>.Add(dot, MathOps<T>.Multiply(left[i], right));
             }
 
             return dot;
         }
 
-        public static T Dot<T>(this T[] source, T[] other) where T : unmanaged
+        public static T Dot(T[] left, T[] right)
         {
-            if (other.Length != source.Length)
+            if (right.Length != left.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(other));
+                throw new ArgumentOutOfRangeException(nameof(right));
             }
 
             Vector<T> vDot = Vector<T>.Zero;
             T dot;
-
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= left.Length - vLen; i += vLen)
             {
-                vDot += new Vector<T>(source, i) * new Vector<T>(other, i);
+                vDot += new Vector<T>(left, i) * new Vector<T>(right, i);
             }
 
             dot = Vector.Dot(vDot, Vector<T>.One);
 
-            for (; i < source.Length; i++)
+            for (; i < left.Length; i++)
             {
-                dot = Operations<T>.Add(dot, Operations<T>.Multiply(source[i], other[i]));
+                dot = MathOps<T>.Add(dot, MathOps<T>.Multiply(left[i], right[i]));
             }
 
             return dot;

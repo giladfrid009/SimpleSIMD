@@ -3,34 +3,33 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class Extensions
+    public static partial class ArrayOps<T>
     {
-        public static void Abs<T>(this T[] source, T[] result) where T : unmanaged
+        public static void Abs(T[] array, T[] result)
         {
-            if (result.Length != source.Length)
+            if (result.Length != array.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(result));
             }
 
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= array.Length - vLen; i += vLen)
             {
-                Vector.Abs(new Vector<T>(source, i)).CopyTo(result, i);
+                Vector.Abs(new Vector<T>(array, i)).CopyTo(result, i);
             }
 
-            for (; i < source.Length; i++)
+            for (; i < array.Length; i++)
             {
-                result[i] = Operations<T>.Abs(source[i]);
+                result[i] = MathOps<T>.Abs(array[i]);
             }
         }
 
-        public static T[] Abs<T>(this T[] source) where T : unmanaged
+        public static T[] Abs(T[] array)
         {
-            var result = new T[source.Length];
+            var result = new T[array.Length];
 
-            source.Abs(result);
+            Abs(array, result);
 
             return result;
         }

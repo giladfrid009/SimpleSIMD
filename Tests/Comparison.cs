@@ -7,81 +7,81 @@ namespace Tests
     public class Comparison
     {
         [Fact]
-        public void Equal1()
+        public void Equals1()
         {
-            Assert.True(Arr2.Equal(Arr2));
-            Assert.False(Arr1.Equal(Arr2));
+            Assert.True(ArrayOps<int>.Equals(Arr2, Arr2));
+            Assert.False(ArrayOps<int>.Equals(Arr1, Arr2));
         }
 
         [Fact]
-        public void Equal2()
+        public void Equals2()
         {
-            Assert.True(Arr2.Equal(2));
-            Assert.False(Arr1.Equal(2));
+            Assert.True(ArrayOps<int>.Equals(Arr2, 2));
+            Assert.False(ArrayOps<int>.Equals(Arr2, 2));
         }
 
         [Fact]
         public void Greater1()
         {
-            Assert.True(Arr2.Greater(Arr1));
-            Assert.False(Arr2.Greater(Arr3));
-            Assert.False(Arr2.Greater(Arr2));
+            Assert.True(ArrayOps<int>.Greater(Arr2, Arr1));
+            Assert.False(ArrayOps<int>.Greater(Arr2, Arr3));
+            Assert.False(ArrayOps<int>.Greater(Arr2, Arr2));
         }
 
         [Fact]
         public void Greater2()
         {
-            Assert.True(Arr2.Greater(1));
-            Assert.False(Arr2.Greater(3));
-            Assert.False(Arr2.Greater(2));
+            Assert.True(ArrayOps<int>.Greater(Arr2, 1));
+            Assert.False(ArrayOps<int>.Greater(Arr2, 3));
+            Assert.False(ArrayOps<int>.Greater(Arr2, 2));
         }
 
         [Fact]
         public void Less1()
         {
-            Assert.True(Arr2.Less(Arr3));
-            Assert.False(Arr2.Less(Arr1));
-            Assert.False(Arr2.Less(Arr2));
+            Assert.True(ArrayOps<int>.Less(Arr2, Arr3));
+            Assert.False(ArrayOps<int>.Less(Arr2, Arr1));
+            Assert.False(ArrayOps<int>.Less(Arr2, Arr2));
         }
 
         [Fact]
         public void Less2()
         {
-            Assert.True(Arr2.Less(3));
-            Assert.False(Arr2.Less(1));
-            Assert.False(Arr2.Less(2));
+            Assert.True(ArrayOps<int>.Less(Arr2, 3));
+            Assert.False(ArrayOps<int>.Less(Arr2, 1));
+            Assert.False(ArrayOps<int>.Less(Arr2, 2));
         }
 
         [Fact]
         public void GreaterOrEqual1()
         {
-            Assert.True(Arr2.GreaterOrEqual(Arr1));
-            Assert.True(Arr2.GreaterOrEqual(Arr2));
-            Assert.False(Arr2.GreaterOrEqual(Arr3));
+            Assert.True(ArrayOps<int>.GreaterOrEqual(Arr2, Arr1));
+            Assert.True(ArrayOps<int>.GreaterOrEqual(Arr2, Arr2));
+            Assert.False(ArrayOps<int>.GreaterOrEqual(Arr2, Arr3));
         }
 
         [Fact]
         public void GreaterOrEqual2()
         {
-            Assert.True(Arr2.GreaterOrEqual(1));
-            Assert.True(Arr2.GreaterOrEqual(2));
-            Assert.False(Arr2.GreaterOrEqual(3));
+            Assert.True(ArrayOps<int>.GreaterOrEqual(Arr2, 1));
+            Assert.True(ArrayOps<int>.GreaterOrEqual(Arr2, 2));
+            Assert.False(ArrayOps<int>.GreaterOrEqual(Arr2, 3));
         }
 
         [Fact]
         public void LessOrEqual1()
         {
-            Assert.True(Arr2.LessOrEqual(Arr3));
-            Assert.True(Arr2.LessOrEqual(Arr2));
-            Assert.False(Arr2.LessOrEqual(Arr1));
+            Assert.True(ArrayOps<int>.LessOrEqual(Arr2, Arr3));
+            Assert.True(ArrayOps<int>.LessOrEqual(Arr2, Arr2));
+            Assert.False(ArrayOps<int>.LessOrEqual(Arr2, Arr1));
         }
 
         [Fact]
         public void LessOrEqual2()
         {
-            Assert.True(Arr2.LessOrEqual(3));
-            Assert.True(Arr2.LessOrEqual(2));
-            Assert.False(Arr2.LessOrEqual(1));
+            Assert.True(ArrayOps<int>.LessOrEqual(Arr2, 3));
+            Assert.True(ArrayOps<int>.LessOrEqual(Arr2, 2));
+            Assert.False(ArrayOps<int>.LessOrEqual(Arr2, 1));
         }
     }
 }

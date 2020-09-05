@@ -3,25 +3,24 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class Extensions
+    public static partial class ArrayOps<T>
     {
-        public static bool Less<T>(this T[] source, T value) where T : unmanaged
+        public static bool Less(T[] left, T right)
         {
-            var vVal = new Vector<T>(value);
-            int vLen = Vector<T>.Count;
+            var vVal = new Vector<T>(right);
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= left.Length - vLen; i += vLen)
             {
-                if (Vector.GreaterThanOrEqualAll(new Vector<T>(source, i), vVal))
+                if (Vector.GreaterThanOrEqualAll(new Vector<T>(left, i), vVal))
                 {
                     return false;
                 }
             }
 
-            for (; i < source.Length; i++)
+            for (; i < left.Length; i++)
             {
-                if (Operations<T>.GreaterOrEqual(source[i], value))
+                if (MathOps<T>.GreaterOrEqual(left[i], right))
                 {
                     return false;
                 }
@@ -30,27 +29,26 @@ namespace SimpleSimd
             return true;
         }
 
-        public static bool Less<T>(this T[] source, T[] other) where T : unmanaged
+        public static bool Less(T[] left, T[] right)
         {
-            if (other.Length != source.Length)
+            if (right.Length != left.Length)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= left.Length - vLen; i += vLen)
             {
-                if (Vector.GreaterThanOrEqualAll(new Vector<T>(source, i), new Vector<T>(other, i)))
+                if (Vector.GreaterThanOrEqualAll(new Vector<T>(left, i), new Vector<T>(right, i)))
                 {
                     return false;
                 }
             }
 
-            for (; i < source.Length; i++)
+            for (; i < left.Length; i++)
             {
-                if (Operations<T>.GreaterOrEqual(source[i], other[i]))
+                if (MathOps<T>.GreaterOrEqual(left[i], right[i]))
                 {
                     return false;
                 }

@@ -3,34 +3,33 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class Extensions
+    public static partial class ArrayOps<T>
     {
-        public static void Copy<T>(this T[] source, T[] result) where T : unmanaged
+        public static void Copy(T[] array, T[] result)
         {
-            if (result.Length != source.Length)
+            if (result.Length != array.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(result));
             }
 
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= array.Length - vLen; i += vLen)
             {
-                new Vector<T>(source, i).CopyTo(result, i);
+                new Vector<T>(array, i).CopyTo(result, i);
             }
 
-            for (; i < source.Length; i++)
+            for (; i < array.Length; i++)
             {
-                result[i] = source[i];
+                result[i] = array[i];
             }
         }
 
-        public static T[] Copy<T>(this T[] source) where T : unmanaged
+        public static T[] Copy(T[] array)
         {
-            var result = new T[source.Length];
+            var result = new T[array.Length];
 
-            source.Copy(result);
+            Copy(array, result);
 
             return result;
         }

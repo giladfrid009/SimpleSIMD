@@ -3,39 +3,38 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class Extensions
+    public static partial class ArrayOps<T>
     {
-        public static void Concat<T>(this T[] source, T[] other, Func<Vector<T>, Vector<T>, Vector<T>> vCombiner, Func<T, T, T> combiner, T[] result) where T : unmanaged
+        public static void Concat(T[] left, T[] right, Func<Vector<T>, Vector<T>, Vector<T>> vCombiner, Func<T, T, T> combiner, T[] result)
         {
-            if(other.Length != source.Length)
+            if (right.Length != left.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(other));
+                throw new ArgumentOutOfRangeException(nameof(right));
             }
 
-            if (result.Length != source.Length)
+            if (result.Length != left.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(result));
             }
 
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= left.Length - vLen; i += vLen)
             {
-                vCombiner(new Vector<T>(source, i), new Vector<T>(other, i)).CopyTo(result, i);
+                vCombiner(new Vector<T>(left, i), new Vector<T>(right, i)).CopyTo(result, i);
             }
 
-            for (; i < source.Length; i++)
+            for (; i < left.Length; i++)
             {
-                result[i] = combiner(source[i], other[i]);
+                result[i] = combiner(left[i], right[i]);
             }
         }
 
-        public static T[] Concat<T>(this T[] source, T[] other, Func<Vector<T>, Vector<T>, Vector<T>> vCombiner, Func<T, T, T> combiner) where T : unmanaged
+        public static T[] Concat(T[] left, T[] right, Func<Vector<T>, Vector<T>, Vector<T>> vCombiner, Func<T, T, T> combiner)
         {
-            var result = new T[source.Length];
+            var result = new T[left.Length];
 
-            source.Concat(other, vCombiner, combiner, result);
+            Concat(left, right, vCombiner, combiner, result);
 
             return result;
         }

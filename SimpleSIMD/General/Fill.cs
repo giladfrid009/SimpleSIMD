@@ -3,38 +3,36 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class Extensions
+    public static partial class ArrayOps<T>
     {
-        public static void Fill<T>(this T[] source, T value) where T : unmanaged
+        public static void Fill(T[] array, T value)
         {
             var vVal = new Vector<T>(value);
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= array.Length - vLen; i += vLen)
             {
-                vVal.CopyTo(source, i);
+                vVal.CopyTo(array, i);
             }
 
-            for (; i < source.Length; i++)
+            for (; i < array.Length; i++)
             {
-                source[i] = value;
+                array[i] = value;
             }
         }
 
-        public static void Fill<T>(this T[] source, Func<Vector<T>> vFunc, Func<T> func) where T : unmanaged
+        public static void Fill(T[] array, Func<Vector<T>> vFunc, Func<T> func)
         {
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= array.Length - vLen; i += vLen)
             {
-                vFunc().CopyTo(source, i);
+                vFunc().CopyTo(array, i);
             }
 
-            for (; i < source.Length; i++)
+            for (; i < array.Length; i++)
             {
-                source[i] = func();
+                array[i] = func();
             }
         }
     }

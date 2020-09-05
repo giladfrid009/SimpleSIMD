@@ -2,25 +2,24 @@
 
 namespace SimpleSimd
 {
-    public static partial class Extensions
+    public static partial class ArrayOps<T>
     {
-        public static bool Contains<T>(this T[] source, T value) where T : unmanaged
+        public static bool Contains(T[] array, T value)
         {
             var vVal = new Vector<T>(value);
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= array.Length - vLen; i += vLen)
             {
-                if (Vector.EqualsAny(new Vector<T>(source, i), vVal))
+                if (Vector.EqualsAny(new Vector<T>(array, i), vVal))
                 {
                     return true;
                 }
             }
 
-            for (; i < source.Length; i++)
+            for (; i < array.Length; i++)
             {
-                if (Operations<T>.Equal(source[i], value))
+                if (MathOps<T>.Equals(array[i], value))
                 {
                     return true;
                 }

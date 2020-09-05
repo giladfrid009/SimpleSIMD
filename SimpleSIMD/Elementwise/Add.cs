@@ -3,70 +3,68 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class Extensions
+    public static partial class ArrayOps<T>
     {
-        public static void Add<T>(this T[] source, T value, T[] result) where T : unmanaged
+        public static void Add(T[] left, T right, T[] result)
         {
-            if (result.Length != source.Length)
+            if (result.Length != left.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(result));
             }
 
-            var vVal = new Vector<T>(value);
-            int vLen = Vector<T>.Count;
+            var vVal = new Vector<T>(right);
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= left.Length - vLen; i += vLen)
             {
-                Vector.Add(new Vector<T>(source, i), vVal).CopyTo(result, i);
+                Vector.Add(new Vector<T>(left, i), vVal).CopyTo(result, i);
             }
 
-            for (; i < source.Length; i++)
+            for (; i < left.Length; i++)
             {
-                result[i] = Operations<T>.Add(source[i], value);
+                result[i] = MathOps<T>.Add(left[i], right);
             }
         }
 
-        public static void Add<T>(this T[] source, T[] other, T[] result) where T : unmanaged
+        public static void Add(T[] left, T[] right, T[] result)
         {
-            if (other.Length != source.Length)
+            if (right.Length != left.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(other));
+                throw new ArgumentOutOfRangeException(nameof(right));
             }
 
-            if (result.Length != source.Length)
+            if (result.Length != left.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(result));
             }
 
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= left.Length - vLen; i += vLen)
             {
-                Vector.Add(new Vector<T>(source, i), new Vector<T>(other, i)).CopyTo(result, i);
+                Vector.Add(new Vector<T>(left, i), new Vector<T>(right, i)).CopyTo(result, i);
             }
 
-            for (; i < source.Length; i++)
+            for (; i < left.Length; i++)
             {
-                result[i] = Operations<T>.Add(source[i], other[i]);
+                result[i] = MathOps<T>.Add(left[i], right[i]);
             }
         }
 
-        public static T[] Add<T>(this T[] source, T value) where T : unmanaged
+        public static T[] Add(T[] left, T right)
         {
-            var result = new T[source.Length];
+            var result = new T[left.Length];
 
-            source.Add(value, result);
+            Add(left, right, result);
 
             return result;
         }
 
-        public static T[] Add<T>(this T[] source, T[] other) where T : unmanaged
+        public static T[] Add(T[] left, T[] right)
         {
-            var result = new T[source.Length];
+            var result = new T[left.Length];
 
-            source.Add(other, result);
+            Add(left, right, result);
 
             return result;
         }

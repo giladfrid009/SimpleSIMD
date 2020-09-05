@@ -2,29 +2,28 @@
 
 namespace SimpleSimd
 {
-    public static partial class Extensions
+    public static partial class ArrayOps<T>
     {
-        public static void Negate<T>(this T[] source, T[] result) where T : unmanaged
+        public static void Negate(T[] array, T[] result)
         {
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= array.Length - vLen; i += vLen)
             {
-                Vector.Negate(new Vector<T>(source, i)).CopyTo(result, i);
+                Vector.Negate(new Vector<T>(array, i)).CopyTo(result, i);
             }
 
-            for (; i < source.Length; i++)
+            for (; i < array.Length; i++)
             {
-                result[i] = Operations<T>.Negate(source[i]);
+                result[i] = MathOps<T>.Negate(array[i]);
             }
         }
 
-        public static T[] Negate<T>(this T[] source) where T : unmanaged
+        public static T[] Negate(T[] array)
         {
-            var result = new T[source.Length];
+            var result = new T[array.Length];
 
-            source.Negate(result);
+            Negate(array, result);
 
             return result;
         }

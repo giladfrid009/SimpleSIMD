@@ -2,21 +2,20 @@
 
 namespace SimpleSimd
 {
-    public static partial class Extensions
+    public static partial class ArrayOps<T>
     {
-        public static int IndexOf<T>(this T[] source, T value) where T : unmanaged
+        public static int IndexOf(T[] array, T value)
         {
             var vVal = new Vector<T>(value);
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= array.Length - vLen; i += vLen)
             {
-                if (Vector.EqualsAny(new Vector<T>(source, i), vVal))
+                if (Vector.EqualsAny(new Vector<T>(array, i), vVal))
                 {
                     for (int j = i; j < i + vLen; j++)
                     {
-                        if (Operations<T>.Equal(source[j], value))
+                        if (MathOps<T>.Equals(array[j], value))
                         {
                             return j;
                         }
@@ -24,9 +23,9 @@ namespace SimpleSimd
                 }
             }
 
-            for (; i < source.Length; i++)
+            for (; i < array.Length; i++)
             {
-                if (Operations<T>.Equal(source[i], value))
+                if (MathOps<T>.Equals(array[i], value))
                 {
                     return i;
                 }

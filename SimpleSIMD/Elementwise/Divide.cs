@@ -3,70 +3,98 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class Extensions
+    public static partial class ArrayOps<T>
     {
-        public static void Divide<T>(this T[] source, T value, T[] result) where T : unmanaged
+        public static void Divide(T[] left, T right, T[] result)
         {
-            if (result.Length != source.Length)
+            if (result.Length != left.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(result));
             }
 
-            var vVal = new Vector<T>(value);
-            int vLen = Vector<T>.Count;
+            var vVal = new Vector<T>(right);
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= left.Length - vLen; i += vLen)
             {
-                Vector.Divide(new Vector<T>(source, i), vVal).CopyTo(result, i);
+                Vector.Divide(new Vector<T>(left, i), vVal).CopyTo(result, i);
             }
 
-            for (; i < source.Length; i++)
+            for (; i < left.Length; i++)
             {
-                result[i] = Operations<T>.Divide(source[i], value);
+                result[i] = MathOps<T>.Divide(left[i], right);
             }
         }
 
-        public static void Divide<T>(this T[] source, T[] other, T[] result) where T : unmanaged
+        public static void Divide(T left, T[] right, T[] result)
         {
-            if (other.Length != source.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(other));
-            }
-
-            if (result.Length != source.Length)
+            if (result.Length != right.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(result));
             }
 
-            int vLen = Vector<T>.Count;
+            var vVal = new Vector<T>(left);
             int i;
 
-            for (i = 0; i <= source.Length - vLen; i += vLen)
+            for (i = 0; i <= right.Length - vLen; i += vLen)
             {
-                Vector.Divide(new Vector<T>(source, i), new Vector<T>(other, i)).CopyTo(result, i);
+                Vector.Divide(vVal, new Vector<T>(right, i)).CopyTo(result, i);
             }
 
-            for (; i < source.Length; i++)
+            for (; i < right.Length; i++)
             {
-                result[i] = Operations<T>.Divide(source[i], other[i]);
+                result[i] = MathOps<T>.Divide(left, right[i]);
             }
         }
 
-        public static T[] Divide<T>(this T[] source, T value) where T : unmanaged
+        public static void Divide(T[] left, T[] right, T[] result)
         {
-            var result = new T[source.Length];
+            if (right.Length != left.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(right));
+            }
 
-            source.Divide(value, result);
+            if (result.Length != left.Length)
+            {
+                throw new ArgumentOutOfRangeException(nameof(result));
+            }
+
+            int i;
+
+            for (i = 0; i <= left.Length - vLen; i += vLen)
+            {
+                Vector.Divide(new Vector<T>(left, i), new Vector<T>(right, i)).CopyTo(result, i);
+            }
+
+            for (; i < left.Length; i++)
+            {
+                result[i] = MathOps<T>.Divide(left[i], right[i]);
+            }
+        }
+
+        public static T[] Divide(T[] left, T right)
+        {
+            var result = new T[left.Length];
+
+            Divide(left, right, result);
 
             return result;
         }
 
-        public static T[] Divide<T>(this T[] source, T[] other) where T : unmanaged
+        public static T[] Divide(T left, T[] right)
         {
-            var result = new T[source.Length];
+            var result = new T[right.Length];
 
-            source.Divide(other, result);
+            Divide(left, right, result);
+
+            return result;
+        }
+
+        public static T[] Divide(T[] left, T[] right)
+        {
+            var result = new T[left.Length];
+
+            Divide(left, right, result);
 
             return result;
         }
