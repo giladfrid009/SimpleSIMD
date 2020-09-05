@@ -7,8 +7,8 @@ namespace SimpleSimd
     {
         public static T Min<T>(this T[] source) where T : unmanaged
         {
-            var vMin = new Vector<T>(Operations<T>.MaxVal);
-            T min = Operations<T>.MaxVal;
+            var vMin = new Vector<T>(Operations<T>.MaxValue);
+            T min = Operations<T>.MaxValue;
 
             int vLen = Vector<T>.Count;
             int i;
@@ -20,12 +20,18 @@ namespace SimpleSimd
 
             for (int j = 0; j < vLen; ++j)
             {
-                min = Operations<T>.Min(min, vMin[j]);
+                if (Operations<T>.Less(vMin[j], min))
+                {
+                    min = vMin[j];
+                }
             }
 
             for (; i < source.Length; i++)
             {
-                min = Operations<T>.Min(min, source[i]);
+                if (Operations<T>.Less(source[i], min))
+                {
+                    min = source[i];
+                }
             }
 
             return min;
@@ -33,8 +39,8 @@ namespace SimpleSimd
 
         public static T Min<T>(this T[] source, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector) where T : unmanaged
         {
-            var vMin = new Vector<T>(Operations<T>.MaxVal);
-            T min = Operations<T>.MaxVal;
+            var vMin = new Vector<T>(Operations<T>.MaxValue);
+            T min = Operations<T>.MaxValue;
 
             int vLen = Vector<T>.Count;
             int i;
@@ -46,12 +52,20 @@ namespace SimpleSimd
 
             for (int j = 0; j < vLen; ++j)
             {
-                min = Operations<T>.Min(min, vMin[j]);
+                if (Operations<T>.Less(vMin[j], min))
+                {
+                    min = vMin[j];
+                }
             }
 
             for (; i < source.Length; i++)
             {
-                min = Operations<T>.Min(min, selector(source[i]));
+                T res = selector(source[i]);
+
+                if (Operations<T>.Less(res, min))
+                {
+                    min = res;
+                }
             }
 
             return min;

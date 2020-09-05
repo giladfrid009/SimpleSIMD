@@ -7,8 +7,8 @@ namespace SimpleSimd
     {
         public static T Max<T>(this T[] source) where T : unmanaged
         {
-            var vMax = new Vector<T>(Operations<T>.MinVal);
-            T max = Operations<T>.MinVal;
+            var vMax = new Vector<T>(Operations<T>.MinValue);
+            T max = Operations<T>.MinValue;
 
             int vLen = Vector<T>.Count;
             int i;
@@ -20,12 +20,18 @@ namespace SimpleSimd
 
             for (int j = 0; j < vLen; ++j)
             {
-                max = Operations<T>.Max(max, vMax[j]);
+                if (Operations<T>.Greater(vMax[j], max))
+                {
+                    max = vMax[j];
+                }
             }
 
             for (; i < source.Length; i++)
             {
-                max = Operations<T>.Max(max, source[i]);
+                if (Operations<T>.Greater(source[i], max))
+                {
+                    max = source[i];
+                }
             }
 
             return max;
@@ -33,8 +39,8 @@ namespace SimpleSimd
 
         public static T Max<T>(this T[] source, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector) where T : unmanaged
         {
-            var vMax = new Vector<T>(Operations<T>.MinVal);
-            T max = Operations<T>.MinVal;
+            var vMax = new Vector<T>(Operations<T>.MinValue);
+            T max = Operations<T>.MinValue;
 
             int vLen = Vector<T>.Count;
             int i;
@@ -46,12 +52,20 @@ namespace SimpleSimd
 
             for (int j = 0; j < vLen; ++j)
             {
-                max = Operations<T>.Max(max, vMax[j]);
+                if (Operations<T>.Greater(vMax[j], max))
+                {
+                    max = vMax[j];
+                }
             }
 
             for (; i < source.Length; i++)
             {
-                max = Operations<T>.Max(max, selector(source[i]));
+                T res = selector(source[i]);
+
+                if (Operations<T>.Greater(res, max))
+                {
+                    max = res;
+                }
             }
 
             return max;

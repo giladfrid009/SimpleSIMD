@@ -1,64 +1,175 @@
 ﻿using System;
-using System.Linq.Expressions;
 
 namespace SimpleSimd
 {
-
+    #pragma warning disable IDE0011
     public static class Operations<T> where T : unmanaged
     {
-        private static readonly IOperation<T> Ops;
+        public static T Zero => default;
 
-        static Operations()
+        public static T MinValue
         {
-            object? opsObj = Type.GetTypeCode(typeof(T)) switch
+            get
             {
-                TypeCode.SByte => new Operations.SByte(),
-                TypeCode.Byte => new Operations.Byte(),
-                TypeCode.Int16 => new Operations.Int16(),
-                TypeCode.UInt16 => new Operations.UInt16(),
-                TypeCode.Int32 => new Operations.Int32(),
-                TypeCode.UInt32 => new Operations.UInt32(),
-                TypeCode.Int64 => new Operations.Int64(),
-                TypeCode.UInt64 => new Operations.UInt64(),
-                TypeCode.Single => new Operations.Single(),
-                TypeCode.Double => new Operations.Double(),
-                _ => null
-            };
+                if (typeof(T) == typeof(byte)) return (T)(object)byte.MinValue;
+                if (typeof(T) == typeof(sbyte)) return (T)(object)sbyte.MinValue;
+                if (typeof(T) == typeof(ushort)) return (T)(object)ushort.MinValue;
+                if (typeof(T) == typeof(short)) return (T)(object)short.MinValue;
+                if (typeof(T) == typeof(uint)) return (T)(object)uint.MinValue;
+                if (typeof(T) == typeof(int)) return (T)(object)int.MinValue;
+                if (typeof(T) == typeof(ulong)) return (T)(object)ulong.MinValue;
+                if (typeof(T) == typeof(long)) return (T)(object)long.MinValue;
+                if (typeof(T) == typeof(float)) return (T)(object)float.MinValue;
+                if (typeof(T) == typeof(double)) return (T)(object)double.MinValue;
+                if (typeof(T) == typeof(decimal)) return (T)(object)decimal.MinValue;
 
-            Ops = opsObj as IOperation<T> ?? throw new NotSupportedException(typeof(T).Name);
+                throw new NotSupportedException(typeof(T).Name);
+            }
         }
 
-        public static T Zero { get; } = default;
-        public static T MinVal => Ops.MinVal;
-        public static T MaxVal => Ops.MaxVal;
+        public static T MaxValue
+        {
+            get
+            {
+                if (typeof(T) == typeof(byte)) return (T)(object)byte.MaxValue;
+                if (typeof(T) == typeof(sbyte)) return (T)(object)sbyte.MaxValue;
+                if (typeof(T) == typeof(ushort)) return (T)(object)ushort.MaxValue;
+                if (typeof(T) == typeof(short)) return (T)(object)short.MaxValue;
+                if (typeof(T) == typeof(uint)) return (T)(object)uint.MaxValue;
+                if (typeof(T) == typeof(int)) return (T)(object)int.MaxValue;
+                if (typeof(T) == typeof(ulong)) return (T)(object)ulong.MaxValue;
+                if (typeof(T) == typeof(long)) return (T)(object)long.MaxValue;
+                if (typeof(T) == typeof(float)) return (T)(object)float.MaxValue;
+                if (typeof(T) == typeof(double)) return (T)(object)double.MaxValue;
+                if (typeof(T) == typeof(decimal)) return (T)(object)decimal.MaxValue;
+
+                throw new NotSupportedException(typeof(T).Name);
+            }
+        }
+
+        public static T Add(T left, T right)
+        {
+            if (typeof(T) == typeof(byte)) return (T)(object)((byte)(object)left + (byte)(object)right);
+            if (typeof(T) == typeof(sbyte)) return (T)(object)((sbyte)(object)left + (sbyte)(object)right);
+            if (typeof(T) == typeof(ushort)) return (T)(object)((ushort)(object)left + (ushort)(object)right);
+            if (typeof(T) == typeof(short)) return (T)(object)((short)(object)left + (short)(object)right);
+            if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left + (uint)(object)right);
+            if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left + (int)(object)right);
+            if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left + (ulong)(object)right);
+            if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left + (long)(object)right);
+            if (typeof(T) == typeof(float)) return (T)(object)((float)(object)left + (float)(object)right);
+            if (typeof(T) == typeof(double)) return (T)(object)((double)(object)left + (double)(object)right);
+            if (typeof(T) == typeof(decimal)) return (T)(object)((decimal)(object)left + (decimal)(object)right);
+
+            throw new NotSupportedException(typeof(T).Name);
+        }
+
+        public static T Subtract(T left, T right)
+        {
+            if (typeof(T) == typeof(byte)) return (T)(object)((byte)(object)left - (byte)(object)right);
+            if (typeof(T) == typeof(sbyte)) return (T)(object)((sbyte)(object)left - (sbyte)(object)right);
+            if (typeof(T) == typeof(ushort)) return (T)(object)((ushort)(object)left - (ushort)(object)right);
+            if (typeof(T) == typeof(short)) return (T)(object)((short)(object)left - (short)(object)right);
+            if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left - (uint)(object)right);
+            if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left - (int)(object)right);
+            if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left - (ulong)(object)right);
+            if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left - (long)(object)right);
+            if (typeof(T) == typeof(float)) return (T)(object)((float)(object)left - (float)(object)right);
+            if (typeof(T) == typeof(double)) return (T)(object)((double)(object)left - (double)(object)right);
+            if (typeof(T) == typeof(decimal)) return (T)(object)((decimal)(object)left - (decimal)(object)right);
+
+            throw new NotSupportedException(typeof(T).Name);
+        }
+
+        public static T Multiply(T left, T right)
+        {
+            if (typeof(T) == typeof(byte)) return (T)(object)((byte)(object)left * (byte)(object)right);
+            if (typeof(T) == typeof(sbyte)) return (T)(object)((sbyte)(object)left * (sbyte)(object)right);
+            if (typeof(T) == typeof(ushort)) return (T)(object)((ushort)(object)left * (ushort)(object)right);
+            if (typeof(T) == typeof(short)) return (T)(object)((short)(object)left * (short)(object)right);
+            if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left * (uint)(object)right);
+            if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left * (int)(object)right);
+            if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left * (ulong)(object)right);
+            if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left * (long)(object)right);
+            if (typeof(T) == typeof(float)) return (T)(object)((float)(object)left * (float)(object)right);
+            if (typeof(T) == typeof(double)) return (T)(object)((double)(object)left * (double)(object)right);
+            if (typeof(T) == typeof(decimal)) return (T)(object)((decimal)(object)left * (decimal)(object)right);
+
+            throw new NotSupportedException(typeof(T).Name);
+        }
+
+        public static T Divide(T left, T right)
+        {
+            if (typeof(T) == typeof(byte)) return (T)(object)((byte)(object)left / (byte)(object)right);
+            if (typeof(T) == typeof(sbyte)) return (T)(object)((sbyte)(object)left / (sbyte)(object)right);
+            if (typeof(T) == typeof(ushort)) return (T)(object)((ushort)(object)left / (ushort)(object)right);
+            if (typeof(T) == typeof(short)) return (T)(object)((short)(object)left / (short)(object)right);
+            if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left / (uint)(object)right);
+            if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left / (int)(object)right);
+            if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left / (ulong)(object)right);
+            if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left / (long)(object)right);
+            if (typeof(T) == typeof(float)) return (T)(object)((float)(object)left / (float)(object)right);
+            if (typeof(T) == typeof(double)) return (T)(object)((double)(object)left / (double)(object)right);
+            if (typeof(T) == typeof(decimal)) return (T)(object)((decimal)(object)left / (decimal)(object)right);
+
+            throw new NotSupportedException(typeof(T).Name);
+        }
+
+        public static bool Equal(T left, T right)
+        {
+            if (typeof(T) == typeof(byte)) return (byte)(object)left == (byte)(object)right;
+            if (typeof(T) == typeof(sbyte)) return (sbyte)(object)left == (sbyte)(object)right;
+            if (typeof(T) == typeof(ushort)) return (ushort)(object)left == (ushort)(object)right;
+            if (typeof(T) == typeof(short)) return (short)(object)left == (short)(object)right;
+            if (typeof(T) == typeof(uint)) return (uint)(object)left == (uint)(object)right;
+            if (typeof(T) == typeof(int)) return (int)(object)left == (int)(object)right;
+            if (typeof(T) == typeof(ulong)) return (ulong)(object)left == (ulong)(object)right;
+            if (typeof(T) == typeof(long)) return (long)(object)left == (long)(object)right;
+            if (typeof(T) == typeof(float)) return (float)(object)left == (float)(object)right;
+            if (typeof(T) == typeof(double)) return (double)(object)left == (double)(object)right;
+            if (typeof(T) == typeof(decimal)) return (decimal)(object)left == (decimal)(object)right;
+
+            throw new NotSupportedException(typeof(T).Name);
+        }
+
+        public static bool Greater(T left, T right)
+        {
+            if (typeof(T) == typeof(byte)) return (byte)(object)left > (byte)(object)right;
+            if (typeof(T) == typeof(sbyte)) return (sbyte)(object)left > (sbyte)(object)right;
+            if (typeof(T) == typeof(ushort)) return (ushort)(object)left > (ushort)(object)right;
+            if (typeof(T) == typeof(short)) return (short)(object)left > (short)(object)right;
+            if (typeof(T) == typeof(uint)) return (uint)(object)left > (uint)(object)right;
+            if (typeof(T) == typeof(int)) return (int)(object)left > (int)(object)right;
+            if (typeof(T) == typeof(ulong)) return (ulong)(object)left > (ulong)(object)right;
+            if (typeof(T) == typeof(long)) return (long)(object)left > (long)(object)right;
+            if (typeof(T) == typeof(float)) return (float)(object)left > (float)(object)right;
+            if (typeof(T) == typeof(double)) return (double)(object)left > (double)(object)right;
+            if (typeof(T) == typeof(decimal)) return (decimal)(object)left > (decimal)(object)right;
+
+            throw new NotSupportedException(typeof(T).Name);
+        }
+
+        public static bool Less(T left, T right)
+        {
+            if (typeof(T) == typeof(byte)) return (byte)(object)left < (byte)(object)right;
+            if (typeof(T) == typeof(sbyte)) return (sbyte)(object)left < (sbyte)(object)right;
+            if (typeof(T) == typeof(ushort)) return (ushort)(object)left < (ushort)(object)right;
+            if (typeof(T) == typeof(short)) return (short)(object)left < (short)(object)right;
+            if (typeof(T) == typeof(uint)) return (uint)(object)left < (uint)(object)right;
+            if (typeof(T) == typeof(int)) return (int)(object)left < (int)(object)right;
+            if (typeof(T) == typeof(ulong)) return (ulong)(object)left < (ulong)(object)right;
+            if (typeof(T) == typeof(long)) return (long)(object)left < (long)(object)right;
+            if (typeof(T) == typeof(float)) return (float)(object)left < (float)(object)right;
+            if (typeof(T) == typeof(double)) return (double)(object)left < (double)(object)right;
+            if (typeof(T) == typeof(decimal)) return (decimal)(object)left < (decimal)(object)right;
+
+            throw new NotSupportedException(typeof(T).Name);
+        }
 
         public static T Negate(T value) => Subtract(Zero, value);
         public static T Abs(T value) => Less(value, Zero) ? Negate(value) : value;
 
-        public static T Add(T left, T right) => Ops.Add(left, right);
-        public static T Subtract(T left, T right) => Ops.Subtract(left, right);
-        public static T Multiply(T left, T right) => Ops.Multiply(left, right);
-        public static T Divide(T left, T right) => Ops.Divide(left, right);
-        public static T Min(T left, T right) => Less(left, right) ? left : right;
-        public static T Max(T left, T right) => Greater(left, right) ? left : right;
-
-        public static bool Equal(T left, T right) => Ops.Equal(left, right);
-        public static bool Less(T left, T right) => Ops.Less(left, right);
-        public static bool Greater(T left, T right) => Ops.Greater(left, right);
         public static bool LessOrEqual(T left, T right) => !Greater(left, right);
         public static bool GreaterOrEqual(T left, T right) => !Less(left, right);
-    }
-
-    public static class Operations<TIn, TOut> where TIn : unmanaged where TOut : unmanaged
-    {
-        private static readonly Func<TIn, TOut> ConvFunc;
-
-        static Operations()
-        {
-            ParameterExpression X = Expression.Parameter(typeof(TIn));
-            ConvFunc = Expression.Lambda<Func<TIn, TOut>>(Expression.Convert(X, typeof(TOut)), X).Compile();
-        }
-
-        public static TOut Convert(TIn value) => ConvFunc(value);
     }
 }
