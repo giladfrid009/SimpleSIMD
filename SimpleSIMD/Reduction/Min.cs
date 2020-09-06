@@ -18,18 +18,12 @@ namespace SimpleSimd
 
             for (int j = 0; j < vLen; ++j)
             {
-                if (MathOps<T>.Less(vMin[j], min))
-                {
-                    min = vMin[j];
-                }
+                min = MathOps<T>.Min(min, vMin[j]);
             }
 
             for (; i < array.Length; i++)
             {
-                if (MathOps<T>.Less(array[i], min))
-                {
-                    min = array[i];
-                }
+                min = MathOps<T>.Min(min, array[i]);
             }
 
             return min;
@@ -48,20 +42,12 @@ namespace SimpleSimd
 
             for (int j = 0; j < vLen; ++j)
             {
-                if (MathOps<T>.Less(vMin[j], min))
-                {
-                    min = vMin[j];
-                }
+                min = MathOps<T>.Min(min, vMin[j]);
             }
 
             for (; i < array.Length; i++)
             {
-                T res = selector(array[i]);
-
-                if (MathOps<T>.Less(res, min))
-                {
-                    min = res;
-                }
+                min = MathOps<T>.Min(min, selector(array[i]));
             }
 
             return min;

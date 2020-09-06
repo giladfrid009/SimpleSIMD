@@ -18,18 +18,12 @@ namespace SimpleSimd
 
             for (int j = 0; j < vLen; ++j)
             {
-                if (MathOps<T>.Greater(vMax[j], max))
-                {
-                    max = vMax[j];
-                }
+                max = MathOps<T>.Max(max, vMax[j]);
             }
 
             for (; i < array.Length; i++)
             {
-                if (MathOps<T>.Greater(array[i], max))
-                {
-                    max = array[i];
-                }
+                max = MathOps<T>.Max(max, array[i]);
             }
 
             return max;
@@ -48,20 +42,12 @@ namespace SimpleSimd
 
             for (int j = 0; j < vLen; ++j)
             {
-                if (MathOps<T>.Greater(vMax[j], max))
-                {
-                    max = vMax[j];
-                }
+                max = MathOps<T>.Max(max, vMax[j]);
             }
 
             for (; i < array.Length; i++)
             {
-                T res = selector(array[i]);
-
-                if (MathOps<T>.Greater(res, max))
-                {
-                    max = res;
-                }
+                max = MathOps<T>.Max(max, selector(array[i]));
             }
 
             return max;

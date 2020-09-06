@@ -1,8 +1,13 @@
-﻿using System;
+﻿#pragma warning disable IDE0011
+
+using System;
 
 namespace SimpleSimd
 {
-#pragma warning disable IDE0011
+    /// <summary>
+    /// Generic high performence numeric operations.
+    /// </summary>
+    /// <typeparam name="T">Numeric type</typeparam>
     public static class MathOps<T> where T : unmanaged
     {
         public static T Zero => default;
@@ -155,6 +160,16 @@ namespace SimpleSimd
             if (typeof(T) == typeof(double)) return (double)(object)left < (double)(object)right;
 
             throw new NotSupportedException(typeof(T).Name);
+        }
+
+        public static T Min(T left, T right)
+        {
+            return Less(left, right) ? left : right;
+        }
+
+        public static T Max(T left, T right)
+        {
+            return Greater(left, right) ? left : right;
         }
 
         public static T Negate(T value)
