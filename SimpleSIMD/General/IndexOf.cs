@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace SimpleSimd
 {
@@ -26,6 +27,35 @@ namespace SimpleSimd
             for (; i < array.Length; i++)
             {
                 if (MathOps<T>.Equals(array[i], value))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+        
+        public static int IndexOf(T[] array, Func<Vector<T>, bool> vPredicate, Func<T, bool> predicate)
+        {
+            int i;
+
+            for (i = 0; i <= array.Length - vLen; i += vLen)
+            {
+                if (vPredicate(new Vector<T>(array, i)))
+                {
+                    for (int j = i; j < i + vLen; j++)
+                    {
+                        if (predicate(array[j]))
+                        {
+                            return j;
+                        }
+                    }
+                }
+            }
+
+            for (; i < array.Length; i++)
+            {
+                if (predicate(array[i]))
                 {
                     return i;
                 }
