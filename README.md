@@ -17,27 +17,32 @@ This approach could be combined with standard multithreading for massive perform
 #### Comparison:
 * Equals
 * Greater
-* Less
 * GreaterOrEqual
+* Less
 * LessOrEqual
 
 #### Elementwise:
+* Negate
 * Abs
 * Add
 * Divide
 * Multiply
-* Negate
+* Subtract
+* And
+* Or
+* Xor
+* Not
 * Select
 * Concat
-* Subtract
+* Sqrt
 
 #### Reduction:
 * Aggregate
+* Sum
 * Average
-* Dot
 * Max
 * Min
-* Sum
+* Dot
 
 #### General Purpose:
 * All
