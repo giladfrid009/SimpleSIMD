@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class ArrayOps<T>
     {
-        public static void Concat(T[] left, T[] right, Func<Vector<T>, Vector<T>, Vector<T>> vCombiner, Func<T, T, T> combiner, T[] result)
+        public static void Concat<U>(T[] left, T[] right, Func<Vector<T>, Vector<T>, Vector<U>> vCombiner, Func<T, T, U> combiner, U[] result) where U : unmanaged
         {
             if (right.Length != left.Length)
             {
@@ -15,6 +15,11 @@ namespace SimpleSimd
             if (result.Length != left.Length)
             {
                 throw new ArgumentOutOfRangeException(nameof(result));
+            }
+
+            if (Vector<U>.Count != vLen)
+            {
+                throw new InvalidCastException(typeof(U).Name);
             }
 
             int i;
@@ -30,9 +35,9 @@ namespace SimpleSimd
             }
         }
 
-        public static T[] Concat(T[] left, T[] right, Func<Vector<T>, Vector<T>, Vector<T>> vCombiner, Func<T, T, T> combiner)
+        public static U[] Concat<U>(T[] left, T[] right, Func<Vector<T>, Vector<T>, Vector<U>> vCombiner, Func<T, T, U> combiner) where U : unmanaged
         {
-            var result = new T[left.Length];
+            var result = new U[left.Length];
 
             Concat(left, right, vCombiner, combiner, result);
 
