@@ -33,6 +33,7 @@ This approach could be combined with standard multithreading for massive perform
 * Xor
 * Not
 * Select
+* Ternary (Conditional Select)
 * Concat
 * Sqrt
 
