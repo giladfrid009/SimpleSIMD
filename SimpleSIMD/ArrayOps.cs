@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace SimpleSimd
+﻿namespace SimpleSimd
 {
     /// <summary>
     /// Generic SIMD-accelerated array operations.
