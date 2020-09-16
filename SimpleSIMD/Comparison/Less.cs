@@ -13,7 +13,7 @@ namespace SimpleSimd
 
             for (i = 0; i <= left.Length - vLen; i += vLen)
             {
-                if (Vector.GreaterThanOrEqualAny(new Vector<T>(left, i), vVal))
+                if (Vector.LessThanAll(new Vector<T>(left, i), vVal) == false)
                 {
                     return false;
                 }
@@ -21,7 +21,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                if (MathOps<T>.GreaterOrEqual(left[i], right))
+                if (MathOps<T>.Less(left[i], right) == false)
                 {
                     return false;
                 }
@@ -42,7 +42,7 @@ namespace SimpleSimd
 
             for (i = 0; i <= left.Length - vLen; i += vLen)
             {
-                if (Vector.GreaterThanOrEqualAny(new Vector<T>(left, i), new Vector<T>(right, i)))
+                if (Vector.LessThanAll(new Vector<T>(left, i), new Vector<T>(right, i)) == false)
                 {
                     return false;
                 }
@@ -50,7 +50,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                if (MathOps<T>.GreaterOrEqual(left[i], right[i]))
+                if (MathOps<T>.Less(left[i], right[i]) == false)
                 {
                     return false;
                 }
