@@ -6,6 +6,7 @@ namespace SimpleSimd
     {
         public static void Negate(T[] array, T[] result)
         {
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)

@@ -14,6 +14,7 @@ namespace SimpleSimd
 
             var vTrue = new Vector<T>(trueValue);
             var vFalse = new Vector<T>(falseValue);
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)
@@ -44,6 +45,7 @@ namespace SimpleSimd
                 throw new ArgumentOutOfRangeException(nameof(result));
             }
 
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)

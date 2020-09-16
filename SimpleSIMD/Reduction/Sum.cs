@@ -9,6 +9,7 @@ namespace SimpleSimd
         {
             Vector<T> vSum = Vector<T>.Zero;
             T sum;
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)
@@ -30,6 +31,7 @@ namespace SimpleSimd
         {
             Vector<T> vSum = Vector<T>.Zero;
             T sum;
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)
@@ -51,6 +53,7 @@ namespace SimpleSimd
         {
             Vector<T> vSum = Vector<T>.Zero;
             T sum;
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)

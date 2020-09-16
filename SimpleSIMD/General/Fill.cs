@@ -8,6 +8,7 @@ namespace SimpleSimd
         public static void Fill(T[] array, T value)
         {
             var vVal = new Vector<T>(value);
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)
@@ -23,6 +24,7 @@ namespace SimpleSimd
 
         public static void Fill(T[] array, Func<Vector<T>> vFunc, Func<T> func)
         {
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)

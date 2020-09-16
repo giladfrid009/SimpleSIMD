@@ -13,6 +13,7 @@ namespace SimpleSimd
             }
 
             var vVal = new Vector<T>(right);
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= left.Length - vLen; i += vLen)
@@ -38,6 +39,7 @@ namespace SimpleSimd
                 throw new ArgumentOutOfRangeException(nameof(result));
             }
 
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= left.Length - vLen; i += vLen)

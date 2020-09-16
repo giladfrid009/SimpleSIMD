@@ -9,6 +9,7 @@ namespace SimpleSimd
         {
             var vRes = new Vector<T>(seed);
             T res = seed;
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)

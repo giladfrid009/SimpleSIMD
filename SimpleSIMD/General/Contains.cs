@@ -7,6 +7,7 @@ namespace SimpleSimd
         public static bool Contains(T[] array, T value)
         {
             var vVal = new Vector<T>(value);
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)

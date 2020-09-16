@@ -7,6 +7,7 @@ namespace SimpleSimd
     {
         public static bool All(T[] array, Func<Vector<T>, bool> vPredicate, Func<T, bool> predicate)
         {
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)

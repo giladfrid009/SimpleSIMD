@@ -9,6 +9,7 @@ namespace SimpleSimd
         {
             var vMax = new Vector<T>(MathOps<T>.MinValue);
             T max = MathOps<T>.MinValue;
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)
@@ -33,6 +34,7 @@ namespace SimpleSimd
         {
             var vMax = new Vector<T>(MathOps<T>.MinValue);
             T max = MathOps<T>.MinValue;
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)

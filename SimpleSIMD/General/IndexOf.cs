@@ -8,6 +8,7 @@ namespace SimpleSimd
         public static int IndexOf(T[] array, T value)
         {
             var vVal = new Vector<T>(value);
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)
@@ -37,6 +38,7 @@ namespace SimpleSimd
         
         public static int IndexOf(T[] array, Func<Vector<T>, bool> vPredicate, Func<T, bool> predicate)
         {
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= array.Length - vLen; i += vLen)

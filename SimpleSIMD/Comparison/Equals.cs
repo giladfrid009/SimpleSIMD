@@ -7,6 +7,7 @@ namespace SimpleSimd
         public static bool Equals(T[] left, T right)
         {
             var vVal = new Vector<T>(right);
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i < left.Length - vLen; i += vLen)
@@ -40,6 +41,7 @@ namespace SimpleSimd
                 return false;
             }
 
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i < left.Length - vLen; i += vLen)

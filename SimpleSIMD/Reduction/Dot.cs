@@ -10,6 +10,7 @@ namespace SimpleSimd
             var vVal = new Vector<T>(right);
             Vector<T> vDot = Vector<T>.Zero;
             T dot;
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= left.Length - vLen; i += vLen)
@@ -36,6 +37,7 @@ namespace SimpleSimd
 
             Vector<T> vDot = Vector<T>.Zero;
             T dot;
+            int vLen = Vector<T>.Count;
             int i;
 
             for (i = 0; i <= left.Length - vLen; i += vLen)
