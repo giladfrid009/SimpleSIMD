@@ -52,10 +52,10 @@ namespace SimpleSimd
 
         public static T Not(T value)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)~(byte)(object)value;
-            if (typeof(T) == typeof(sbyte)) return (T)(object)~(sbyte)(object)value;
-            if (typeof(T) == typeof(ushort)) return (T)(object)~(ushort)(object)value;
-            if (typeof(T) == typeof(short)) return (T)(object)~(short)(object)value;
+            if (typeof(T) == typeof(byte)) return (T)(object)(byte)~(byte)(object)value;
+            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)~(sbyte)(object)value;
+            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)~(ushort)(object)value;
+            if (typeof(T) == typeof(short)) return (T)(object)(short)~(short)(object)value;
             if (typeof(T) == typeof(uint)) return (T)(object)~(uint)(object)value;
             if (typeof(T) == typeof(int)) return (T)(object)~(int)(object)value;
             if (typeof(T) == typeof(ulong)) return (T)(object)~(ulong)(object)value;
@@ -66,10 +66,10 @@ namespace SimpleSimd
 
         public static T Add(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)((byte)(object)left + (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)((sbyte)(object)left + (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)((ushort)(object)left + (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)((short)(object)left + (short)(object)right);
+            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left + (byte)(object)right);
+            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left + (sbyte)(object)right);
+            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left + (ushort)(object)right);
+            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left + (short)(object)right);
             if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left + (uint)(object)right);
             if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left + (int)(object)right);
             if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left + (ulong)(object)right);
@@ -82,10 +82,10 @@ namespace SimpleSimd
 
         public static T Subtract(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)((byte)(object)left - (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)((sbyte)(object)left - (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)((ushort)(object)left - (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)((short)(object)left - (short)(object)right);
+            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left - (byte)(object)right);
+            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left - (sbyte)(object)right);
+            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left - (ushort)(object)right);
+            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left - (short)(object)right);
             if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left - (uint)(object)right);
             if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left - (int)(object)right);
             if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left - (ulong)(object)right);
@@ -98,10 +98,10 @@ namespace SimpleSimd
 
         public static T Multiply(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)((byte)(object)left * (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)((sbyte)(object)left * (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)((ushort)(object)left * (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)((short)(object)left * (short)(object)right);
+            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left * (byte)(object)right);
+            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left * (sbyte)(object)right);
+            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left * (ushort)(object)right);
+            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left * (short)(object)right);
             if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left * (uint)(object)right);
             if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left * (int)(object)right);
             if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left * (ulong)(object)right);
@@ -114,10 +114,10 @@ namespace SimpleSimd
 
         public static T Divide(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)((byte)(object)left / (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)((sbyte)(object)left / (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)((ushort)(object)left / (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)((short)(object)left / (short)(object)right);
+            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left / (byte)(object)right);
+            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left / (sbyte)(object)right);
+            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left / (ushort)(object)right);
+            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left / (short)(object)right);
             if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left / (uint)(object)right);
             if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left / (int)(object)right);
             if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left / (ulong)(object)right);
@@ -130,10 +130,10 @@ namespace SimpleSimd
 
         public static T Modulus(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)((byte)(object)left % (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)((sbyte)(object)left % (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)((ushort)(object)left % (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)((short)(object)left % (short)(object)right);
+            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left % (byte)(object)right);
+            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left % (sbyte)(object)right);
+            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left % (ushort)(object)right);
+            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left % (short)(object)right);
             if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left % (uint)(object)right);
             if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left % (int)(object)right);
             if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left % (ulong)(object)right);
@@ -146,10 +146,10 @@ namespace SimpleSimd
 
         public static T And(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)((byte)(object)left & (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)((sbyte)(object)left & (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)((ushort)(object)left & (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)((short)(object)left & (short)(object)right);
+            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left & (byte)(object)right);
+            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left & (sbyte)(object)right);
+            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left & (ushort)(object)right);
+            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left & (short)(object)right);
             if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left & (uint)(object)right);
             if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left & (int)(object)right);
             if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left & (ulong)(object)right);
@@ -160,10 +160,10 @@ namespace SimpleSimd
 
         public static T Or(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)((byte)(object)left | (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)((sbyte)(object)left | (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)((ushort)(object)left | (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)((short)(object)left | (short)(object)right);
+            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left | (byte)(object)right);
+            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left | (sbyte)(object)right);
+            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left | (ushort)(object)right);
+            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left | (short)(object)right);
             if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left | (uint)(object)right);
             if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left | (int)(object)right);
             if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left | (ulong)(object)right);
@@ -174,10 +174,10 @@ namespace SimpleSimd
 
         public static T Xor(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)((byte)(object)left ^ (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)((sbyte)(object)left ^ (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)((ushort)(object)left ^ (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)((short)(object)left ^ (short)(object)right);
+            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left ^ (byte)(object)right);
+            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left ^ (sbyte)(object)right);
+            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left ^ (ushort)(object)right);
+            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left ^ (short)(object)right);
             if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left ^ (uint)(object)right);
             if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left ^ (int)(object)right);
             if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left ^ (ulong)(object)right);
