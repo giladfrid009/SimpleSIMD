@@ -20,7 +20,7 @@ namespace SimpleSimd
 
             for (; i < array.Length; i++)
             {
-                if (MathOps<T>.Equals(array[i], value))
+                if (MathOps<T>.Equal(array[i], value))
                 {
                     return true;
                 }

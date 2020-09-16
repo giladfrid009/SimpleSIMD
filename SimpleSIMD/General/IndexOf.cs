@@ -17,7 +17,7 @@ namespace SimpleSimd
                 {
                     for (int j = i; j < i + vLen; j++)
                     {
-                        if (MathOps<T>.Equals(array[j], value))
+                        if (MathOps<T>.Equal(array[j], value))
                         {
                             return j;
                         }
@@ -27,7 +27,7 @@ namespace SimpleSimd
 
             for (; i < array.Length; i++)
             {
-                if (MathOps<T>.Equals(array[i], value))
+                if (MathOps<T>.Equal(array[i], value))
                 {
                     return i;
                 }

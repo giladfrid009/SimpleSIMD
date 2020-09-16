@@ -4,7 +4,7 @@ namespace SimpleSimd
 {
     public static partial class ArrayOps<T>
     {
-        public static bool Equals(T[] left, T right)
+        public static bool Equal(T[] left, T right)
         {
             var vVal = new Vector<T>(right);
             int vLen = Vector<T>.Count;
@@ -20,7 +20,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                if (MathOps<T>.Equals(left[i], right) == false)
+                if (MathOps<T>.Equal(left[i], right) == false)
                 {
                     return false;
                 }
@@ -29,7 +29,7 @@ namespace SimpleSimd
             return true;
         }
 
-        public static bool Equals(T[] left, T[] right)
+        public static bool Equal(T[] left, T[] right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -54,7 +54,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                if (MathOps<T>.Equals(left[i], right[i]) == false)
+                if (MathOps<T>.Equal(left[i], right[i]) == false)
                 {
                     return false;
                 }

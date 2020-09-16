@@ -186,7 +186,7 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
-        public static bool Equals(T left, T right)
+        public static bool Equal(T left, T right)
         {
             if (typeof(T) == typeof(byte)) return (byte)(object)left == (byte)(object)right;
             if (typeof(T) == typeof(sbyte)) return (sbyte)(object)left == (sbyte)(object)right;
