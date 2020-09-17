@@ -8,6 +8,7 @@ The concurrency is performed on a single thread, while utilizing the full size o
 This approach could be combined with standard multithreading for massive performence boosts in numeric computations.
 
 ## Goals And Purpose
+* Single API to unify SIMD for supported types
 * Gain performence boost for mathematical computations using a simple API
 * Simplifies SIMD usage, and to make it easy to integrate it into an already existing solutions
 * Helps generalize several methemathical functions for supported types
@@ -57,7 +58,9 @@ This approach could be combined with standard multithreading for massive perform
 * Methods are not lazily evaluated as IEnumerable
 * Benefitial only for hardware which supports SIMD instructions
 * Could perform worse than simple for loop approach, for very small arrays
-* Only work for collections of type ```T[] where T : unmanaged```
+* Only work for collections of type:
+  * ```T[] where T : unmanaged```
+  * ```Span<T> where T : unmanaged```
 * Supports only **Primitive Numeric Types** as array elements. Supported types are:
   * ```byte, sbyte```
   * ```short, ushort```
