@@ -9,7 +9,8 @@ namespace SimpleSimd
         {
             if (result.Length != array.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(result));
+                Exceptions.ArgOutOfRange(nameof(result));
+                return;
             }
 
             var vTrue = new Vector<T>(trueValue);
@@ -42,7 +43,8 @@ namespace SimpleSimd
         {
             if (result.Length != array.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(result));
+                Exceptions.ArgOutOfRange(nameof(result));
+                return;
             }
 
             int vLen = Vector<T>.Count;

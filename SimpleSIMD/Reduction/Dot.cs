@@ -1,5 +1,4 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace SimpleSimd
 {
@@ -32,7 +31,8 @@ namespace SimpleSimd
         {
             if (right.Length != left.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(right));
+                Exceptions.ArgOutOfRange(nameof(right));
+                return default;
             }
 
             Vector<T> vDot = Vector<T>.Zero;

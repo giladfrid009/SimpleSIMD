@@ -1,5 +1,4 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace SimpleSimd
 {
@@ -9,7 +8,8 @@ namespace SimpleSimd
         {
             if (result.Length != left.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(result));
+                Exceptions.ArgOutOfRange(nameof(result));
+                return;
             }
 
             var vVal = new Vector<T>(right);
@@ -31,12 +31,14 @@ namespace SimpleSimd
         {
             if (right.Length != left.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(right));
+                Exceptions.ArgOutOfRange(nameof(right));
+                return;
             }
 
             if (result.Length != left.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(result));
+                Exceptions.ArgOutOfRange(nameof(result));
+                return;
             }
 
             int vLen = Vector<T>.Count;

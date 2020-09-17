@@ -9,12 +9,14 @@ namespace SimpleSimd
         {
             if (result.Length != array.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(result));
+                Exceptions.ArgOutOfRange(nameof(result));
+                return;
             }       
 
             if (Vector<U>.Count != Vector<T>.Count)
             {
-                throw new InvalidCastException(typeof(U).Name);
+                Exceptions.InvalidCast(typeof(U).Name);
+                return;
             }
 
             int vLen = Vector<T>.Count;
@@ -35,12 +37,14 @@ namespace SimpleSimd
         {
             if (result.Length != array.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(result));
+                Exceptions.ArgOutOfRange(nameof(result));
+                return;
             }
 
             if (Vector<U>.Count != Vector<T>.Count)
             {
-                throw new InvalidCastException(typeof(U).Name);
+                Exceptions.InvalidCast(typeof(U).Name);
+                return;
             }
 
             int vLen = Vector<T>.Count;

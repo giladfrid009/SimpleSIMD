@@ -9,17 +9,20 @@ namespace SimpleSimd
         {
             if (right.Length != left.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(right));
+                Exceptions.ArgOutOfRange(nameof(right));
+                return;
             }
 
             if (result.Length != left.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(result));
+                Exceptions.ArgOutOfRange(nameof(result));
+                return;
             }
 
             if (Vector<U>.Count != Vector<T>.Count)
             {
-                throw new InvalidCastException(typeof(U).Name);
+                Exceptions.InvalidCast(typeof(U).Name);
+                return;
             }
 
             int vLen = Vector<T>.Count;

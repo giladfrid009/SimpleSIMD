@@ -10,6 +10,12 @@ namespace SimpleSimd
             int vLen = Vector<T>.Count;
             int i;
 
+            if (result.Length != array.Length)
+            {
+                Exceptions.ArgOutOfRange(nameof(result));
+                return;
+            }
+
             for (i = 0; i <= array.Length - vLen; i += vLen)
             {
                 Vector.SquareRoot(new Vector<T>(array, i)).CopyTo(result, i);

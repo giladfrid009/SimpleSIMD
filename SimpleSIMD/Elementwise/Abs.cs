@@ -1,5 +1,4 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace SimpleSimd
 {
@@ -9,7 +8,8 @@ namespace SimpleSimd
         {
             if (result.Length != array.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(result));
+                Exceptions.ArgOutOfRange(nameof(result));
+                return;
             }
 
             int vLen = Vector<T>.Count;

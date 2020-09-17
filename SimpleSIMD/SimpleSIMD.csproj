@@ -11,8 +11,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Easy to use SIMD accelerated array extensions</Description>
     <Copyright>Copyright 2020 (c) Gilad Freidkin, All rights reserved</Copyright>
-    <Version>1.8.1</Version>
-    <PackageReleaseNotes>Bugfix for ArrayOps.Greater and ArrayOps.Less</PackageReleaseNotes>
+    <Version>1.8.2</Version>
+    <PackageReleaseNotes>Minor performance improvments</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
