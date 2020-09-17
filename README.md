@@ -15,7 +15,7 @@ This approach could be combined with standard multithreading for massive perform
 
 ## Available Functions
 #### Comparison:
-* Equals
+* Equal
 * Greater
 * GreaterOrEqual
 * Less
