@@ -25,13 +25,18 @@ namespace SimpleSimd
                 return;
             }
 
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= left.Length - vLen; i += vLen)
+            var vsLeft = AsVectors(left);
+            var vsRight = AsVectors(right);
+            var vsResult = AsVectors(result);
+
+            for (i = 0; i < vsLeft.Length; i++)
             {
-                vCombiner(new Vector<T>(left, i), new Vector<T>(right, i)).CopyTo(result, i);
+                vsResult[i] = vCombiner(vsLeft[i], vsRight[i]);
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < left.Length; i++)
             {

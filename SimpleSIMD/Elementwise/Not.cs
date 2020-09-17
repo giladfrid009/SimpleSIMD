@@ -12,13 +12,17 @@ namespace SimpleSimd
                 return;
             }
 
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+            var vsResult = AsVectors(result);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                (~new Vector<T>(array, i)).CopyTo(result, i);
+                vsResult[i] = ~vsArray[i];
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {

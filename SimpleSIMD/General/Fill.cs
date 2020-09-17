@@ -7,14 +7,17 @@ namespace SimpleSimd
     {
         public static void Fill(T[] array, T value)
         {
-            var vVal = new Vector<T>(value);
-            int vLen = Vector<T>.Count;
+            var vValue = new Vector<T>(value);
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                vVal.CopyTo(array, i);
+                vsArray[i] = vValue;
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {
@@ -24,13 +27,16 @@ namespace SimpleSimd
 
         public static void Fill(T[] array, Func<Vector<T>> vFunc, Func<T> func)
         {
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                vFunc().CopyTo(array, i);
+                vsArray[i] = vFunc();
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {

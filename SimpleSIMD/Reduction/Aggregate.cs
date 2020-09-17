@@ -9,18 +9,21 @@ namespace SimpleSimd
         {
             var vRes = new Vector<T>(seed);
             T res = seed;
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                vRes = vAccumulator(vRes, new Vector<T>(array[i]));
+                vRes = vAccumulator(vRes, vsArray[i]);
             }
 
-            for (int j = 0; j < vLen; j++)
+            for (int j = 0; j < Vector<T>.Count; j++)
             {
                 res = accumulator(res, vRes[j]);
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {

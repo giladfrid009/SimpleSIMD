@@ -9,15 +9,18 @@ namespace SimpleSimd
         {
             Vector<T> vSum = Vector<T>.Zero;
             T sum;
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                vSum += new Vector<T>(array, i);
+                vSum += vsArray[i];
             }
 
             sum = Vector.Dot(vSum, Vector<T>.One);
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {
@@ -31,15 +34,18 @@ namespace SimpleSimd
         {
             Vector<T> vSum = Vector<T>.Zero;
             T sum;
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                vSum += vSelector(new Vector<T>(array, i));
+                vSum += vSelector(vsArray[i]);
             }
 
             sum = Vector.Dot(vSum, Vector<T>.One);
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {
@@ -53,15 +59,18 @@ namespace SimpleSimd
         {
             Vector<T> vSum = Vector<T>.Zero;
             T sum;
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                vSum += vSelector(new Vector<T>(array, i), i);
+                vSum += vSelector(vsArray[i], i * Vector<T>.Count);
             }
 
             sum = Vector.Dot(vSum, Vector<T>.One);
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {

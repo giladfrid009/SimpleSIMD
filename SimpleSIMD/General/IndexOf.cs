@@ -7,23 +7,28 @@ namespace SimpleSimd
     {
         public static int IndexOf(T[] array, T value)
         {
-            var vVal = new Vector<T>(value);
-            int vLen = Vector<T>.Count;
+            var vValue = new Vector<T>(value);
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                if (Vector.EqualsAny(new Vector<T>(array, i), vVal))
+                if (Vector.EqualsAny(vsArray[i], vValue))
                 {
-                    for (int j = i; j < i + vLen; j++)
+                    var vec = vsArray[i];
+
+                    for (int j = 0; j < Vector<T>.Count; j++)
                     {
-                        if (MathOps<T>.Equal(array[j], value))
+                        if (MathOps<T>.Equal(vec[j], value))
                         {
-                            return j;
+                            return i * Vector<T>.Count + j;
                         }
                     }
                 }
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {
@@ -38,22 +43,27 @@ namespace SimpleSimd
         
         public static int IndexOf(T[] array, Func<Vector<T>, bool> vPredicate, Func<T, bool> predicate)
         {
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                if (vPredicate(new Vector<T>(array, i)))
+                if (vPredicate(vsArray[i]))
                 {
-                    for (int j = i; j < i + vLen; j++)
+                    var vec = vsArray[i];
+
+                    for (int j = 0; j < Vector<T>.Count; j++)
                     {
-                        if (predicate(array[j]))
+                        if (predicate(vec[j]))
                         {
-                            return j;
+                            return i * Vector<T>.Count + j;
                         }
                     }
                 }
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {

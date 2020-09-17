@@ -15,13 +15,17 @@ namespace SimpleSimd
 
             var vTrue = new Vector<T>(trueValue);
             var vFalse = new Vector<T>(falseValue);
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+            var vsResult = AsVectors(result);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                Vector.ConditionalSelect(vCondition(new Vector<T>(array, i)), vTrue, vFalse).CopyTo(result, i);
+                vsResult[i] = Vector.ConditionalSelect(vCondition(vsArray[i]), vTrue, vFalse);
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {
@@ -47,19 +51,21 @@ namespace SimpleSimd
                 return;
             }
 
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+            var vsResult = AsVectors(result);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                var vec = new Vector<T>(array, i);
-                Vector.ConditionalSelect(vCondition(vec), vTrueSelector(vec), vFalseSelector(vec)).CopyTo(result, i);
+                vsResult[i] = Vector.ConditionalSelect(vCondition(vsArray[i]), vTrueSelector(vsArray[i]), vFalseSelector(vsArray[i]));
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {
-                T val = array[i];
-                result[i] = condition(val) ? trueSelector(val) : falseSelector(val);
+                result[i] = condition(array[i]) ? trueSelector(array[i]) : falseSelector(array[i]);
             }
         }
 

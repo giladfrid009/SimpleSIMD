@@ -6,17 +6,20 @@ namespace SimpleSimd
     {
         public static bool Equal(T[] left, T right)
         {
-            var vVal = new Vector<T>(right);
-            int vLen = Vector<T>.Count;
+            var vRight = new Vector<T>(right);
             int i;
 
-            for (i = 0; i < left.Length - vLen; i += vLen)
+            var vsLeft = AsVectors(left);
+
+            for (i = 0; i < vsLeft.Length; i++)
             {
-                if (new Vector<T>(left, i) != vVal)
+                if (vsLeft[i].Equals(vRight) == false)
                 {
                     return false;
                 }
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < left.Length; i++)
             {
@@ -41,16 +44,20 @@ namespace SimpleSimd
                 return false;
             }
 
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i < left.Length - vLen; i += vLen)
+            var vsLeft = AsVectors(left);
+            var vsRight = AsVectors(right);
+
+            for (i = 0; i < vsLeft.Length; i++)
             {
-                if (new Vector<T>(left, i) != new Vector<T>(right, i))
+                if (vsLeft[i].Equals(vsRight[i]) == false)
                 {
                     return false;
                 }
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < left.Length; i++)
             {

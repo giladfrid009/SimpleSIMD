@@ -7,13 +7,16 @@ namespace SimpleSimd
     {
         public static void Foreach(T[] array, Action<Vector<T>> vAction, Action<T> action)
         {
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                vAction(new Vector<T>(array, i));
+                vAction(vsArray[i]);
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {
@@ -23,13 +26,16 @@ namespace SimpleSimd
 
         public static void Foreach(T[] array, Action<Vector<T>, int> vAction, Action<T, int> action)
         {
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                vAction(new Vector<T>(array, i), i);
+                vAction(vsArray[i], i * Vector<T>.Count);
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {

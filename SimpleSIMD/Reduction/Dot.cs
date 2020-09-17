@@ -6,18 +6,21 @@ namespace SimpleSimd
     {
         public static T Dot(T[] left, T right)
         {
-            var vVal = new Vector<T>(right);
+            var vRight = new Vector<T>(right);
             Vector<T> vDot = Vector<T>.Zero;
             T dot;
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= left.Length - vLen; i += vLen)
+            var vsLeft = AsVectors(left);
+
+            for (i = 0; i < vsLeft.Length; i++)
             {
-                vDot += new Vector<T>(left, i) * vVal;
+                vDot += vsLeft[i] * vRight;
             }
 
             dot = Vector.Dot(vDot, Vector<T>.One);
+
+            i *= Vector<T>.Count;
 
             for (; i < left.Length; i++)
             {
@@ -37,15 +40,19 @@ namespace SimpleSimd
 
             Vector<T> vDot = Vector<T>.Zero;
             T dot;
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= left.Length - vLen; i += vLen)
+            var vsLeft = AsVectors(left);
+            var vsRight = AsVectors(right);
+
+            for (i = 0; i < vsLeft.Length; i++)
             {
-                vDot += new Vector<T>(left, i) * new Vector<T>(right, i);
+                vDot += vsLeft[i] * vsRight[i];
             }
 
             dot = Vector.Dot(vDot, Vector<T>.One);
+
+            i *= Vector<T>.Count;
 
             for (; i < left.Length; i++)
             {

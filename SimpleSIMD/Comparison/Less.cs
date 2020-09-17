@@ -6,18 +6,21 @@ namespace SimpleSimd
     {
         public static bool Less(T[] left, T right)
         {
-            var vVal = new Vector<T>(right);
-            int vLen = Vector<T>.Count;
+            var vRight = new Vector<T>(right);
             int i;
 
-            for (i = 0; i <= left.Length - vLen; i += vLen)
+            var vsLeft = AsVectors(left);
+
+            for (i = 0; i < vsLeft.Length; i++)
             {
-                if (Vector.LessThanAll(new Vector<T>(left, i), vVal) == false)
+                if (Vector.LessThanAll(vsLeft[i], vRight) == false)
                 {
                     return false;
                 }
             }
 
+            i *= Vector<T>.Count;
+            
             for (; i < left.Length; i++)
             {
                 if (MathOps<T>.Less(left[i], right) == false)
@@ -37,16 +40,20 @@ namespace SimpleSimd
                 return default;
             }
 
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= left.Length - vLen; i += vLen)
+            var vsLeft = AsVectors(left);
+            var vsRight = AsVectors(right);
+
+            for (i = 0; i < vsLeft.Length; i++)
             {
-                if (Vector.LessThanAll(new Vector<T>(left, i), new Vector<T>(right, i)) == false)
+                if (Vector.LessThanAll(vsLeft[i], vsRight[i]) == false)
                 {
                     return false;
                 }
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < left.Length; i++)
             {

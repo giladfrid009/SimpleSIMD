@@ -1,5 +1,4 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace SimpleSimd
 {
@@ -13,14 +12,18 @@ namespace SimpleSimd
                 return;
             }
 
-            var vVal = new Vector<T>(right);
-            int vLen = Vector<T>.Count;
+            var vRight = new Vector<T>(right);
             int i;
 
-            for (i = 0; i <= left.Length - vLen; i += vLen)
+            var vsLeft = AsVectors(left);
+            var vsResult = AsVectors(result);
+
+            for (i = 0; i < vsLeft.Length; i++)
             {
-                Vector.Xor(new Vector<T>(left, i), vVal).CopyTo(result, i);
+                vsResult[i] = Vector.Xor(vsLeft[i], vRight);
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < left.Length; i++)
             {
@@ -42,13 +45,18 @@ namespace SimpleSimd
                 return;
             }
 
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= left.Length - vLen; i += vLen)
+            var vsLeft = AsVectors(left);
+            var vsRight = AsVectors(right);
+            var vsResult = AsVectors(result);
+
+            for (i = 0; i < vsLeft.Length; i++)
             {
-                Vector.Xor(new Vector<T>(left, i), new Vector<T>(right, i)).CopyTo(result, i);
+                vsResult[i] = Vector.Xor(vsLeft[i], vsRight[i]);
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < left.Length; i++)
             {

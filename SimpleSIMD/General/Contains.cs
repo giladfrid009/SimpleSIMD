@@ -6,17 +6,20 @@ namespace SimpleSimd
     {
         public static bool Contains(T[] array, T value)
         {
-            var vVal = new Vector<T>(value);
-            int vLen = Vector<T>.Count;
+            Vector<T> vValue = new Vector<T>(value);
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                if (Vector.EqualsAny(new Vector<T>(array, i), vVal))
+                if (Vector.EqualsAny(vsArray[i], vValue))
                 {
                     return true;
                 }
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {

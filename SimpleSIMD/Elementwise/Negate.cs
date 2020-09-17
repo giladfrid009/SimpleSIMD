@@ -6,19 +6,23 @@ namespace SimpleSimd
     {
         public static void Negate(T[] array, T[] result)
         {
-            int vLen = Vector<T>.Count;
-            int i;
-
             if (result.Length != array.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
                 return;
             }
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            int i;
+
+            var vsArray = AsVectors(array);
+            var vsResult = AsVectors(result);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                Vector.Negate(new Vector<T>(array, i)).CopyTo(result, i);
+                vsResult[i] = Vector.Negate(vsArray[i]);
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {

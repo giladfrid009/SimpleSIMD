@@ -9,18 +9,21 @@ namespace SimpleSimd
         {
             var vMax = new Vector<T>(MathOps<T>.MinValue);
             T max = MathOps<T>.MinValue;
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                vMax = Vector.Max(vMax, new Vector<T>(array, i));
+                vMax = Vector.Max(vMax, vsArray[i]);
             }
 
-            for (int j = 0; j < vLen; ++j)
+            for (int j = 0; j < Vector<T>.Count; ++j)
             {
                 max = MathOps<T>.Max(max, vMax[j]);
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {
@@ -34,18 +37,21 @@ namespace SimpleSimd
         {
             var vMax = new Vector<T>(MathOps<T>.MinValue);
             T max = MathOps<T>.MinValue;
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                vMax = Vector.Max(vMax, vSelector(new Vector<T>(array, i)));
+                vMax = Vector.Max(vMax, vSelector(vsArray[i]));
             }
 
-            for (int j = 0; j < vLen; ++j)
+            for (int j = 0; j < Vector<T>.Count; ++j)
             {
                 max = MathOps<T>.Max(max, vMax[j]);
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {

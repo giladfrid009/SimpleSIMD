@@ -7,16 +7,19 @@ namespace SimpleSimd
     {
         public static bool All(T[] array, Func<Vector<T>, bool> vPredicate, Func<T, bool> predicate)
         {
-            int vLen = Vector<T>.Count;
             int i;
 
-            for (i = 0; i <= array.Length - vLen; i += vLen)
+            var vsArray = AsVectors(array);
+
+            for (i = 0; i < vsArray.Length; i++)
             {
-                if (vPredicate(new Vector<T>(array, i)) == false)
+                if (vPredicate(vsArray[i]) == false)
                 {
                     return false;
                 }
             }
+
+            i *= Vector<T>.Count;
 
             for (; i < array.Length; i++)
             {
