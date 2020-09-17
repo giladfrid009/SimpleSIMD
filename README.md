@@ -58,7 +58,7 @@ This approach could be combined with standard multithreading for massive perform
 * Methods are not lazily evaluated as IEnumerable
 * Benefitial only for hardware which supports SIMD instructions
 * Could perform worse than simple for loop approach, for very small arrays
-* Only work for collections of type:
+* Supported collection types:
   * ```T[] where T : unmanaged```
   * ```Span<T> where T : unmanaged```
 * Supports only **Primitive Numeric Types** as array elements. Supported types are:
