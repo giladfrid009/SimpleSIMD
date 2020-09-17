@@ -49,7 +49,6 @@ This approach could be combined with standard multithreading for massive perform
 * All
 * Any
 * Contains
-* Copy
 * IndexOf
 * Fill
 * Foreach
