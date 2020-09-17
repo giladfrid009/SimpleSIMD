@@ -8,7 +8,7 @@ The concurrency is performed on a single thread, while utilizing the full size o
 This approach could be combined with standard multithreading for massive performence boosts in numeric computations.
 
 ## Goals And Purpose
-* Single API to unify SIMD for supported types
+* Single API to unify SIMD for **All supported types**
 * Gain performence boost for mathematical computations using a simple API
 * Simplifies SIMD usage, and to make it easy to integrate it into an already existing solutions
 * Helps generalize several methemathical functions for supported types
