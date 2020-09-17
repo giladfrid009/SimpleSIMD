@@ -3,43 +3,43 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class ArrayOps<T>
+    public static partial class SimdOps<T>
     {
-        public static void Foreach(T[] array, Action<Vector<T>> vAction, Action<T> action)
+        public static void Foreach(in Span<T> span, Action<Vector<T>> vAction, Action<T> action)
         {
             int i;
 
-            var vsArray = AsVectors(array);
+            var vsSpan = AsVectors(span);
 
-            for (i = 0; i < vsArray.Length; i++)
+            for (i = 0; i < vsSpan.Length; i++)
             {
-                vAction(vsArray[i]);
+                vAction(vsSpan[i]);
             }
 
             i *= Vector<T>.Count;
 
-            for (; i < array.Length; i++)
+            for (; i < span.Length; i++)
             {
-                action(array[i]);
+                action(span[i]);
             }
         }
 
-        public static void Foreach(T[] array, Action<Vector<T>, int> vAction, Action<T, int> action)
+        public static void Foreach(in Span<T> span, Action<Vector<T>, int> vAction, Action<T, int> action)
         {
             int i;
 
-            var vsArray = AsVectors(array);
+            var vsSpan = AsVectors(span);
 
-            for (i = 0; i < vsArray.Length; i++)
+            for (i = 0; i < vsSpan.Length; i++)
             {
-                vAction(vsArray[i], i * Vector<T>.Count);
+                vAction(vsSpan[i], i * Vector<T>.Count);
             }
 
             i *= Vector<T>.Count;
 
-            for (; i < array.Length; i++)
+            for (; i < span.Length; i++)
             {
-                action(array[i], i);
+                action(span[i], i);
             }
         }
     }

@@ -1,19 +1,20 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class ArrayOps<T>
+    public static partial class SimdOps<T>
     {
-        public static bool Contains(T[] array, T value)
+        public static bool Contains(in Span<T> span, T value)
         {
             Vector<T> vValue = new Vector<T>(value);
             int i;
 
-            var vsArray = AsVectors(array);
+            var vsSpan = AsVectors(span);
 
-            for (i = 0; i < vsArray.Length; i++)
+            for (i = 0; i < vsSpan.Length; i++)
             {
-                if (Vector.EqualsAny(vsArray[i], vValue))
+                if (Vector.EqualsAny(vsSpan[i], vValue))
                 {
                     return true;
                 }
@@ -21,9 +22,9 @@ namespace SimpleSimd
 
             i *= Vector<T>.Count;
 
-            for (; i < array.Length; i++)
+            for (; i < span.Length; i++)
             {
-                if (MathOps<T>.Equal(array[i], value))
+                if (NumOps<T>.Equal(span[i], value))
                 {
                     return true;
                 }

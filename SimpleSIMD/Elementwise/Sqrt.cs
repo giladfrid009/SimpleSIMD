@@ -3,11 +3,11 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class ArrayOps<T>
+    public static partial class SimdOps<T>
     {
-        public static void Sqrt(T[] array, T[] result)
+        public static void Sqrt(in Span<T> span, in Span<T> result)
         {
-            if (result.Length != array.Length)
+            if (result.Length != span.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
                 return;
@@ -15,19 +15,19 @@ namespace SimpleSimd
 
             int i;
 
-            var vsArray = AsVectors(array);
+            var vsSpan = AsVectors(span);
             var vsResult = AsVectors(result);
 
-            for (i = 0; i < vsArray.Length; i++)
+            for (i = 0; i < vsSpan.Length; i++)
             {
-                vsResult[i] = Vector.SquareRoot(vsArray[i]);
+                vsResult[i] = Vector.SquareRoot(vsSpan[i]);
             }
 
             i *= Vector<T>.Count;
 
-            for (; i < array.Length; i++)
+            for (; i < span.Length; i++)
             {
-                result[i] = MathOps<double, T>.Convert(Math.Sqrt(MathOps<T, double>.Convert(array[i])));
+                result[i] = NumOps<double, T>.Convert(Math.Sqrt(NumOps<T, double>.Convert(span[i])));
             }
         }
 

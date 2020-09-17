@@ -1,12 +1,13 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class ArrayOps<T>
+    public static partial class SimdOps<T>
     {
-        public static void Not(T[] array, T[] result)
+        public static void Not(in Span<T> span, in Span<T> result)
         {
-            if (result.Length != array.Length)
+            if (result.Length != span.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
                 return;
@@ -14,19 +15,19 @@ namespace SimpleSimd
 
             int i;
 
-            var vsArray = AsVectors(array);
+            var vsSpan = AsVectors(span);
             var vsResult = AsVectors(result);
 
-            for (i = 0; i < vsArray.Length; i++)
+            for (i = 0; i < vsSpan.Length; i++)
             {
-                vsResult[i] = ~vsArray[i];
+                vsResult[i] = ~vsSpan[i];
             }
 
             i *= Vector<T>.Count;
 
-            for (; i < array.Length; i++)
+            for (; i < span.Length; i++)
             {
-                result[i] = MathOps<T>.Not(array[i]);
+                result[i] = NumOps<T>.Not(span[i]);
             }
         }
 

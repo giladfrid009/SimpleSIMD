@@ -1,10 +1,11 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class ArrayOps<T>
+    public static partial class SimdOps<T>
     {
-        public static T Dot(T[] left, T right)
+        public static T Dot(in Span<T> left, T right)
         {
             var vRight = new Vector<T>(right);
             Vector<T> vDot = Vector<T>.Zero;
@@ -24,13 +25,13 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                dot = MathOps<T>.Add(dot, MathOps<T>.Multiply(left[i], right));
+                dot = NumOps<T>.Add(dot, NumOps<T>.Multiply(left[i], right));
             }
 
             return dot;
         }
 
-        public static T Dot(T[] left, T[] right)
+        public static T Dot(in Span<T> left, in Span<T> right)
         {
             if (right.Length != left.Length)
             {
@@ -56,7 +57,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                dot = MathOps<T>.Add(dot, MathOps<T>.Multiply(left[i], right[i]));
+                dot = NumOps<T>.Add(dot, NumOps<T>.Multiply(left[i], right[i]));
             }
 
             return dot;

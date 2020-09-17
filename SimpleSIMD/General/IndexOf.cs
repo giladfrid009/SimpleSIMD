@@ -3,24 +3,24 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class ArrayOps<T>
+    public static partial class SimdOps<T>
     {
-        public static int IndexOf(T[] array, T value)
+        public static int IndexOf(in Span<T> span, T value)
         {
             var vValue = new Vector<T>(value);
             int i;
 
-            var vsArray = AsVectors(array);
+            var vsSpan = AsVectors(span);
 
-            for (i = 0; i < vsArray.Length; i++)
+            for (i = 0; i < vsSpan.Length; i++)
             {
-                if (Vector.EqualsAny(vsArray[i], vValue))
+                if (Vector.EqualsAny(vsSpan[i], vValue))
                 {
-                    var vec = vsArray[i];
+                    var vec = vsSpan[i];
 
                     for (int j = 0; j < Vector<T>.Count; j++)
                     {
-                        if (MathOps<T>.Equal(vec[j], value))
+                        if (NumOps<T>.Equal(vec[j], value))
                         {
                             return i * Vector<T>.Count + j;
                         }
@@ -30,9 +30,9 @@ namespace SimpleSimd
 
             i *= Vector<T>.Count;
 
-            for (; i < array.Length; i++)
+            for (; i < span.Length; i++)
             {
-                if (MathOps<T>.Equal(array[i], value))
+                if (NumOps<T>.Equal(span[i], value))
                 {
                     return i;
                 }
@@ -41,17 +41,17 @@ namespace SimpleSimd
             return -1;
         }
         
-        public static int IndexOf(T[] array, Func<Vector<T>, bool> vPredicate, Func<T, bool> predicate)
+        public static int IndexOf(in Span<T> span, Func<Vector<T>, bool> vPredicate, Func<T, bool> predicate)
         {
             int i;
 
-            var vsArray = AsVectors(array);
+            var vsSpan = AsVectors(span);
 
-            for (i = 0; i < vsArray.Length; i++)
+            for (i = 0; i < vsSpan.Length; i++)
             {
-                if (vPredicate(vsArray[i]))
+                if (vPredicate(vsSpan[i]))
                 {
-                    var vec = vsArray[i];
+                    var vec = vsSpan[i];
 
                     for (int j = 0; j < Vector<T>.Count; j++)
                     {
@@ -65,9 +65,9 @@ namespace SimpleSimd
 
             i *= Vector<T>.Count;
 
-            for (; i < array.Length; i++)
+            for (; i < span.Length; i++)
             {
-                if (predicate(array[i]))
+                if (predicate(span[i]))
                 {
                     return i;
                 }

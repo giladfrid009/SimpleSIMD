@@ -3,11 +3,11 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class ArrayOps<T>
+    public static partial class SimdOps<T>
     {
-        public static void Select<U>(T[] array, Func<Vector<T>, Vector<U>> vSelector, Func<T, U> selector, U[] result) where U : unmanaged
+        public static void Select<U>(in Span<T> span, Func<Vector<T>, Vector<U>> vSelector, Func<T, U> selector, in Span<U> result) where U : unmanaged
         {
-            if (result.Length != array.Length)
+            if (result.Length != span.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
                 return;
@@ -21,25 +21,25 @@ namespace SimpleSimd
 
             int i;
 
-            var vsArray = AsVectors(array);
+            var vsSpan = AsVectors(span);
             var vsResult = AsVectors(result);
 
-            for (i = 0; i < vsArray.Length; i++)
+            for (i = 0; i < vsSpan.Length; i++)
             {
-                vsResult[i] = vSelector(vsArray[i]);
+                vsResult[i] = vSelector(vsSpan[i]);
             }
 
             i *= Vector<T>.Count;
 
-            for (; i < array.Length; i++)
+            for (; i < span.Length; i++)
             {
-                result[i] = selector(array[i]);
+                result[i] = selector(span[i]);
             }
         }
 
-        public static void Select<U>(T[] array, Func<Vector<T>, int, Vector<U>> vSelector, Func<T, int, U> selector, U[] result) where U : unmanaged
+        public static void Select<U>(in Span<T> span, Func<Vector<T>, int, Vector<U>> vSelector, Func<T, int, U> selector, in Span<U> result) where U : unmanaged
         {
-            if (result.Length != array.Length)
+            if (result.Length != span.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
                 return;
@@ -53,19 +53,19 @@ namespace SimpleSimd
 
             int i;
 
-            var vsArray = AsVectors(array);
+            var vsSpan = AsVectors(span);
             var vsResult = AsVectors(result);
 
-            for (i = 0; i < vsArray.Length; i++)
+            for (i = 0; i < vsSpan.Length; i++)
             {
-                vsResult[i] = vSelector(vsArray[i], i * Vector<T>.Count);
+                vsResult[i] = vSelector(vsSpan[i], i * Vector<T>.Count);
             }
 
             i *= Vector<T>.Count;
 
-            for (; i < array.Length; i++)
+            for (; i < span.Length; i++)
             {
-                result[i] = selector(array[i], i);
+                result[i] = selector(span[i], i);
             }
         }
 

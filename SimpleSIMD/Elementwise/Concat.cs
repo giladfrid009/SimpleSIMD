@@ -3,9 +3,9 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class ArrayOps<T>
+    public static partial class SimdOps<T>
     {
-        public static void Concat<U>(T[] left, T[] right, Func<Vector<T>, Vector<T>, Vector<U>> vCombiner, Func<T, T, U> combiner, U[] result) where U : unmanaged
+        public static void Concat<U>(in Span<T> left, in Span<T> right, Func<Vector<T>, Vector<T>, Vector<U>> vCombiner, Func<T, T, U> combiner, in Span<U> result) where U : unmanaged
         {
             if (right.Length != left.Length)
             {

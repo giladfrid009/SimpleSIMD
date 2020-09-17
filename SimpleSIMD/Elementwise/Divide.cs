@@ -1,10 +1,11 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class ArrayOps<T>
+    public static partial class SimdOps<T>
     {
-        public static void Divide(T[] left, T right, T[] result)
+        public static void Divide(in Span<T> left, T right, in Span<T> result)
         {
             if (result.Length != left.Length)
             {
@@ -27,11 +28,11 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                result[i] = MathOps<T>.Divide(left[i], right);
+                result[i] = NumOps<T>.Divide(left[i], right);
             }
         }
 
-        public static void Divide(T left, T[] right, T[] result)
+        public static void Divide(T left, in Span<T> right, in Span<T> result)
         {
             if (result.Length != right.Length)
             {
@@ -54,11 +55,11 @@ namespace SimpleSimd
 
             for (; i < right.Length; i++)
             {
-                result[i] = MathOps<T>.Divide(left, right[i]);
+                result[i] = NumOps<T>.Divide(left, right[i]);
             }
         }
 
-        public static void Divide(T[] left, T[] right, T[] result)
+        public static void Divide(in Span<T> left, in Span<T> right, in Span<T> result)
         {
             if (right.Length != left.Length)
             {
@@ -87,7 +88,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                result[i] = MathOps<T>.Divide(left[i], right[i]);
+                result[i] = NumOps<T>.Divide(left[i], right[i]);
             }
         }
 

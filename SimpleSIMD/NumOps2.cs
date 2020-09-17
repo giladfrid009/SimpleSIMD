@@ -8,11 +8,11 @@ namespace SimpleSimd
     /// </summary>
     /// <typeparam name="TIn">Input numeric type</typeparam>
     /// <typeparam name="TOut">Output numeric type</typeparam>
-    public static class MathOps<TIn, TOut> where TIn : unmanaged where TOut : unmanaged
+    public static class NumOps<TIn, TOut> where TIn : unmanaged where TOut : unmanaged
     {
         private static readonly Func<TIn, TOut> convFunc;
 
-        static MathOps()
+        static NumOps()
         {
             ParameterExpression X = Expression.Parameter(typeof(TIn));
             convFunc = Expression.Lambda<Func<TIn, TOut>>(Expression.Convert(X, typeof(TOut)), X).Compile();

@@ -3,17 +3,17 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class ArrayOps<T>
+    public static partial class SimdOps<T>
     {
-        public static bool All(T[] array, Func<Vector<T>, bool> vPredicate, Func<T, bool> predicate)
+        public static bool All(in Span<T> span, Func<Vector<T>, bool> vPredicate, Func<T, bool> predicate)
         {
             int i;
 
-            var vsArray = AsVectors(array);
+            var vsSpan = AsVectors(span);
 
-            for (i = 0; i < vsArray.Length; i++)
+            for (i = 0; i < vsSpan.Length; i++)
             {
-                if (vPredicate(vsArray[i]) == false)
+                if (vPredicate(vsSpan[i]) == false)
                 {
                     return false;
                 }
@@ -21,9 +21,9 @@ namespace SimpleSimd
 
             i *= Vector<T>.Count;
 
-            for (; i < array.Length; i++)
+            for (; i < span.Length; i++)
             {
-                if (predicate(array[i]) == false)
+                if (predicate(span[i]) == false)
                 {
                     return false;
                 }

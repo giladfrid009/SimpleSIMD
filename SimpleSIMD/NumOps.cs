@@ -8,7 +8,7 @@ namespace SimpleSimd
     /// Generic high performence numeric operations.
     /// </summary>
     /// <typeparam name="T">Numeric type</typeparam>
-    public static class MathOps<T> where T : unmanaged
+    public static class NumOps<T> where T : unmanaged
     {
         public static T Zero => default;
 

@@ -1,10 +1,11 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class ArrayOps<T>
+    public static partial class SimdOps<T>
     {
-        public static void And(T[] left, T right, T[] result)
+        public static void And(in Span<T> left, T right, in Span<T> result)
         {
             if (result.Length != left.Length)
             {
@@ -27,11 +28,11 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                result[i] = MathOps<T>.And(left[i], right);
+                result[i] = NumOps<T>.And(left[i], right);
             }
         }
 
-        public static void And(T[] left, T[] right, T[] result)
+        public static void And(in Span<T> left, in Span<T> right, in Span<T> result)
         {
             if (right.Length != left.Length)
             {
@@ -60,7 +61,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                result[i] = MathOps<T>.And(left[i], right[i]);
+                result[i] = NumOps<T>.And(left[i], right[i]);
             }
         }
 

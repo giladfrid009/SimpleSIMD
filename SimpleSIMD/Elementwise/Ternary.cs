@@ -3,11 +3,11 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-    public static partial class ArrayOps<T>
+    public static partial class SimdOps<T>
     {
-        public static void Ternary(T[] array, Func<Vector<T>, Vector<T>> vCondition, Func<T, bool> condition, T trueValue, T falseValue, T[] result)
+        public static void Ternary(in Span<T> span, Func<Vector<T>, Vector<T>> vCondition, Func<T, bool> condition, T trueValue, T falseValue, in Span<T> result)
         {
-            if (result.Length != array.Length)
+            if (result.Length != span.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
                 return;
@@ -17,35 +17,35 @@ namespace SimpleSimd
             var vFalse = new Vector<T>(falseValue);
             int i;
 
-            var vsArray = AsVectors(array);
+            var vsSpan = AsVectors(span);
             var vsResult = AsVectors(result);
 
-            for (i = 0; i < vsArray.Length; i++)
+            for (i = 0; i < vsSpan.Length; i++)
             {
-                vsResult[i] = Vector.ConditionalSelect(vCondition(vsArray[i]), vTrue, vFalse);
+                vsResult[i] = Vector.ConditionalSelect(vCondition(vsSpan[i]), vTrue, vFalse);
             }
 
             i *= Vector<T>.Count;
 
-            for (; i < array.Length; i++)
+            for (; i < span.Length; i++)
             {
-                result[i] = condition(array[i]) ? trueValue : falseValue;
+                result[i] = condition(span[i]) ? trueValue : falseValue;
             }
         }
 
         public static void Ternary
         (
-            T[] array,
+            in Span<T> span,
             Func<Vector<T>, Vector<T>> vCondition,
             Func<Vector<T>, Vector<T>> vTrueSelector,
             Func<Vector<T>, Vector<T>> vFalseSelector,
             Func<T, bool> condition,
             Func<T, T> trueSelector,
             Func<T, T> falseSelector,
-            T[] result
+            in Span<T> result
         )
         {
-            if (result.Length != array.Length)
+            if (result.Length != span.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
                 return;
@@ -53,19 +53,19 @@ namespace SimpleSimd
 
             int i;
 
-            var vsArray = AsVectors(array);
+            var vsSpan = AsVectors(span);
             var vsResult = AsVectors(result);
 
-            for (i = 0; i < vsArray.Length; i++)
+            for (i = 0; i < vsSpan.Length; i++)
             {
-                vsResult[i] = Vector.ConditionalSelect(vCondition(vsArray[i]), vTrueSelector(vsArray[i]), vFalseSelector(vsArray[i]));
+                vsResult[i] = Vector.ConditionalSelect(vCondition(vsSpan[i]), vTrueSelector(vsSpan[i]), vFalseSelector(vsSpan[i]));
             }
 
             i *= Vector<T>.Count;
 
-            for (; i < array.Length; i++)
+            for (; i < span.Length; i++)
             {
-                result[i] = condition(array[i]) ? trueSelector(array[i]) : falseSelector(array[i]);
+                result[i] = condition(span[i]) ? trueSelector(span[i]) : falseSelector(span[i]);
             }
         }
 
