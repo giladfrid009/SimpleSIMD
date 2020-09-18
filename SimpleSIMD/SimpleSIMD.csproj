@@ -12,7 +12,7 @@
     <Description>Easy to use SIMD accelerated array extensions</Description>
     <Copyright>Copyright 2020 (c) Gilad Freidkin, All rights reserved</Copyright>
     <Version>2.0.1</Version>
-    <PackageReleaseNotes>Added Span support</PackageReleaseNotes>
+    <PackageReleaseNotes>Minor performance improvments</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
