@@ -1,6 +1,7 @@
 ﻿#pragma warning disable IDE0011
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace SimpleSimd
 {
@@ -10,10 +11,13 @@ namespace SimpleSimd
     /// <typeparam name="T">Numeric type</typeparam>
     public static class NumOps<T> where T : unmanaged
     {
+        private const MethodImplOptions Inline = MethodImplOptions.AggressiveInlining;
+
         public static T Zero => default;
 
         public static T MinValue
         {
+            [MethodImpl(Inline)]
             get
             {
                 if (typeof(T) == typeof(byte)) return (T)(object)byte.MinValue;
@@ -33,6 +37,7 @@ namespace SimpleSimd
 
         public static T MaxValue
         {
+            [MethodImpl(Inline)]
             get
             {
                 if (typeof(T) == typeof(byte)) return (T)(object)byte.MaxValue;
@@ -50,6 +55,7 @@ namespace SimpleSimd
             }
         }
 
+        [MethodImpl(Inline)]
         public static T Not(T value)
         {
             if (typeof(T) == typeof(byte)) return (T)(object)(byte)~(byte)(object)value;
@@ -64,6 +70,7 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
+        [MethodImpl(Inline)]
         public static T Add(T left, T right)
         {
             if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left + (byte)(object)right);
@@ -80,6 +87,7 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
+        [MethodImpl(Inline)]
         public static T Subtract(T left, T right)
         {
             if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left - (byte)(object)right);
@@ -96,6 +104,7 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
+        [MethodImpl(Inline)]
         public static T Multiply(T left, T right)
         {
             if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left * (byte)(object)right);
@@ -112,6 +121,7 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
+        [MethodImpl(Inline)]
         public static T Divide(T left, T right)
         {
             if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left / (byte)(object)right);
@@ -128,6 +138,7 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
+        [MethodImpl(Inline)]
         public static T Modulus(T left, T right)
         {
             if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left % (byte)(object)right);
@@ -144,6 +155,7 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
+        [MethodImpl(Inline)]
         public static T And(T left, T right)
         {
             if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left & (byte)(object)right);
@@ -158,6 +170,7 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
+        [MethodImpl(Inline)]
         public static T Or(T left, T right)
         {
             if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left | (byte)(object)right);
@@ -172,6 +185,7 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
+        [MethodImpl(Inline)]
         public static T Xor(T left, T right)
         {
             if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left ^ (byte)(object)right);
@@ -186,6 +200,7 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
+        [MethodImpl(Inline)]
         public static bool Equal(T left, T right)
         {
             if (typeof(T) == typeof(byte)) return (byte)(object)left == (byte)(object)right;
@@ -202,6 +217,7 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
+        [MethodImpl(Inline)]
         public static bool Greater(T left, T right)
         {
             if (typeof(T) == typeof(byte)) return (byte)(object)left > (byte)(object)right;
@@ -218,6 +234,7 @@ namespace SimpleSimd
             throw new NotSupportedException(typeof(T).Name);
         }
 
+        [MethodImpl(Inline)]
         public static bool Less(T left, T right)
         {
             if (typeof(T) == typeof(byte)) return (byte)(object)left < (byte)(object)right;
