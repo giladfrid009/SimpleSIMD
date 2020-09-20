@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Select<U>(in Span<T> span, Func<Vector<T>, Vector<U>> vSelector, Func<T, U> selector, in Span<U> result) where U : unmanaged
+        public static void Select<TRes>(in Span<T> span, Func<Vector<T>, Vector<TRes>> vSelector, Func<T, TRes> selector, in Span<TRes> result) where TRes : unmanaged
         {
             if (result.Length != span.Length)
             {
@@ -13,9 +13,9 @@ namespace SimpleSimd
                 return;
             }       
 
-            if (Vector<U>.Count != Vector<T>.Count)
+            if (Vector<TRes>.Count != Vector<T>.Count)
             {
-                Exceptions.InvalidCast(typeof(U).Name);
+                Exceptions.InvalidCast(typeof(TRes).Name);
                 return;
             }
 
@@ -37,7 +37,7 @@ namespace SimpleSimd
             }
         }
 
-        public static void Select<U>(in Span<T> span, Func<Vector<T>, int, Vector<U>> vSelector, Func<T, int, U> selector, in Span<U> result) where U : unmanaged
+        public static void Select<TRes>(in Span<T> span, Func<Vector<T>, int, Vector<TRes>> vSelector, Func<T, int, TRes> selector, in Span<TRes> result) where TRes : unmanaged
         {
             if (result.Length != span.Length)
             {
@@ -45,9 +45,9 @@ namespace SimpleSimd
                 return;
             }
 
-            if (Vector<U>.Count != Vector<T>.Count)
+            if (Vector<TRes>.Count != Vector<T>.Count)
             {
-                Exceptions.InvalidCast(typeof(U).Name);
+                Exceptions.InvalidCast(typeof(TRes).Name);
                 return;
             }
 
@@ -69,18 +69,18 @@ namespace SimpleSimd
             }
         }
 
-        public static U[] Select<U>(T[] array, Func<Vector<T>, Vector<U>> vSelector, Func<T, U> selector) where U : unmanaged
+        public static TRes[] Select<TRes>(T[] array, Func<Vector<T>, Vector<TRes>> vSelector, Func<T, TRes> selector) where TRes : unmanaged
         {
-            var result = new U[array.Length];
+            var result = new TRes[array.Length];
 
             Select(array, vSelector, selector, result);
 
             return result;
         }
 
-        public static U[] Select<U>(T[] array, Func<Vector<T>, int, Vector<U>> vSelector, Func<T, int, U> selector) where U : unmanaged
+        public static TRes[] Select<TRes>(T[] array, Func<Vector<T>, int, Vector<TRes>> vSelector, Func<T, int, TRes> selector) where TRes : unmanaged
         {
-            var result = new U[array.Length];
+            var result = new TRes[array.Length];
 
             Select(array, vSelector, selector, result);
 

@@ -6,18 +6,18 @@ namespace SimpleSimd
     /// <summary>
     /// Generic runtime-generated numeric operations where the output type differs from the input type. 
     /// </summary>
-    /// <typeparam name="TIn">Input numeric type</typeparam>
-    /// <typeparam name="TOut">Output numeric type</typeparam>
-    public static class NumOps<TIn, TOut> where TIn : unmanaged where TOut : unmanaged
+    /// <typeparam name="T">Input type</typeparam>
+    /// <typeparam name="TRes">Output type</typeparam>
+    public static class NumOps<T, TRes> where T : unmanaged where TRes : unmanaged
     {
-        private static readonly Func<TIn, TOut> convFunc;
+        private static readonly Func<T, TRes> convFunc;
 
         static NumOps()
         {
-            ParameterExpression X = Expression.Parameter(typeof(TIn));
-            convFunc = Expression.Lambda<Func<TIn, TOut>>(Expression.Convert(X, typeof(TOut)), X).Compile();
+            ParameterExpression X = Expression.Parameter(typeof(T));
+            convFunc = Expression.Lambda<Func<T, TRes>>(Expression.Convert(X, typeof(TRes)), X).Compile();
         }
 
-        public static TOut Convert(TIn value) => convFunc(value);
+        public static TRes Convert(T value) => convFunc(value);
     }
 }

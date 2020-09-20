@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Concat<U>(in Span<T> left, in Span<T> right, Func<Vector<T>, Vector<T>, Vector<U>> vCombiner, Func<T, T, U> combiner, in Span<U> result) where U : unmanaged
+        public static void Concat<TRes>(in Span<T> left, in Span<T> right, Func<Vector<T>, Vector<T>, Vector<TRes>> vCombiner, Func<T, T, TRes> combiner, in Span<TRes> result) where TRes : unmanaged
         {
             if (right.Length != left.Length)
             {
@@ -19,9 +19,9 @@ namespace SimpleSimd
                 return;
             }
 
-            if (Vector<U>.Count != Vector<T>.Count)
+            if (Vector<TRes>.Count != Vector<T>.Count)
             {
-                Exceptions.InvalidCast(typeof(U).Name);
+                Exceptions.InvalidCast(typeof(TRes).Name);
                 return;
             }
 
@@ -44,9 +44,9 @@ namespace SimpleSimd
             }
         }
 
-        public static U[] Concat<U>(T[] left, T[] right, Func<Vector<T>, Vector<T>, Vector<U>> vCombiner, Func<T, T, U> combiner) where U : unmanaged
+        public static TRes[] Concat<TRes>(T[] left, T[] right, Func<Vector<T>, Vector<T>, Vector<TRes>> vCombiner, Func<T, T, TRes> combiner) where TRes : unmanaged
         {
-            var result = new U[left.Length];
+            var result = new TRes[left.Length];
 
             Concat(left, right, vCombiner, combiner, result);
 
