@@ -7,9 +7,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Gilad Freidkin</Authors>
     <RepositoryUrl>https://github.com/giladfrid009/SimpleSIMD</RepositoryUrl>
-    <PackageTags>SIMD, Library, Performance, Parallel, Math, Generic, Allocation</PackageTags>
+    <PackageTags>SIMD, Library, Performance, Parallel, Math, Generic, Allocation, Array, Span</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Description>Easy to use SIMD accelerated array extensions</Description>
+    <Description>Easy to use SIMD accelerated span and array methods</Description>
     <Copyright>Copyright 2020 (c) Gilad Freidkin, All rights reserved</Copyright>
     <Version>2.0.1</Version>
     <PackageReleaseNotes>Minor performance improvments</PackageReleaseNotes>
