@@ -55,10 +55,10 @@ This approach could be combined with standard multithreading for massive perform
 * Foreach
 
 ## Value Delegates
-This library extensively uses the value delegate pattern.  
-This pattern is used as a replacement for delegates.  
-Calling functions using this patten may feel unusual since it requires creation of structs to pass as arguments, but it is very beneficial performance-wise.  
-
+This library extensively uses the value delegate pattern. This pattern is used as a replacement for delegates.  
+Calling functions using this patten may feel unusual since it requires creation of structs to pass as arguments instead of delegates, but it is very beneficial performance-wise. 
+The performance difference makes using this pattern worthwhile in performance critical places.  
+Since the focus of this library is **pure performance**, we use this pattern wherever possible.
 #### Usage:
 
 ``` csharp
