@@ -66,7 +66,7 @@ using System;
 using System.Numerics;
 using SimpleSimd;
 
-namespace Benchmarks
+namespace MyProgram
 {
     class Program
     {
