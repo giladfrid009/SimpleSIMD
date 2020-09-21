@@ -30,7 +30,12 @@ namespace SimpleSimd
             return sum;
         }
 
-        public static T Sum(in Span<T> span, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector)
+        
+        public static T Sum<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
+
+            where F1 : struct, IFunc<Vector<T>, Vector<T>>
+            where F2 : struct, IFunc<T, T>
+
         {
             Vector<T> vSum = Vector<T>.Zero;
             T sum;
@@ -40,7 +45,7 @@ namespace SimpleSimd
 
             for (i = 0; i < vsSpan.Length; i++)
             {
-                vSum += vSelector(vsSpan[i]);
+                vSum += vSelector.Invoke(vsSpan[i]);
             }
 
             sum = Vector.Dot(vSum, Vector<T>.One);
@@ -49,32 +54,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                sum = NumOps<T>.Add(sum, selector(span[i]));
-            }
-
-            return sum;
-        }
-
-        public static T Sum(in Span<T> span, Func<Vector<T>, int, Vector<T>> vSelector, Func<T, int, T> selector)
-        {
-            Vector<T> vSum = Vector<T>.Zero;
-            T sum;
-            int i;
-
-            var vsSpan = AsVectors(span);
-
-            for (i = 0; i < vsSpan.Length; i++)
-            {
-                vSum += vSelector(vsSpan[i], i * Vector<T>.Count);
-            }
-
-            sum = Vector.Dot(vSum, Vector<T>.One);
-
-            i *= Vector<T>.Count;
-
-            for (; i < span.Length; i++)
-            {
-                sum = NumOps<T>.Add(sum, selector(span[i], i));
+                sum = NumOps<T>.Add(sum, selector.Invoke(span[i]));
             }
 
             return sum;

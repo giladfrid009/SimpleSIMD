@@ -5,7 +5,11 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static bool All(in Span<T> span, Func<Vector<T>, bool> vPredicate, Func<T, bool> predicate)
+        public static bool All<F1, F2>(in Span<T> span, F1 vPredicate, F2 predicate)
+
+            where F1 : struct, IFunc<Vector<T>, bool>
+            where F2 : struct, IFunc<T, bool>
+
         {
             int i;
 
@@ -13,7 +17,7 @@ namespace SimpleSimd
 
             for (i = 0; i < vsSpan.Length; i++)
             {
-                if (vPredicate(vsSpan[i]) == false)
+                if (vPredicate.Invoke(vsSpan[i]) == false)
                 {
                     return false;
                 }
@@ -23,7 +27,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                if (predicate(span[i]) == false)
+                if (predicate.Invoke(span[i]) == false)
                 {
                     return false;
                 }

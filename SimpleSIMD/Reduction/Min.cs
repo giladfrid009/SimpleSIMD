@@ -33,7 +33,11 @@ namespace SimpleSimd
             return min;
         }
 
-        public static T Min(in Span<T> span, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector)
+        public static T Min<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
+
+            where F1 : struct, IFunc<Vector<T>, Vector<T>>
+            where F2 : struct, IFunc<T, T>
+
         {
             var vMin = new Vector<T>(NumOps<T>.MaxValue);
             T min = NumOps<T>.MaxValue;
@@ -43,7 +47,7 @@ namespace SimpleSimd
 
             for (i = 0; i < vsSpan.Length; i++)
             {
-                vMin = Vector.Min(vMin, vSelector(vsSpan[i]));
+                vMin = Vector.Min(vMin, vSelector.Invoke(vsSpan[i]));
             }
 
             for (int j = 0; j < Vector<T>.Count; ++j)
@@ -55,7 +59,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                min = NumOps<T>.Min(min, selector(span[i]));
+                min = NumOps<T>.Min(min, selector.Invoke(span[i]));
             }
 
             return min;

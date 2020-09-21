@@ -6,8 +6,6 @@ namespace SimpleSimd
     /// <summary>
     /// Generic runtime-generated numeric operations where the output type differs from the input type. 
     /// </summary>
-    /// <typeparam name="T">Input type</typeparam>
-    /// <typeparam name="TRes">Output type</typeparam>
     public static class NumOps<T, TRes> where T : unmanaged where TRes : unmanaged
     {
         private static readonly Func<T, TRes> convFunc;

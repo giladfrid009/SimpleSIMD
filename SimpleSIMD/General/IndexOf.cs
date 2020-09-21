@@ -40,8 +40,12 @@ namespace SimpleSimd
 
             return -1;
         }
-        
-        public static int IndexOf(in Span<T> span, Func<Vector<T>, bool> vPredicate, Func<T, bool> predicate)
+
+        public static int IndexOf<F1, F2>(in Span<T> span, F1 vPredicate, F2 predicate)
+
+            where F1 : struct, IFunc<Vector<T>, bool>
+            where F2 : struct, IFunc<T, bool>
+
         {
             int i;
 
@@ -49,13 +53,13 @@ namespace SimpleSimd
 
             for (i = 0; i < vsSpan.Length; i++)
             {
-                if (vPredicate(vsSpan[i]))
+                if (vPredicate.Invoke(vsSpan[i]))
                 {
                     var vec = vsSpan[i];
 
                     for (int j = 0; j < Vector<T>.Count; j++)
                     {
-                        if (predicate(vec[j]))
+                        if (predicate.Invoke(vec[j]))
                         {
                             return i * Vector<T>.Count + j;
                         }
@@ -67,7 +71,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                if (predicate(span[i]))
+                if (predicate.Invoke(span[i]))
                 {
                     return i;
                 }

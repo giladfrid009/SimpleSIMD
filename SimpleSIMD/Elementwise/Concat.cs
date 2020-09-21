@@ -4,8 +4,13 @@ using System.Numerics;
 namespace SimpleSimd
 {
     public static partial class SimdOps<T>
-    {
-        public static void Concat<TRes>(in Span<T> left, in Span<T> right, Func<Vector<T>, Vector<T>, Vector<TRes>> vCombiner, Func<T, T, TRes> combiner, in Span<TRes> result) where TRes : unmanaged
+    {   
+        public static void Concat<F1, F2, TRes>(in Span<T> left, in Span<T> right, F1 vCombiner, F2 combiner, in Span<TRes> result)
+
+            where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
+            where F2 : struct, IFunc<T, T, TRes>
+            where TRes : unmanaged
+
         {
             if (right.Length != left.Length)
             {
@@ -23,7 +28,7 @@ namespace SimpleSimd
             {
                 Exceptions.InvalidCast(typeof(TRes).Name);
                 return;
-            }
+            }        
 
             int i;
 
@@ -33,22 +38,27 @@ namespace SimpleSimd
 
             for (i = 0; i < vsLeft.Length; i++)
             {
-                vsResult[i] = vCombiner(vsLeft[i], vsRight[i]);
+                vsResult[i] = vCombiner.Invoke(vsLeft[i], vsRight[i]);
             }
 
             i *= Vector<T>.Count;
 
             for (; i < left.Length; i++)
             {
-                result[i] = combiner(left[i], right[i]);
+                result[i] = combiner.Invoke(left[i], right[i]);
             }
         }
 
-        public static TRes[] Concat<TRes>(T[] left, T[] right, Func<Vector<T>, Vector<T>, Vector<TRes>> vCombiner, Func<T, T, TRes> combiner) where TRes : unmanaged
+        public static TRes[] Concat<F1, F2, TRes>(T[] left, T[] right, F1 vCombiner, F2 combiner)
+
+            where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
+            where F2 : struct, IFunc<T, T, TRes>
+            where TRes : unmanaged
+
         {
             var result = new TRes[left.Length];
 
-            Concat(left, right, vCombiner, combiner, result);
+            Concat<F1, F2, TRes>(left, right, vCombiner, combiner, result);
 
             return result;
         }

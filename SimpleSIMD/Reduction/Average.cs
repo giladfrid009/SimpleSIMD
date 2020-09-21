@@ -10,7 +10,11 @@ namespace SimpleSimd
             return NumOps<T>.Divide(Sum(span), NumOps<int, T>.Convert(span.Length));
         }
 
-        public static T Average(in Span<T> span, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector)
+        public static T Average<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
+
+            where F1 : struct, IFunc<Vector<T>, Vector<T>>
+            where F2 : struct, IFunc<T, T>
+
         {
             return NumOps<T>.Divide(Sum(span, vSelector, selector), NumOps<int, T>.Convert(span.Length));
         }

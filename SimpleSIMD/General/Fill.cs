@@ -25,7 +25,12 @@ namespace SimpleSimd
             }
         }
 
-        public static void Fill(in Span<T> span, Func<Vector<T>> vFunc, Func<T> func)
+
+        public static void Fill<F1, F2>(in Span<T> span, F1 vFunc, F2 func)
+
+            where F1 : struct, IFunc<Vector<T>>
+            where F2 : struct, IFunc<T>
+
         {
             int i;
 
@@ -33,14 +38,14 @@ namespace SimpleSimd
 
             for (i = 0; i < vsSpan.Length; i++)
             {
-                vsSpan[i] = vFunc();
+                vsSpan[i] = vFunc.Invoke();
             }
 
             i *= Vector<T>.Count;
 
             for (; i < span.Length; i++)
             {
-                span[i] = func();
+                span[i] = func.Invoke();
             }
         }
     }

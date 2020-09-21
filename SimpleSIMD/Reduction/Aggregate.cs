@@ -5,7 +5,11 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static T Aggregate(in Span<T> span, T seed, Func<Vector<T>, Vector<T>, Vector<T>> vAccumulator, Func<T, T, T> accumulator)
+        public static T Aggregate<F1, F2>(in Span<T> span, T seed, F1 vAccumulator, F2 accumulator)
+
+            where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<T>>
+            where F2 : struct, IFunc<T, T, T>
+
         {
             var vRes = new Vector<T>(seed);
             T res = seed;
@@ -15,19 +19,19 @@ namespace SimpleSimd
 
             for (i = 0; i < vsSpan.Length; i++)
             {
-                vRes = vAccumulator(vRes, vsSpan[i]);
+                vRes = vAccumulator.Invoke(vRes, vsSpan[i]);
             }
 
             for (int j = 0; j < Vector<T>.Count; j++)
             {
-                res = accumulator(res, vRes[j]);
+                res = accumulator.Invoke(res, vRes[j]);
             }
 
             i *= Vector<T>.Count;
 
             for (; i < span.Length; i++)
             {
-                res = accumulator(res, span[i]);
+                res = accumulator.Invoke(res, span[i]);
             }
 
             return res;

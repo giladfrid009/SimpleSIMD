@@ -11,8 +11,12 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Easy to use SIMD accelerated span and array methods</Description>
     <Copyright>Copyright 2020 (c) Gilad Freidkin, All rights reserved</Copyright>
-    <Version>2.0.1</Version>
-    <PackageReleaseNotes>Minor performance improvments</PackageReleaseNotes>
+    <Version>2.1.1</Version>
+    <PackageReleaseNotes>Major performance improvments for functions with delegates in parameters</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
 </Project>
