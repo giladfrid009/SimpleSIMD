@@ -81,16 +81,16 @@ namespace MyProgram
                 Data[i] = rnd.Next();
             }
 
-            SimdOps<int>.Sum(Data, new VectorFn(), new Fn());
+            SimdOps<int>.Sum(Data, new VecSelector(), new Selector());
         }
     }             
 
-    struct VectorFn : IFunc<Vector<int>, Vector<int>>
+    struct VecSelector : IFunc<Vector<int>, Vector<int>>
     {
         public Vector<int> Invoke(Vector<int> param) => param * 2;
     }
 
-    struct Fn : IFunc<int, int>
+    struct Selector : IFunc<int, int>
     {
         public int Invoke(int param) => param * 2;
     }   
