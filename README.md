@@ -159,5 +159,10 @@ Frequency=3515621 Hz, Resolution=284.4448 ns, Timer=TSC
   * ```float```
   * ```double```
 
+## Contributing
+**All ideas and suggestions are welcome.** 
+Feel free to open an issue if you have an idea or a suggestion that might improve this project.  
+If you encounter a bug or have a feature request, please open a relevent issue.
+
 ## License
 This project is licensed under MIT license. For more info see the [License File](LICENSE)
