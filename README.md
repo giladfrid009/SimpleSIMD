@@ -146,8 +146,7 @@ Frequency=3515621 Hz, Resolution=284.4448 ns, Timer=TSC
 
 ## Limitations
 * Methods are not lazily evaluated as IEnumerable
-* Benefitial only for hardware which supports SIMD instructions
-* Could perform worse than simple for loop approach, for very small arrays
+* Old hardware might not support SIMD
 * Supported collection types:
   * ```T[] where T : unmanaged```
   * ```Span<T> where T : unmanaged```
