@@ -72,24 +72,23 @@ namespace MyProgram
     {
         static void Main()
         {
-            int[] Data = new int[1000];
-
-            Random rnd = new Random(1); 
-
-            for (int i = 0; i < Data.Length; i++)
-            {
-                Data[i] = rnd.Next();
-            }
-
+            // Creating the data, not relevant
+            int[] Data = GetData()
+            
+            // We need to create 2 structs which will serve as a replacement for delegates
             SimdOps<int>.Sum(Data, new VecSelector(), new Selector());
         }
     }             
-
+    
+    // A struct which is used as Vector<int> selector
+    // Inheritence from IFunc is according to Sum() signature
     struct VecSelector : IFunc<Vector<int>, Vector<int>>
     {
         public Vector<int> Invoke(Vector<int> param) => param * 2;
     }
 
+    // A struct which is used as int selector
+    // Inheritence from IFunc is according to Sum() signature
     struct Selector : IFunc<int, int>
     {
         public int Invoke(int param) => param * 2;
