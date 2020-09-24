@@ -7,23 +7,26 @@ namespace SimpleSimd
     {
         public static T Max(in Span<T> span)
         {
-            var vMax = new Vector<T>(NumOps<T>.MinValue);
             T max = NumOps<T>.MinValue;
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vMax = Vector.Max(vMax, vsSpan[i]);
-            }
+                var vMax = new Vector<T>(max);
+                var vsSpan = AsVectors(span);
 
-            for (int j = 0; j < Vector<T>.Count; ++j)
-            {
-                max = NumOps<T>.Max(max, vMax[j]);
-            }
+                for (; i < vsSpan.Length; i++)
+                {
+                    vMax = Vector.Max(vMax, vsSpan[i]);
+                }
 
-            i *= Vector<T>.Count;
+                for (int j = 0; j < Vector<T>.Count; ++j)
+                {
+                    max = NumOps<T>.Max(max, vMax[j]);
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {
@@ -39,23 +42,26 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T, T>
 
         {
-            var vMax = new Vector<T>(NumOps<T>.MinValue);
             T max = NumOps<T>.MinValue;
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vMax = Vector.Max(vMax, vSelector.Invoke(vsSpan[i]));
-            }
+                var vMax = new Vector<T>(max);
+                var vsSpan = AsVectors(span);
 
-            for (int j = 0; j < Vector<T>.Count; ++j)
-            {
-                max = NumOps<T>.Max(max, vMax[j]);
-            }
+                for (; i < vsSpan.Length; i++)
+                {
+                    vMax = Vector.Max(vMax, vSelector.Invoke(vsSpan[i]));
+                }
 
-            i *= Vector<T>.Count;
+                for (int j = 0; j < Vector<T>.Count; ++j)
+                {
+                    max = NumOps<T>.Max(max, vMax[j]);
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {

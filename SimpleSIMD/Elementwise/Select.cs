@@ -5,11 +5,11 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Select<F1, F2, TRes>(in Span<T> span, F1 vSelector, F2 selector, in Span<TRes> result)
+        public static void Select<TRes, F1, F2>(in Span<T> span, F1 vSelector, F2 selector, in Span<TRes> result)
 
+            where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, TRes>
-            where TRes : unmanaged
 
         {
             if (result.Length != span.Length)
@@ -24,17 +24,20 @@ namespace SimpleSimd
                 return;
             }
 
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-            var vsResult = AsVectors(result);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vsResult[i] = vSelector.Invoke(vsSpan[i]);
-            }
+                var vsSpan = AsVectors(span);
+                var vsResult = AsVectors(result);
 
-            i *= Vector<T>.Count;
+                for (; i < vsSpan.Length; i++)
+                {
+                    vsResult[i] = vSelector.Invoke(vsSpan[i]);
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {
@@ -42,16 +45,16 @@ namespace SimpleSimd
             }
         }
 
-        public static TRes[] Select<F1, F2, TRes>(T[] array, F1 vSelector, F2 selector)
+        public static TRes[] Select<TRes, F1, F2>(T[] array, F1 vSelector, F2 selector)
 
+            where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, TRes>
-            where TRes : unmanaged
 
         {
             var result = new TRes[array.Length];
 
-            Select<F1, F2, TRes>(array, vSelector, selector, result);
+            Select<TRes, F1, F2>(array, vSelector, selector, result);
 
             return result;
         }

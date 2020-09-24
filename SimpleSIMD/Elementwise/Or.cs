@@ -13,18 +13,21 @@ namespace SimpleSimd
                 return;
             }
 
-            var vRight = new Vector<T>(right);
-            int i;
+            int i = 0;
 
-            var vsLeft = AsVectors(left);
-            var vsResult = AsVectors(result);
-
-            for (i = 0; i < vsLeft.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vsResult[i] = Vector.BitwiseOr(vsLeft[i], vRight);
-            }
+                var vRight = new Vector<T>(right);
+                var vsLeft = AsVectors(left);
+                var vsResult = AsVectors(result);
 
-            i *= Vector<T>.Count;
+                for (; i < vsLeft.Length; i++)
+                {
+                    vsResult[i] = Vector.BitwiseOr(vsLeft[i], vRight);
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < left.Length; i++)
             {
@@ -46,18 +49,21 @@ namespace SimpleSimd
                 return;
             }
 
-            int i;
+            int i = 0;
 
-            var vsLeft = AsVectors(left);
-            var vsRight = AsVectors(right);
-            var vsResult = AsVectors(result);
-
-            for (i = 0; i < vsLeft.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vsResult[i] = Vector.BitwiseOr(vsLeft[i], vsRight[i]);
-            }
+                var vsLeft = AsVectors(left);
+                var vsRight = AsVectors(right);
+                var vsResult = AsVectors(result);
 
-            i *= Vector<T>.Count;
+                for (; i < vsLeft.Length; i++)
+                {
+                    vsResult[i] = Vector.BitwiseOr(vsLeft[i], vsRight[i]);
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < left.Length; i++)
             {

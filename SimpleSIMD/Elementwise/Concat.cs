@@ -5,11 +5,11 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {   
-        public static void Concat<F1, F2, TRes>(in Span<T> left, in Span<T> right, F1 vCombiner, F2 combiner, in Span<TRes> result)
+        public static void Concat<TRes, F1, F2>(in Span<T> left, in Span<T> right, F1 vCombiner, F2 combiner, in Span<TRes> result)
 
+            where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
-            where TRes : unmanaged
 
         {
             if (right.Length != left.Length)
@@ -30,18 +30,21 @@ namespace SimpleSimd
                 return;
             }        
 
-            int i;
+            int i = 0;
 
-            var vsLeft = AsVectors(left);
-            var vsRight = AsVectors(right);
-            var vsResult = AsVectors(result);
-
-            for (i = 0; i < vsLeft.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vsResult[i] = vCombiner.Invoke(vsLeft[i], vsRight[i]);
-            }
+                var vsLeft = AsVectors(left);
+                var vsRight = AsVectors(right);
+                var vsResult = AsVectors(result);
 
-            i *= Vector<T>.Count;
+                for (; i < vsLeft.Length; i++)
+                {
+                    vsResult[i] = vCombiner.Invoke(vsLeft[i], vsRight[i]);
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < left.Length; i++)
             {
@@ -49,16 +52,16 @@ namespace SimpleSimd
             }
         }
 
-        public static TRes[] Concat<F1, F2, TRes>(T[] left, T[] right, F1 vCombiner, F2 combiner)
-
+        public static TRes[] Concat<TRes, F1, F2>(T[] left, T[] right, F1 vCombiner, F2 combiner)
+            
+            where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
-            where TRes : unmanaged
 
         {
             var result = new TRes[left.Length];
 
-            Concat<F1, F2, TRes>(left, right, vCombiner, combiner, result);
+            Concat<TRes, F1, F2>(left, right, vCombiner, combiner, result);
 
             return result;
         }

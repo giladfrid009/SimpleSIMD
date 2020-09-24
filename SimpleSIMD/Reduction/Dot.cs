@@ -6,22 +6,25 @@ namespace SimpleSimd
     public static partial class SimdOps<T>
     {
         public static T Dot(in Span<T> left, T right)
-        {
-            var vRight = new Vector<T>(right);
-            Vector<T> vDot = Vector<T>.Zero;
-            T dot;
-            int i;
+        {        
+            T dot = NumOps<T>.Zero;
+            int i = 0;
 
-            var vsLeft = AsVectors(left);
-
-            for (i = 0; i < vsLeft.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vDot += vsLeft[i] * vRight;
+                var vDot = Vector<T>.Zero;
+                var vRight = new Vector<T>(right);
+                var vsLeft = AsVectors(left);
+
+                for (; i < vsLeft.Length; i++)
+                {
+                    vDot += vsLeft[i] * vRight;
+                }
+
+                dot = Vector.Dot(vDot, Vector<T>.One);
+
+                i *= Vector<T>.Count;
             }
-
-            dot = Vector.Dot(vDot, Vector<T>.One);
-
-            i *= Vector<T>.Count;
 
             for (; i < left.Length; i++)
             {
@@ -39,21 +42,24 @@ namespace SimpleSimd
                 return default;
             }
 
-            Vector<T> vDot = Vector<T>.Zero;
-            T dot;
-            int i;
+            T dot = NumOps<T>.Zero;
+            int i = 0;
 
-            var vsLeft = AsVectors(left);
-            var vsRight = AsVectors(right);
-
-            for (i = 0; i < vsLeft.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vDot += vsLeft[i] * vsRight[i];
+                var vDot = Vector<T>.Zero;
+                var vsLeft = AsVectors(left);
+                var vsRight = AsVectors(right);
+
+                for (; i < vsLeft.Length; i++)
+                {
+                    vDot += vsLeft[i] * vsRight[i];
+                }
+
+                dot = Vector.Dot(vDot, Vector<T>.One);
+
+                i *= Vector<T>.Count;
             }
-
-            dot = Vector.Dot(vDot, Vector<T>.One);
-
-            i *= Vector<T>.Count;
 
             for (; i < left.Length; i++)
             {

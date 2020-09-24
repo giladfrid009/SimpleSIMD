@@ -7,23 +7,26 @@ namespace SimpleSimd
     {
         public static T Min(in Span<T> span)
         {
-            var vMin = new Vector<T>(NumOps<T>.MaxValue);
             T min = NumOps<T>.MaxValue;
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vMin = Vector.Min(vMin, vsSpan[i]);
-            }
+                var vMin = new Vector<T>(min);
+                var vsSpan = AsVectors(span);
 
-            for (int j = 0; j < Vector<T>.Count; ++j)
-            {
-                min = NumOps<T>.Min(min, vMin[j]);
-            }
+                for (; i < vsSpan.Length; i++)
+                {
+                    vMin = Vector.Min(vMin, vsSpan[i]);
+                }
 
-            i *= Vector<T>.Count;
+                for (int j = 0; j < Vector<T>.Count; ++j)
+                {
+                    min = NumOps<T>.Min(min, vMin[j]);
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {
@@ -39,23 +42,26 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T, T>
 
         {
-            var vMin = new Vector<T>(NumOps<T>.MaxValue);
             T min = NumOps<T>.MaxValue;
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vMin = Vector.Min(vMin, vSelector.Invoke(vsSpan[i]));
-            }
+                var vMin = new Vector<T>(min);
+                var vsSpan = AsVectors(span);
 
-            for (int j = 0; j < Vector<T>.Count; ++j)
-            {
-                min = NumOps<T>.Min(min, vMin[j]);
-            }
+                for (; i < vsSpan.Length; i++)
+                {
+                    vMin = Vector.Min(vMin, vSelector.Invoke(vsSpan[i]));
+                }
 
-            i *= Vector<T>.Count;
+                for (int j = 0; j < Vector<T>.Count; ++j)
+                {
+                    min = NumOps<T>.Min(min, vMin[j]);
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {

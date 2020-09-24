@@ -8,19 +8,22 @@ namespace SimpleSimd
         public static bool Contains(in Span<T> span, T value)
         {
             Vector<T> vValue = new Vector<T>(value);
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                if (Vector.EqualsAny(vsSpan[i], vValue))
-                {
-                    return true;
-                }
-            }
+                var vsSpan = AsVectors(span);
 
-            i *= Vector<T>.Count;
+                for (; i < vsSpan.Length; i++)
+                {
+                    if (Vector.EqualsAny(vsSpan[i], vValue))
+                    {
+                        return true;
+                    }
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {

@@ -7,20 +7,23 @@ namespace SimpleSimd
     {
         public static bool Equal(in Span<T> left, T right)
         {
-            var vRight = new Vector<T>(right);
-            int i;
+            int i = 0;
 
-            var vsLeft = AsVectors(left);
-
-            for (i = 0; i < vsLeft.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                if (vsLeft[i].Equals(vRight) == false)
-                {
-                    return false;
-                }
-            }
+                var vRight = new Vector<T>(right);
+                var vsLeft = AsVectors(left);
 
-            i *= Vector<T>.Count;
+                for (; i < vsLeft.Length; i++)
+                {
+                    if (vsLeft[i].Equals(vRight) == false)
+                    {
+                        return false;
+                    }
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < left.Length; i++)
             {
@@ -40,20 +43,23 @@ namespace SimpleSimd
                 return false;
             }
 
-            int i;
+            int i = 0;
 
-            var vsLeft = AsVectors(left);
-            var vsRight = AsVectors(right);
-
-            for (i = 0; i < vsLeft.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                if (vsLeft[i].Equals(vsRight[i]) == false)
-                {
-                    return false;
-                }
-            }
+                var vsLeft = AsVectors(left);
+                var vsRight = AsVectors(right);
 
-            i *= Vector<T>.Count;
+                for (; i < vsLeft.Length; i++)
+                {
+                    if (vsLeft[i].Equals(vsRight[i]) == false)
+                    {
+                        return false;
+                    }
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < left.Length; i++)
             {

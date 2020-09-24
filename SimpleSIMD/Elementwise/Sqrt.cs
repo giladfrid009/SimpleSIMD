@@ -13,17 +13,20 @@ namespace SimpleSimd
                 return;
             }
 
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-            var vsResult = AsVectors(result);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vsResult[i] = Vector.SquareRoot(vsSpan[i]);
-            }
+                var vsSpan = AsVectors(span);
+                var vsResult = AsVectors(result);
 
-            i *= Vector<T>.Count;
+                for (; i < vsSpan.Length; i++)
+                {
+                    vsResult[i] = Vector.SquareRoot(vsSpan[i]);
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {

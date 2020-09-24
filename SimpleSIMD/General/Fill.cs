@@ -7,17 +7,20 @@ namespace SimpleSimd
     {
         public static void Fill(in Span<T> span, T value)
         {
-            var vValue = new Vector<T>(value);
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vsSpan[i] = vValue;
-            }
+                var vValue = new Vector<T>(value);
+                var vsSpan = AsVectors(span);
 
-            i *= Vector<T>.Count;
+                for (; i < vsSpan.Length; i++)
+                {
+                    vsSpan[i] = vValue;
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {
@@ -32,16 +35,19 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T>
 
         {
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vsSpan[i] = vFunc.Invoke();
-            }
+                var vsSpan = AsVectors(span);
 
-            i *= Vector<T>.Count;
+                for (; i < vsSpan.Length; i++)
+                {
+                    vsSpan[i] = vFunc.Invoke();
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {

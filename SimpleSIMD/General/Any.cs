@@ -11,19 +11,22 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T, bool>
 
         {
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                if (vPredicate.Invoke(vsSpan[i]))
-                {
-                    return true;
-                }
-            }
+                var vsSpan = AsVectors(span);
 
-            i *= Vector<T>.Count;
+                for (; i < vsSpan.Length; i++)
+                {
+                    if (vPredicate.Invoke(vsSpan[i]))
+                    {
+                        return true;
+                    }
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {

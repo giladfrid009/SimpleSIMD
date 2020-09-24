@@ -7,28 +7,31 @@ namespace SimpleSimd
     {
         public static int IndexOf(in Span<T> span, T value)
         {
-            var vValue = new Vector<T>(value);
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                if (Vector.EqualsAny(vsSpan[i], vValue))
-                {
-                    var vec = vsSpan[i];
+                var vValue = new Vector<T>(value);
+                var vsSpan = AsVectors(span);
 
-                    for (int j = 0; j < Vector<T>.Count; j++)
+                for (; i < vsSpan.Length; i++)
+                {
+                    if (Vector.EqualsAny(vsSpan[i], vValue))
                     {
-                        if (NumOps<T>.Equal(vec[j], value))
+                        var vec = vsSpan[i];
+
+                        for (int j = 0; j < Vector<T>.Count; j++)
                         {
-                            return i * Vector<T>.Count + j;
+                            if (NumOps<T>.Equal(vec[j], value))
+                            {
+                                return i * Vector<T>.Count + j;
+                            }
                         }
                     }
                 }
-            }
 
-            i *= Vector<T>.Count;
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {
@@ -47,27 +50,30 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T, bool>
 
         {
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                if (vPredicate.Invoke(vsSpan[i]))
-                {
-                    var vec = vsSpan[i];
+                var vsSpan = AsVectors(span);
 
-                    for (int j = 0; j < Vector<T>.Count; j++)
+                for (; i < vsSpan.Length; i++)
+                {
+                    if (vPredicate.Invoke(vsSpan[i]))
                     {
-                        if (predicate.Invoke(vec[j]))
+                        var vec = vsSpan[i];
+
+                        for (int j = 0; j < Vector<T>.Count; j++)
                         {
-                            return i * Vector<T>.Count + j;
+                            if (predicate.Invoke(vec[j]))
+                            {
+                                return i * Vector<T>.Count + j;
+                            }
                         }
                     }
                 }
-            }
 
-            i *= Vector<T>.Count;
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {

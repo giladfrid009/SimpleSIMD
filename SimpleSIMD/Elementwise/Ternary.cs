@@ -16,20 +16,23 @@ namespace SimpleSimd
                 Exceptions.ArgOutOfRange(nameof(result));
                 return;
             }
+            
+            int i = 0;
 
-            var vTrue = new Vector<T>(trueValue);
-            var vFalse = new Vector<T>(falseValue);
-            int i;
-
-            var vsSpan = AsVectors(span);
-            var vsResult = AsVectors(result);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vsResult[i] = Vector.ConditionalSelect(vCondition.Invoke(vsSpan[i]), vTrue, vFalse);
-            }
+                var vTrue = new Vector<T>(trueValue);
+                var vFalse = new Vector<T>(falseValue);
+                var vsSpan = AsVectors(span);
+                var vsResult = AsVectors(result);
 
-            i *= Vector<T>.Count;
+                for (; i < vsSpan.Length; i++)
+                {
+                    vsResult[i] = Vector.ConditionalSelect(vCondition.Invoke(vsSpan[i]), vTrue, vFalse);
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {
@@ -53,17 +56,20 @@ namespace SimpleSimd
                 return;
             }
 
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-            var vsResult = AsVectors(result);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vsResult[i] = Vector.ConditionalSelect(vCondition.Invoke(vsSpan[i]), vTrueSelector.Invoke(vsSpan[i]), vFalseSelector.Invoke(vsSpan[i]));
-            }
+                var vsSpan = AsVectors(span);
+                var vsResult = AsVectors(result);
 
-            i *= Vector<T>.Count;
+                for (; i < vsSpan.Length; i++)
+                {
+                    vsResult[i] = Vector.ConditionalSelect(vCondition.Invoke(vsSpan[i]), vTrueSelector.Invoke(vsSpan[i]), vFalseSelector.Invoke(vsSpan[i]));
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {

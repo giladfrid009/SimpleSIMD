@@ -11,23 +11,26 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T, T, T>
 
         {
-            var vRes = new Vector<T>(seed);
             T res = seed;
-            int i;
+            int i = 0;
 
-            var vsSpan = AsVectors(span);
-
-            for (i = 0; i < vsSpan.Length; i++)
+            if (Vector.IsHardwareAccelerated)
             {
-                vRes = vAccumulator.Invoke(vRes, vsSpan[i]);
-            }
+                var vRes = new Vector<T>(seed);
+                var vsSpan = AsVectors(span);
 
-            for (int j = 0; j < Vector<T>.Count; j++)
-            {
-                res = accumulator.Invoke(res, vRes[j]);
-            }
+                for (; i < vsSpan.Length; i++)
+                {
+                    vRes = vAccumulator.Invoke(vRes, vsSpan[i]);
+                }
 
-            i *= Vector<T>.Count;
+                for (int j = 0; j < Vector<T>.Count; j++)
+                {
+                    res = accumulator.Invoke(res, vRes[j]);
+                }
+
+                i *= Vector<T>.Count;
+            }
 
             for (; i < span.Length; i++)
             {
