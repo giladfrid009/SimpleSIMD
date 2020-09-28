@@ -72,7 +72,8 @@ namespace MyProgram
     {
         static void Main()
         {
-            // Creating the data, not relevant
+            // Creating the data
+            // Can be int[], Span<int>, ReadOnlySpan<int>
             int[] Data = GetData()
             
             // We need to create 2 structs which will serve as a replacement for delegates
