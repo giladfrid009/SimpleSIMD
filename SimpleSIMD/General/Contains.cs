@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static bool Contains(in Span<T> span, T value)
+        public static bool Contains(in ReadOnlySpan<T> span, T value)
         {
             Vector<T> vValue = new Vector<T>(value);
             int i = 0;

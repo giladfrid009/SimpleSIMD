@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static T Sum(in Span<T> span)
+        public static T Sum(in ReadOnlySpan<T> span)
         {
             T sum = NumOps<T>.Zero;
             int i = 0;
@@ -34,7 +34,7 @@ namespace SimpleSimd
         }
 
         
-        public static T Sum<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
+        public static T Sum<F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, T>

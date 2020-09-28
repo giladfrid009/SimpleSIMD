@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static bool Any<F1, F2>(in Span<T> span, F1 vPredicate, F2 predicate)
+        public static bool Any<F1, F2>(in ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
 
             where F1 : struct, IFunc<Vector<T>, bool>
             where F2 : struct, IFunc<T, bool>

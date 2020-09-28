@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void And(in Span<T> left, T right, in Span<T> result)
+        public static void And(in ReadOnlySpan<T> left, T right, in Span<T> result)
         {
             if (result.Length != left.Length)
             {
@@ -35,7 +35,7 @@ namespace SimpleSimd
             }
         }
 
-        public static void And(in Span<T> left, in Span<T> right, in Span<T> result)
+        public static void And(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, in Span<T> result)
         {
             if (right.Length != left.Length)
             {

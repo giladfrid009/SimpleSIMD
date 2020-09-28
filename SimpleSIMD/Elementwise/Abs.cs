@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Abs(in Span<T> span, in Span<T> result)
+        public static void Abs(in ReadOnlySpan<T> span, in Span<T> result)
         {
             if (result.Length != span.Length)
             {

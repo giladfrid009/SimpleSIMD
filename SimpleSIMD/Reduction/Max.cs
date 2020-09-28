@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static T Max(in Span<T> span)
+        public static T Max(in ReadOnlySpan<T> span)
         {
             T max = NumOps<T>.MinValue;
             int i = 0;
@@ -36,7 +36,7 @@ namespace SimpleSimd
             return max;
         }
 
-        public static T Max<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
+        public static T Max<F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, T>

@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static bool Equal(in Span<T> left, T right)
+        public static bool Equal(in ReadOnlySpan<T> left, T right)
         {
             int i = 0;
 
@@ -16,7 +16,7 @@ namespace SimpleSimd
 
                 for (; i < vsLeft.Length; i++)
                 {
-                    if (vsLeft[i].Equals(vRight) == false)
+                    if (Vector.EqualsAll(vsLeft[i], vRight) == false)
                     {
                         return false;
                     }
@@ -36,7 +36,7 @@ namespace SimpleSimd
             return true;
         }
 
-        public static bool Equal(in Span<T> left, in Span<T> right)
+        public static bool Equal(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
         {
             if (right.Length != left.Length)
             {
@@ -52,7 +52,7 @@ namespace SimpleSimd
 
                 for (; i < vsLeft.Length; i++)
                 {
-                    if (vsLeft[i].Equals(vsRight[i]) == false)
+                    if (Vector.EqualsAll(vsLeft[i], vsRight[i]) == false)
                     {
                         return false;
                     }

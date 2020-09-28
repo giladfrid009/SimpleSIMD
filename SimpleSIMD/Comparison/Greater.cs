@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static bool Greater(in Span<T> left, T right)
+        public static bool Greater(in ReadOnlySpan<T> left, T right)
         {
             int i = 0;
 
@@ -36,7 +36,7 @@ namespace SimpleSimd
             return true;
         }
 
-        public static bool Greater(in Span<T> left, in Span<T> right)
+        public static bool Greater(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
         {
             if (right.Length != left.Length)
             {
