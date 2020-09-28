@@ -143,6 +143,7 @@ Frequency=3515621 Hz, Resolution=284.4448 ns, Timer=TSC
 * Supported collection types:
   * ```T[] where T : unmanaged```
   * ```Span<T> where T : unmanaged```
+  * ```ReadOnlySpan<T> where T : unmanaged```
 * Supports only **Primitive Numeric Types** as array elements. Supported types are:
   * ```byte, sbyte```
   * ```short, ushort```
