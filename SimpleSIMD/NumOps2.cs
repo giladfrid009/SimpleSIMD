@@ -3,9 +3,6 @@ using System.Linq.Expressions;
 
 namespace SimpleSimd
 {
-    /// <summary>
-    /// Generic runtime-generated numeric operations where the output type differs from the input type. 
-    /// </summary>
     public static class NumOps<T, TRes> where T : unmanaged where TRes : unmanaged
     {
         private static readonly Func<T, TRes> convFunc;

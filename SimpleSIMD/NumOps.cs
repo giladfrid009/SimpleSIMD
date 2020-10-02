@@ -5,10 +5,6 @@ using System.Runtime.CompilerServices;
 
 namespace SimpleSimd
 {
-    /// <summary>
-    /// Generic high performence numeric operations.
-    /// </summary>
-    /// <typeparam name="T">Numeric type</typeparam>
     public static class NumOps<T> where T : unmanaged
     {
         private const MethodImplOptions Inline = MethodImplOptions.AggressiveInlining;

@@ -4,9 +4,6 @@ using System.Runtime.InteropServices;
 
 namespace SimpleSimd
 {
-    /// <summary>
-    /// Generic SIMD-accelerated operations.
-    /// </summary>
     public static partial class SimdOps<T> where T : unmanaged
     {
         private static ReadOnlySpan<Vector<T>> AsVectors(ReadOnlySpan<T> span)
