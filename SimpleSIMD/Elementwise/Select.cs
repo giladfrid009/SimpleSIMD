@@ -15,13 +15,11 @@ namespace SimpleSimd
             if (result.Length != span.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
-                return;
             }       
 
             if (Vector<TRes>.Count != Vector<T>.Count)
             {
                 Exceptions.InvalidCast(typeof(TRes).Name);
-                return;
             }
 
             int i = 0;

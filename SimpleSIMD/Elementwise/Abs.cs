@@ -10,7 +10,6 @@ namespace SimpleSimd
             if (result.Length != span.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
-                return;
             }
 
             int i = 0;

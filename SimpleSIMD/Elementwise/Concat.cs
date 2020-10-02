@@ -15,19 +15,16 @@ namespace SimpleSimd
             if (right.Length != left.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(right));
-                return;
             }
 
             if (result.Length != left.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
-                return;
             }
 
             if (Vector<TRes>.Count != Vector<T>.Count)
             {
                 Exceptions.InvalidCast(typeof(TRes).Name);
-                return;
             }        
 
             int i = 0;

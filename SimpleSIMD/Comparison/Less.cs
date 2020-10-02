@@ -41,7 +41,6 @@ namespace SimpleSimd
             if (right.Length != left.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(right));
-                return default;
             }
 
             int i = 0;

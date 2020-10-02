@@ -10,7 +10,6 @@ namespace SimpleSimd
             if (result.Length != left.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
-                return;
             }
 
             int i = 0;
@@ -40,13 +39,11 @@ namespace SimpleSimd
             if (right.Length != left.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(right));
-                return;
             }
 
             if (result.Length != left.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
-                return;
             }
 
             int i = 0;

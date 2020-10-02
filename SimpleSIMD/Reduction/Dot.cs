@@ -39,7 +39,6 @@ namespace SimpleSimd
             if (right.Length != left.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(right));
-                return default;
             }
 
             T dot = NumOps<T>.Zero;
