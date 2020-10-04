@@ -11,8 +11,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Easy to use SIMD accelerated span and array methods</Description>
     <Copyright>Copyright 2020 (c) Gilad Freidkin, All rights reserved</Copyright>
-    <Version>2.3.0</Version>
-    <PackageReleaseNotes>Added ReadOnlySpan support</PackageReleaseNotes>
+    <Version>2.3.1</Version>
+    <PackageReleaseNotes>Performance improvments</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
