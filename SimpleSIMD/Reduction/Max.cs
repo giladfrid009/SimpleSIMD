@@ -8,16 +8,22 @@ namespace SimpleSimd
         public static T Max(in ReadOnlySpan<T> span)
         {
             T max = NumOps<T>.MinValue;
+
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
                 var vMax = new Vector<T>(max);
-                var vsSpan = AsVectors(span);
 
-                for (; i < vsSpan.Length; i++)
+                ref var vrSpan = ref AsVector(rSpan);
+
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vMax = Vector.Max(vMax, vsSpan[i]);
+                    vMax = Vector.Max(vMax, Offset(vrSpan, i));
                 }
 
                 for (int j = 0; j < Vector<T>.Count; ++j)
@@ -30,7 +36,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                max = NumOps<T>.Max(max, span[i]);
+                max = NumOps<T>.Max(max, Offset(rSpan, i));
             }
 
             return max;
@@ -43,16 +49,22 @@ namespace SimpleSimd
 
         {
             T max = NumOps<T>.MinValue;
+
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
                 var vMax = new Vector<T>(max);
-                var vsSpan = AsVectors(span);
 
-                for (; i < vsSpan.Length; i++)
+                ref var vrSpan = ref AsVector(rSpan);
+
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vMax = Vector.Max(vMax, vSelector.Invoke(vsSpan[i]));
+                    vMax = Vector.Max(vMax, vSelector.Invoke(Offset(vrSpan, i)));
                 }
 
                 for (int j = 0; j < Vector<T>.Count; ++j)
@@ -65,7 +77,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                max = NumOps<T>.Max(max, selector.Invoke(span[i]));
+                max = NumOps<T>.Max(max, selector.Invoke(Offset(rSpan, i)));
             }
 
             return max;

@@ -5,31 +5,36 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Abs(in ReadOnlySpan<T> span, in Span<T> result)
+        public static void Abs(in ReadOnlySpan<T> span, in ReadOnlySpan<T> result)
         {
             if (result.Length != span.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
             }
 
+            ref var rSpan = ref GetRef(span);
+            ref var rResult = ref GetRef(result);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vsSpan = AsVectors(span);
-                var vsResult = AsVectors(result);
+                ref var vrSpan = ref AsVector(rSpan);
+                ref var vrResult = ref AsVector(rResult);
 
-                for (; i < vsSpan.Length; i++)
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vsResult[i] = Vector.Abs(vsSpan[i]);
+                    Offset(vrResult, i) = Vector.Abs(Offset(vrSpan, i));
                 }
 
                 i *= Vector<T>.Count;
-            }
+            }      
 
             for (; i < span.Length; i++)
             {
-                result[i] = NumOps<T>.Abs(span[i]);
+                Offset(rResult, i) = NumOps<T>.Abs(Offset(rSpan, i));
             }
         }
 

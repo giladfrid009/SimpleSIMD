@@ -5,24 +5,30 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Divide(in ReadOnlySpan<T> left, T right, in Span<T> result)
+        public static void Divide(in ReadOnlySpan<T> left, T right, in ReadOnlySpan<T> result)
         {
             if (result.Length != left.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
             }
 
+            ref var rLeft = ref GetRef(left);
+            ref var rResult = ref GetRef(result);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
                 var vRight = new Vector<T>(right);
-                var vsLeft = AsVectors(left);
-                var vsResult = AsVectors(result);
 
-                for (; i < vsLeft.Length; i++)
+                ref var vrLeft = ref AsVector(rLeft);
+                ref var vrResult = ref AsVector(rResult);
+
+                int length = left.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vsResult[i] = Vector.Divide(vsLeft[i], vRight);
+                    Offset(vrResult, i) = Vector.Divide(Offset(vrLeft, i), vRight);
                 }
 
                 i *= Vector<T>.Count;
@@ -30,40 +36,46 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                result[i] = NumOps<T>.Divide(left[i], right);
+                Offset(rResult, i) = NumOps<T>.Divide(Offset(rLeft, i), right);
             }
         }
 
-        public static void Divide(T left, in ReadOnlySpan<T> right, in Span<T> result)
+        public static void Divide(T left, in ReadOnlySpan<T> right, in ReadOnlySpan<T> result)
         {
             if (result.Length != right.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
             }
 
+            ref var rRight = ref GetRef(right);
+            ref var rResult = ref GetRef(result);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
                 var vLeft = new Vector<T>(right);
-                var vsRight = AsVectors(right);
-                var vsResult = AsVectors(result);
 
-                for (; i < vsRight.Length; i++)
+                ref var vrRight = ref AsVector(rRight);
+                ref var vrResult = ref AsVector(rResult);
+
+                int length = right.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vsResult[i] = Vector.Divide(vLeft, vsRight[i]);
+                    Offset(vrResult, i) = Vector.Divide(vLeft, Offset(vrRight, i));
                 }
 
                 i *= Vector<T>.Count;
-            }
+            }      
 
             for (; i < right.Length; i++)
             {
-                result[i] = NumOps<T>.Divide(left, right[i]);
+                Offset(rResult, i) = NumOps<T>.Divide(left, Offset(rRight, i));
             }
         }
 
-        public static void Divide(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, in Span<T> result)
+        public static void Divide(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, in ReadOnlySpan<T> result)
         {
             if (right.Length != left.Length)
             {
@@ -75,17 +87,23 @@ namespace SimpleSimd
                 Exceptions.ArgOutOfRange(nameof(result));
             }
 
+            ref var rLeft = ref GetRef(left);
+            ref var rRight = ref GetRef(right);
+            ref var rResult = ref GetRef(result);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vsLeft = AsVectors(left);
-                var vsRight = AsVectors(right);
-                var vsResult = AsVectors(result);
+                ref var vrLeft = ref AsVector(rLeft);
+                ref var vrRight = ref AsVector(rRight);
+                ref var vrResult = ref AsVector(rResult);
 
-                for (; i < vsLeft.Length; i++)
+                int length = left.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vsResult[i] = Vector.Divide(vsLeft[i], vsRight[i]);
+                    Offset(vrResult, i) = Vector.Divide(Offset(vrLeft, i), Offset(vrRight, i));
                 }
 
                 i *= Vector<T>.Count;
@@ -93,7 +111,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                result[i] = NumOps<T>.Divide(left[i], right[i]);
+                Offset(rResult, i) = NumOps<T>.Divide(Offset(rLeft, i), Offset(rRight, i));
             }
         }
 

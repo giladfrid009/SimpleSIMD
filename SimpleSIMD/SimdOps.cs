@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace SimpleSimd
 {
     public static partial class SimdOps<T> where T : unmanaged
     {
-        private static ReadOnlySpan<Vector<T>> AsVectors(ReadOnlySpan<T> span)
+        private static ref Vector<U> AsVector<U>(in U value) where U : unmanaged
         {
-            return MemoryMarshal.Cast<T, Vector<T>>(span);
+            return ref Unsafe.As<U, Vector<U>>(ref Unsafe.AsRef(value));
         }
 
-        private static Span<Vector<TRes>> AsVectors<TRes>(Span<TRes> span) where TRes : unmanaged
+        private static ref U GetRef<U>(ReadOnlySpan<U> span) where U : unmanaged
         {
-            return MemoryMarshal.Cast<TRes, Vector<TRes>>(span);
+            return ref MemoryMarshal.GetReference(span);
+        }
+
+        private static ref U Offset<U>(in U first, int count) where U : struct
+        {
+            return ref Unsafe.Add(ref Unsafe.AsRef(in first), count);
         }
     }
 }

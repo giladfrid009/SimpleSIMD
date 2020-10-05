@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Select<TRes, F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector, in Span<TRes> result)
+        public static void Select<TRes, F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector, in ReadOnlySpan<TRes> result)
 
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<TRes>>
@@ -22,24 +22,29 @@ namespace SimpleSimd
                 Exceptions.InvalidCast(typeof(TRes).Name);
             }
 
+            ref var rSpan = ref GetRef(span);
+            ref var rResult = ref GetRef(result);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vsSpan = AsVectors(span);
-                var vsResult = AsVectors(result);
+                ref var vrSpan = ref AsVector(rSpan);
+                ref var vrResult = ref AsVector(rResult);
 
-                for (; i < vsSpan.Length; i++)
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vsResult[i] = vSelector.Invoke(vsSpan[i]);
+                    Offset(vrResult, i) = vSelector.Invoke(Offset(vrSpan, i));
                 }
 
                 i *= Vector<T>.Count;
-            }
+            }        
 
             for (; i < span.Length; i++)
             {
-                result[i] = selector.Invoke(span[i]);
+                Offset(rResult, i) = selector.Invoke(Offset(rSpan, i));
             }
         }
 

@@ -8,16 +8,22 @@ namespace SimpleSimd
         public static T Min(in ReadOnlySpan<T> span)
         {
             T min = NumOps<T>.MaxValue;
+
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
                 var vMin = new Vector<T>(min);
-                var vsSpan = AsVectors(span);
 
-                for (; i < vsSpan.Length; i++)
+                ref var vrSpan = ref AsVector(rSpan);
+
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vMin = Vector.Min(vMin, vsSpan[i]);
+                    vMin = Vector.Min(vMin, Offset(vrSpan, i));
                 }
 
                 for (int j = 0; j < Vector<T>.Count; ++j)
@@ -30,7 +36,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                min = NumOps<T>.Min(min, span[i]);
+                min = NumOps<T>.Min(min, Offset(rSpan, i));
             }
 
             return min;
@@ -43,16 +49,22 @@ namespace SimpleSimd
 
         {
             T min = NumOps<T>.MaxValue;
+
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
                 var vMin = new Vector<T>(min);
-                var vsSpan = AsVectors(span);
 
-                for (; i < vsSpan.Length; i++)
+                ref var vrSpan = ref AsVector(rSpan);
+
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vMin = Vector.Min(vMin, vSelector.Invoke(vsSpan[i]));
+                    vMin = Vector.Min(vMin, vSelector.Invoke(Offset(vrSpan, i)));
                 }
 
                 for (int j = 0; j < Vector<T>.Count; ++j)
@@ -65,7 +77,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                min = NumOps<T>.Min(min, selector.Invoke(span[i]));
+                min = NumOps<T>.Min(min, selector.Invoke(Offset(rSpan, i)));
             }
 
             return min;

@@ -7,16 +7,21 @@ namespace SimpleSimd
     {
         public static bool Greater(in ReadOnlySpan<T> left, T right)
         {
+            ref var rLeft = ref GetRef(left);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vRight = new Vector<T>(right);
-                var vsLeft = AsVectors(left);
+                var vRight = new Vector<T>(right);     
 
-                for (; i < vsLeft.Length; i++)
+                ref var vrLeft = ref AsVector(rLeft);
+
+                int length = left.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    if (Vector.GreaterThanAll(vsLeft[i], vRight) == false)
+                    if (Vector.GreaterThanAll(Offset(vrLeft, i), vRight) == false)
                     {
                         return false;
                     }
@@ -27,7 +32,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                if (NumOps<T>.Greater(left[i], right) == false)
+                if (NumOps<T>.Greater(Offset(rLeft, i), right) == false)
                 {
                     return false;
                 }
@@ -43,16 +48,21 @@ namespace SimpleSimd
                 Exceptions.ArgOutOfRange(nameof(right));
             }
 
+            ref var rLeft = ref GetRef(left);
+            ref var rRight = ref GetRef(right);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vsLeft = AsVectors(left);
-                var vsRight = AsVectors(right);
+                ref var vrLeft = ref AsVector(rLeft);
+                ref var vrRight = ref AsVector(rRight);
 
-                for (; i < vsLeft.Length; i++)
+                int length = left.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    if (Vector.GreaterThanAll(vsLeft[i], vsRight[i]) == false)
+                    if (Vector.GreaterThanAll(Offset(vrLeft, i), Offset(vrRight, i)) == false)
                     {
                         return false;
                     }
@@ -63,7 +73,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                if (NumOps<T>.Greater(left[i], right[i]) == false)
+                if (NumOps<T>.Greater(Offset(rLeft, i), Offset(rRight, i)) == false)
                 {
                     return false;
                 }

@@ -7,16 +7,21 @@ namespace SimpleSimd
     {
         public static bool Contains(in ReadOnlySpan<T> span, T value)
         {
-            Vector<T> vValue = new Vector<T>(value);
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vsSpan = AsVectors(span);
+                var vValue = new Vector<T>(value);
 
-                for (; i < vsSpan.Length; i++)
+                ref var vrSpan = ref AsVector(rSpan);
+
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    if (Vector.EqualsAny(vsSpan[i], vValue))
+                    if (Vector.EqualsAny(Offset(vrSpan, i), vValue))
                     {
                         return true;
                     }
@@ -27,7 +32,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                if (NumOps<T>.Equal(span[i], value))
+                if (NumOps<T>.Equal(Offset(rSpan, i), value))
                 {
                     return true;
                 }

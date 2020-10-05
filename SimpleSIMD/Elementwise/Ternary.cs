@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Ternary<F1, F2>(in ReadOnlySpan<T> span, F1 vCondition, F2 condition, T trueValue, T falseValue, in Span<T> result)
+        public static void Ternary<F1, F2>(in ReadOnlySpan<T> span, F1 vCondition, F2 condition, T trueValue, T falseValue, in ReadOnlySpan<T> result)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, bool>
@@ -15,19 +15,25 @@ namespace SimpleSimd
             {
                 Exceptions.ArgOutOfRange(nameof(result));
             }
-            
+
+            ref var rSpan = ref GetRef(span);
+            ref var rResult = ref GetRef(result);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
                 var vTrue = new Vector<T>(trueValue);
                 var vFalse = new Vector<T>(falseValue);
-                var vsSpan = AsVectors(span);
-                var vsResult = AsVectors(result);
 
-                for (; i < vsSpan.Length; i++)
+                ref var vrSpan = ref AsVector(rSpan);
+                ref var vrResult = ref AsVector(rResult);
+
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vsResult[i] = Vector.ConditionalSelect(vCondition.Invoke(vsSpan[i]), vTrue, vFalse);
+                    Offset(vrResult, i) = Vector.ConditionalSelect(vCondition.Invoke(Offset(vrSpan, i)), vTrue, vFalse);
                 }
 
                 i *= Vector<T>.Count;
@@ -35,11 +41,11 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                result[i] = condition.Invoke(span[i]) ? trueValue : falseValue;
+                Offset(rResult, i) = condition.Invoke(Offset(rSpan, i)) ? trueValue : falseValue;
             }
         }
 
-        public static void Ternary<F1, F2, F3, F4, F5, F6>(in ReadOnlySpan<T> span, F1 vCondition, F2 vTrueSelector, F3 vFalseSelector, F4 condition, F5 trueSelector, F6 falseSelector, in Span<T> result)
+        public static void Ternary<F1, F2, F3, F4, F5, F6>(in ReadOnlySpan<T> span, F1 vCondition, F2 vTrueSelector, F3 vFalseSelector, F4 condition, F5 trueSelector, F6 falseSelector, in ReadOnlySpan<T> result)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<Vector<T>, Vector<T>>
@@ -54,16 +60,21 @@ namespace SimpleSimd
                 Exceptions.ArgOutOfRange(nameof(result));
             }
 
+            ref var rSpan = ref GetRef(span);
+            ref var rResult = ref GetRef(result);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vsSpan = AsVectors(span);
-                var vsResult = AsVectors(result);
+                ref var vrSpan = ref AsVector(rSpan);
+                ref var vrResult = ref AsVector(rResult);
 
-                for (; i < vsSpan.Length; i++)
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vsResult[i] = Vector.ConditionalSelect(vCondition.Invoke(vsSpan[i]), vTrueSelector.Invoke(vsSpan[i]), vFalseSelector.Invoke(vsSpan[i]));
+                    Offset(vrResult, i) = Vector.ConditionalSelect(vCondition.Invoke(Offset(vrSpan, i)), vTrueSelector.Invoke(Offset(vrSpan, i)), vFalseSelector.Invoke(Offset(vrSpan, i)));
                 }
 
                 i *= Vector<T>.Count;
@@ -71,7 +82,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                result[i] = condition.Invoke(span[i]) ? trueSelector.Invoke(span[i]) : falseSelector.Invoke(span[i]);
+                Offset(rResult, i) = condition.Invoke(Offset(rSpan, i)) ? trueSelector.Invoke(Offset(rSpan, i)) : falseSelector.Invoke(Offset(rSpan, i));
             }
         }
 

@@ -8,16 +8,22 @@ namespace SimpleSimd
         public static T Sum(in ReadOnlySpan<T> span)
         {
             T sum = NumOps<T>.Zero;
+
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
                 var vSum = Vector<T>.Zero;
-                var vsSpan = AsVectors(span);
 
-                for (; i < vsSpan.Length; i++)
+                ref var vrSpan = ref AsVector(rSpan);
+
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vSum += vsSpan[i];
+                    vSum += Offset(vrSpan, i);
                 }
 
                 sum = Vector.Dot(vSum, Vector<T>.One);
@@ -27,7 +33,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                sum = NumOps<T>.Add(sum, span[i]);
+                sum = NumOps<T>.Add(sum, Offset(rSpan, i));
             }
 
             return sum;
@@ -41,16 +47,22 @@ namespace SimpleSimd
 
         {
             T sum = NumOps<T>.Zero;
+
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
                 var vSum = Vector<T>.Zero;
-                var vsSpan = AsVectors(span);
 
-                for (; i < vsSpan.Length; i++)
+                ref var vrSpan = ref AsVector(rSpan);
+
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vSum += vSelector.Invoke(vsSpan[i]);
+                    vSum += vSelector.Invoke(Offset(vrSpan, i));
                 }
 
                 sum = Vector.Dot(vSum, Vector<T>.One);
@@ -60,7 +72,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                sum = NumOps<T>.Add(sum, selector.Invoke(span[i]));
+                sum = NumOps<T>.Add(sum, selector.Invoke(Offset(rSpan, i)));
             }
 
             return sum;

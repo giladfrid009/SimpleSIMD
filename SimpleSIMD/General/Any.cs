@@ -11,15 +11,19 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T, bool>
 
         {
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vsSpan = AsVectors(span);
+                ref var vrSpan = ref AsVector(rSpan);
 
-                for (; i < vsSpan.Length; i++)
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    if (vPredicate.Invoke(vsSpan[i]))
+                    if (vPredicate.Invoke(Offset(vrSpan, i)) == true)
                     {
                         return true;
                     }
@@ -28,9 +32,10 @@ namespace SimpleSimd
                 i *= Vector<T>.Count;
             }
 
+
             for (; i < span.Length; i++)
             {
-                if (predicate.Invoke(span[i]))
+                if (predicate.Invoke(Offset(rSpan, i)) == true)
                 {
                     return true;
                 }

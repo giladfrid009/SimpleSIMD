@@ -11,15 +11,19 @@ namespace SimpleSimd
             where F2 : struct, IAction<T>
 
         {
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vsSpan = AsVectors(span);
+                ref var vrSpan = ref AsVector(rSpan);
 
-                for (; i < vsSpan.Length; i++)
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vAction.Invoke(vsSpan[i]);
+                    vAction.Invoke(Offset(vrSpan, i));
                 }
 
                 i *= Vector<T>.Count;
@@ -27,7 +31,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                action.Invoke(span[i]);
+                action.Invoke(Offset(rSpan, i));
             }
         }
     }

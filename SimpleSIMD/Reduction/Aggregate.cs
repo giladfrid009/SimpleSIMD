@@ -12,16 +12,22 @@ namespace SimpleSimd
 
         {
             T res = seed;
+
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
                 var vRes = new Vector<T>(seed);
-                var vsSpan = AsVectors(span);
 
-                for (; i < vsSpan.Length; i++)
+                ref var vrSpan = ref AsVector(rSpan);
+
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vRes = vAccumulator.Invoke(vRes, vsSpan[i]);
+                    vRes = vAccumulator.Invoke(vRes, Offset(vrSpan, i));
                 }
 
                 for (int j = 0; j < Vector<T>.Count; j++)
@@ -34,7 +40,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                res = accumulator.Invoke(res, span[i]);
+                res = accumulator.Invoke(res, Offset(rSpan, i));
             }
 
             return res;

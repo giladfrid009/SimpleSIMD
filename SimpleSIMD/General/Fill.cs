@@ -5,18 +5,23 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Fill(in Span<T> span, T value)
+        public static void Fill(in ReadOnlySpan<T> span, T value)
         {
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
                 var vValue = new Vector<T>(value);
-                var vsSpan = AsVectors(span);
 
-                for (; i < vsSpan.Length; i++)
+                ref var vrSpan = ref AsVector(rSpan);
+
+                int length = span.Length / Vector<T>.Count;
+                
+                for (; i < length; i++)
                 {
-                    vsSpan[i] = vValue;
+                    Offset(vrSpan, i) = vValue;
                 }
 
                 i *= Vector<T>.Count;
@@ -24,26 +29,30 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                span[i] = value;
+                Offset(rSpan, i) = value;
             }
         }
 
 
-        public static void Fill<F1, F2>(in Span<T> span, F1 vFunc, F2 func)
+        public static void Fill<F1, F2>(in ReadOnlySpan<T> span, F1 vFunc, F2 func)
 
             where F1 : struct, IFunc<Vector<T>>
             where F2 : struct, IFunc<T>
 
         {
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vsSpan = AsVectors(span);
+                ref var vrSpan = ref AsVector(rSpan);
+                
+                int length = span.Length / Vector<T>.Count;
 
-                for (; i < vsSpan.Length; i++)
+                for (; i < length; i++)
                 {
-                    vsSpan[i] = vFunc.Invoke();
+                    Offset(vrSpan, i) = vFunc.Invoke();
                 }
 
                 i *= Vector<T>.Count;
@@ -51,7 +60,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                span[i] = func.Invoke();
+                Offset(rSpan, i) = func.Invoke();
             }
         }
     }

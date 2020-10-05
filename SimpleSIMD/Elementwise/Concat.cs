@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {   
-        public static void Concat<TRes, F1, F2>(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, in Span<TRes> result)
+        public static void Concat<TRes, F1, F2>(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, in ReadOnlySpan<TRes> result)
 
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
@@ -27,17 +27,23 @@ namespace SimpleSimd
                 Exceptions.InvalidCast(typeof(TRes).Name);
             }        
 
+            ref var rLeft = ref GetRef(left);
+            ref var rRight = ref GetRef(right);
+            ref var rResult = ref GetRef(result);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vsLeft = AsVectors(left);
-                var vsRight = AsVectors(right);
-                var vsResult = AsVectors(result);
+                ref var vrLeft = ref AsVector(rLeft);
+                ref var vrRight = ref AsVector(rRight);
+                ref var vrResult = ref AsVector(rResult);
 
-                for (; i < vsLeft.Length; i++)
+                int length = left.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    vsResult[i] = vCombiner.Invoke(vsLeft[i], vsRight[i]);
+                    Offset(vrResult, i) = vCombiner.Invoke(Offset(vrLeft, i), Offset(vrRight, i));
                 }
 
                 i *= Vector<T>.Count;
@@ -45,7 +51,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                result[i] = combiner.Invoke(left[i], right[i]);
+                Offset(rResult, i) = combiner.Invoke(Offset(rLeft, i), Offset(rRight, i));
             }
         }
 

@@ -7,16 +7,21 @@ namespace SimpleSimd
     {
         public static bool Equal(in ReadOnlySpan<T> left, T right)
         {
+            ref var rLeft = ref GetRef(left);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
                 var vRight = new Vector<T>(right);
-                var vsLeft = AsVectors(left);
 
-                for (; i < vsLeft.Length; i++)
+                ref var vrLeft = ref AsVector(rLeft);
+
+                int length = left.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    if (Vector.EqualsAll(vsLeft[i], vRight) == false)
+                    if (Vector.EqualsAll(Offset(vrLeft, i), vRight) == false)
                     {
                         return false;
                     }
@@ -27,7 +32,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                if (NumOps<T>.Equal(left[i], right) == false)
+                if (NumOps<T>.Equal(Offset(rLeft, i), right) == false)
                 {
                     return false;
                 }
@@ -43,16 +48,21 @@ namespace SimpleSimd
                 return false;
             }
 
+            ref var rLeft = ref GetRef(left);
+            ref var rRight = ref GetRef(right);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vsLeft = AsVectors(left);
-                var vsRight = AsVectors(right);
+                ref var vrLeft = ref AsVector(rLeft);
+                ref var vrRight = ref AsVector(rRight);
 
-                for (; i < vsLeft.Length; i++)
+                int length = left.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    if (Vector.EqualsAll(vsLeft[i], vsRight[i]) == false)
+                    if (Vector.EqualsAll(Offset(vrLeft, i), Offset(vrLeft, i)) == false)
                     {
                         return false;
                     }
@@ -63,7 +73,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                if (NumOps<T>.Equal(left[i], right[i]) == false)
+                if (NumOps<T>.Equal(Offset(rLeft, i), Offset(rRight, i)) == false)
                 {
                     return false;
                 }

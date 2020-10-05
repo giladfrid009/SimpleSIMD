@@ -7,24 +7,29 @@ namespace SimpleSimd
     {
         public static int IndexOf(in ReadOnlySpan<T> span, T value)
         {
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
                 var vValue = new Vector<T>(value);
-                var vsSpan = AsVectors(span);
 
-                for (; i < vsSpan.Length; i++)
+                ref var vrSpan = ref AsVector(rSpan);
+
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    if (Vector.EqualsAny(vsSpan[i], vValue))
+                    if (Vector.EqualsAny(Offset(vrSpan, i), vValue))
                     {
-                        var vec = vsSpan[i];
+                        int length2 = (i + 1) * Vector<T>.Count;
 
-                        for (int j = 0; j < Vector<T>.Count; j++)
+                        for (int j = i * Vector<T>.Count; j < length2; j++)
                         {
-                            if (NumOps<T>.Equal(vec[j], value))
+                            if (NumOps<T>.Equal(Offset(rSpan, i) , value))
                             {
-                                return i * Vector<T>.Count + j;
+                                return j;
                             }
                         }
                     }
@@ -35,7 +40,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                if (NumOps<T>.Equal(span[i], value))
+                if (NumOps<T>.Equal(Offset(rSpan, i), value))
                 {
                     return i;
                 }
@@ -50,23 +55,27 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T, bool>
 
         {
+            ref var rSpan = ref GetRef(span);
+
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vsSpan = AsVectors(span);
+                ref var vrSpan = ref AsVector(rSpan);
 
-                for (; i < vsSpan.Length; i++)
+                int length = span.Length / Vector<T>.Count;
+
+                for (; i < length; i++)
                 {
-                    if (vPredicate.Invoke(vsSpan[i]))
+                    if (vPredicate.Invoke(Offset(vrSpan, i)))
                     {
-                        var vec = vsSpan[i];
+                        int length2 = (i + 1) * Vector<T>.Count;
 
-                        for (int j = 0; j < Vector<T>.Count; j++)
+                        for (int j = i * Vector<T>.Count; j < length2; j++)
                         {
-                            if (predicate.Invoke(vec[j]))
+                            if (predicate.Invoke(Offset(rSpan, j)))
                             {
-                                return i * Vector<T>.Count + j;
+                                return j;
                             }
                         }
                     }
@@ -75,9 +84,10 @@ namespace SimpleSimd
                 i *= Vector<T>.Count;
             }
 
+
             for (; i < span.Length; i++)
             {
-                if (predicate.Invoke(span[i]))
+                if (predicate.Invoke(Offset(rSpan, i)))
                 {
                     return i;
                 }
