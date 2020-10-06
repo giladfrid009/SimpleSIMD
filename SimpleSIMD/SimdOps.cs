@@ -16,10 +16,13 @@ namespace SimpleSimd
         {
             return ref MemoryMarshal.GetReference(span);
         }
+    }
 
-        private static ref U Offset<U>(in U first, int count) where U : struct
+    internal static class SimdOps
+    {
+        internal static ref T Offset<T>(this ref T source, int count) where T : struct
         {
-            return ref Unsafe.Add(ref Unsafe.AsRef(in first), count);
+            return ref Unsafe.Add(ref source, count);
         }
     }
 }

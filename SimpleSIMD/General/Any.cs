@@ -23,7 +23,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    if (vPredicate.Invoke(Offset(vrSpan, i)) == true)
+                    if (vPredicate.Invoke(vrSpan.Offset(i)) == true)
                     {
                         return true;
                     }
@@ -35,7 +35,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                if (predicate.Invoke(Offset(rSpan, i)) == true)
+                if (predicate.Invoke(rSpan.Offset(i)) == true)
                 {
                     return true;
                 }

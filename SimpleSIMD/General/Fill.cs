@@ -21,7 +21,7 @@ namespace SimpleSimd
                 
                 for (; i < length; i++)
                 {
-                    Offset(vrSpan, i) = vValue;
+                    vrSpan.Offset(i) = vValue;
                 }
 
                 i *= Vector<T>.Count;
@@ -29,7 +29,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                Offset(rSpan, i) = value;
+                rSpan.Offset(i) = value;
             }
         }
 
@@ -52,7 +52,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    Offset(vrSpan, i) = vFunc.Invoke();
+                    vrSpan.Offset(i) = vFunc.Invoke();
                 }
 
                 i *= Vector<T>.Count;
@@ -60,7 +60,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                Offset(rSpan, i) = func.Invoke();
+                rSpan.Offset(i) = func.Invoke();
             }
         }
     }

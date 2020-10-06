@@ -21,13 +21,14 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    if (Vector.EqualsAny(Offset(vrSpan, i), vValue))
+                    if (Vector.EqualsAny(vrSpan.Offset(i), vValue))
                     {
-                        int length2 = (i + 1) * Vector<T>.Count;
+                        int j = i * Vector<T>.Count;
+                        int l = j + Vector<T>.Count;
 
-                        for (int j = i * Vector<T>.Count; j < length2; j++)
+                        for (; j < l; j++)
                         {
-                            if (NumOps<T>.Equal(Offset(rSpan, i) , value))
+                            if (NumOps<T>.Equal(rSpan.Offset(j) , value))
                             {
                                 return j;
                             }
@@ -40,7 +41,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                if (NumOps<T>.Equal(Offset(rSpan, i), value))
+                if (NumOps<T>.Equal(rSpan.Offset(i), value))
                 {
                     return i;
                 }
@@ -67,13 +68,14 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    if (vPredicate.Invoke(Offset(vrSpan, i)))
+                    if (vPredicate.Invoke(vrSpan.Offset(i)))
                     {
-                        int length2 = (i + 1) * Vector<T>.Count;
+                        int j = i * Vector<T>.Count;
+                        int l = j + Vector<T>.Count;
 
-                        for (int j = i * Vector<T>.Count; j < length2; j++)
+                        for (; j < l; j++)
                         {
-                            if (predicate.Invoke(Offset(rSpan, j)))
+                            if (predicate.Invoke(rSpan.Offset(j)))
                             {
                                 return j;
                             }
@@ -87,7 +89,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                if (predicate.Invoke(Offset(rSpan, i)))
+                if (predicate.Invoke(rSpan.Offset(i)))
                 {
                     return i;
                 }

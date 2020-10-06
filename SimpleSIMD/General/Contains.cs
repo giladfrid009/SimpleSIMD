@@ -21,7 +21,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    if (Vector.EqualsAny(Offset(vrSpan, i), vValue))
+                    if (Vector.EqualsAny(vrSpan.Offset(i), vValue))
                     {
                         return true;
                     }
@@ -32,7 +32,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                if (NumOps<T>.Equal(Offset(rSpan, i), value))
+                if (NumOps<T>.Equal(rSpan.Offset(i), value))
                 {
                     return true;
                 }

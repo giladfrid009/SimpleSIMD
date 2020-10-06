@@ -21,7 +21,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    if (Vector.GreaterThanAll(Offset(vrLeft, i), vRight) == false)
+                    if (Vector.GreaterThanAll(vrLeft.Offset(i), vRight) == false)
                     {
                         return false;
                     }
@@ -32,7 +32,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                if (NumOps<T>.Greater(Offset(rLeft, i), right) == false)
+                if (NumOps<T>.Greater(rLeft.Offset(i), right) == false)
                 {
                     return false;
                 }
@@ -62,7 +62,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    if (Vector.GreaterThanAll(Offset(vrLeft, i), Offset(vrRight, i)) == false)
+                    if (Vector.GreaterThanAll(vrLeft.Offset(i), vrRight.Offset(i)) == false)
                     {
                         return false;
                     }
@@ -73,7 +73,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                if (NumOps<T>.Greater(Offset(rLeft, i), Offset(rRight, i)) == false)
+                if (NumOps<T>.Greater(rLeft.Offset(i), rRight.Offset(i)) == false)
                 {
                     return false;
                 }

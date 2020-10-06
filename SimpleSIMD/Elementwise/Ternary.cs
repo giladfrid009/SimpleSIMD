@@ -33,7 +33,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    Offset(vrResult, i) = Vector.ConditionalSelect(vCondition.Invoke(Offset(vrSpan, i)), vTrue, vFalse);
+                    vrResult.Offset(i) = Vector.ConditionalSelect(vCondition.Invoke(vrSpan.Offset(i)), vTrue, vFalse);
                 }
 
                 i *= Vector<T>.Count;
@@ -41,7 +41,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                Offset(rResult, i) = condition.Invoke(Offset(rSpan, i)) ? trueValue : falseValue;
+                rResult.Offset(i) = condition.Invoke(rSpan.Offset(i)) ? trueValue : falseValue;
             }
         }
 
@@ -74,7 +74,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    Offset(vrResult, i) = Vector.ConditionalSelect(vCondition.Invoke(Offset(vrSpan, i)), vTrueSelector.Invoke(Offset(vrSpan, i)), vFalseSelector.Invoke(Offset(vrSpan, i)));
+                    vrResult.Offset(i) = Vector.ConditionalSelect(vCondition.Invoke(vrSpan.Offset(i)), vTrueSelector.Invoke(vrSpan.Offset(i)), vFalseSelector.Invoke(vrSpan.Offset(i)));
                 }
 
                 i *= Vector<T>.Count;
@@ -82,7 +82,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                Offset(rResult, i) = condition.Invoke(Offset(rSpan, i)) ? trueSelector.Invoke(Offset(rSpan, i)) : falseSelector.Invoke(Offset(rSpan, i));
+                rResult.Offset(i) = condition.Invoke(rSpan.Offset(i)) ? trueSelector.Invoke(rSpan.Offset(i)) : falseSelector.Invoke(rSpan.Offset(i));
             }
         }
 

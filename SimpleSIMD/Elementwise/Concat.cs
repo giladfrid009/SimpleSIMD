@@ -43,7 +43,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    Offset(vrResult, i) = vCombiner.Invoke(Offset(vrLeft, i), Offset(vrRight, i));
+                    vrResult.Offset(i) = vCombiner.Invoke(vrLeft.Offset(i), vrRight.Offset(i));
                 }
 
                 i *= Vector<T>.Count;
@@ -51,7 +51,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                Offset(rResult, i) = combiner.Invoke(Offset(rLeft, i), Offset(rRight, i));
+                rResult.Offset(i) = combiner.Invoke(rLeft.Offset(i), rRight.Offset(i));
             }
         }
 

@@ -28,7 +28,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    Offset(vrResult, i) = Vector.Divide(Offset(vrLeft, i), vRight);
+                    vrResult.Offset(i) = Vector.Divide(vrLeft.Offset(i), vRight);
                 }
 
                 i *= Vector<T>.Count;
@@ -36,7 +36,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                Offset(rResult, i) = NumOps<T>.Divide(Offset(rLeft, i), right);
+                rResult.Offset(i) = NumOps<T>.Divide(rLeft.Offset(i), right);
             }
         }
 
@@ -63,7 +63,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    Offset(vrResult, i) = Vector.Divide(vLeft, Offset(vrRight, i));
+                    vrResult.Offset(i) = Vector.Divide(vLeft, vrRight.Offset(i));
                 }
 
                 i *= Vector<T>.Count;
@@ -71,7 +71,7 @@ namespace SimpleSimd
 
             for (; i < right.Length; i++)
             {
-                Offset(rResult, i) = NumOps<T>.Divide(left, Offset(rRight, i));
+                rResult.Offset(i) = NumOps<T>.Divide(left, rRight.Offset(i));
             }
         }
 
@@ -103,7 +103,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    Offset(vrResult, i) = Vector.Divide(Offset(vrLeft, i), Offset(vrRight, i));
+                    vrResult.Offset(i) = Vector.Divide(vrLeft.Offset(i), vrRight.Offset(i));
                 }
 
                 i *= Vector<T>.Count;
@@ -111,7 +111,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                Offset(rResult, i) = NumOps<T>.Divide(Offset(rLeft, i), Offset(rRight, i));
+                rResult.Offset(i) = NumOps<T>.Divide(rLeft.Offset(i), rRight.Offset(i));
             }
         }
 

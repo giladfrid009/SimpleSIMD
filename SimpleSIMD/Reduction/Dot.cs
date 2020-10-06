@@ -24,7 +24,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    vDot += Offset(vrLeft, i) * vRight;
+                    vDot += vrLeft.Offset(i) * vRight;
                 }
 
                 dot = Vector.Dot(vDot, Vector<T>.One);
@@ -34,7 +34,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                dot = NumOps<T>.Add(dot, NumOps<T>.Multiply(Offset(rLeft, i), right));
+                dot = NumOps<T>.Add(dot, NumOps<T>.Multiply(rLeft.Offset(i), right));
             }
 
             return dot;
@@ -65,7 +65,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    vDot += Offset(vrLeft, i) * Offset(vrRight, i);
+                    vDot += vrLeft.Offset(i) * vrRight.Offset(i);
                 }
 
                 dot = Vector.Dot(vDot, Vector<T>.One);
@@ -75,7 +75,7 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                dot = NumOps<T>.Add(dot, NumOps<T>.Multiply(Offset(rLeft, i), Offset(rRight, i)));
+                dot = NumOps<T>.Add(dot, NumOps<T>.Multiply(rLeft.Offset(i), rRight.Offset(i)));
             }
 
             return dot;

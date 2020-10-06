@@ -23,7 +23,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    vAction.Invoke(Offset(vrSpan, i));
+                    vAction.Invoke(vrSpan.Offset(i));
                 }
 
                 i *= Vector<T>.Count;
@@ -31,7 +31,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                action.Invoke(Offset(rSpan, i));
+                action.Invoke(rSpan.Offset(i));
             }
         }
     }

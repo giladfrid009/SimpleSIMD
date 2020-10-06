@@ -26,7 +26,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    Offset(vrResult, i) = Vector.Negate(Offset(vrSpan, i));
+                    vrResult.Offset(i) = Vector.Negate(vrSpan.Offset(i));
                 }
 
                 i *= Vector<T>.Count;
@@ -34,7 +34,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                Offset(rResult, i) = NumOps<T>.Negate(Offset(rSpan, i));
+                rResult.Offset(i) = NumOps<T>.Negate(rSpan.Offset(i));
             }
         }
 

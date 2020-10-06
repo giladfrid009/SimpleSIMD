@@ -36,7 +36,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    Offset(vrResult, i) = vSelector.Invoke(Offset(vrSpan, i));
+                    vrResult.Offset(i) = vSelector.Invoke(vrSpan.Offset(i));
                 }
 
                 i *= Vector<T>.Count;
@@ -44,7 +44,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                Offset(rResult, i) = selector.Invoke(Offset(rSpan, i));
+                rResult.Offset(i) = selector.Invoke(rSpan.Offset(i));
             }
         }
 

@@ -27,7 +27,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    vRes = vAccumulator.Invoke(vRes, Offset(vrSpan, i));
+                    vRes = vAccumulator.Invoke(vRes, vrSpan.Offset(i));
                 }
 
                 for (int j = 0; j < Vector<T>.Count; j++)
@@ -40,7 +40,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                res = accumulator.Invoke(res, Offset(rSpan, i));
+                res = accumulator.Invoke(res, rSpan.Offset(i));
             }
 
             return res;

@@ -23,10 +23,10 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    vMin = Vector.Min(vMin, Offset(vrSpan, i));
+                    vMin = Vector.Min(vMin, vrSpan.Offset(i));
                 }
 
-                for (int j = 0; j < Vector<T>.Count; ++j)
+                for (int j = 0; j < Vector<T>.Count; j++)
                 {
                     min = NumOps<T>.Min(min, vMin[j]);
                 }
@@ -36,7 +36,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                min = NumOps<T>.Min(min, Offset(rSpan, i));
+                min = NumOps<T>.Min(min, rSpan.Offset(i));
             }
 
             return min;
@@ -64,10 +64,10 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    vMin = Vector.Min(vMin, vSelector.Invoke(Offset(vrSpan, i)));
+                    vMin = Vector.Min(vMin, vSelector.Invoke(vrSpan.Offset(i)));
                 }
 
-                for (int j = 0; j < Vector<T>.Count; ++j)
+                for (int j = 0; j < Vector<T>.Count; j++)
                 {
                     min = NumOps<T>.Min(min, vMin[j]);
                 }
@@ -77,7 +77,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                min = NumOps<T>.Min(min, selector.Invoke(Offset(rSpan, i)));
+                min = NumOps<T>.Min(min, selector.Invoke(rSpan.Offset(i)));
             }
 
             return min;

@@ -23,10 +23,10 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    vMax = Vector.Max(vMax, Offset(vrSpan, i));
+                    vMax = Vector.Max(vMax, vrSpan.Offset(i));
                 }
 
-                for (int j = 0; j < Vector<T>.Count; ++j)
+                for (int j = 0; j < Vector<T>.Count; j++)
                 {
                     max = NumOps<T>.Max(max, vMax[j]);
                 }
@@ -36,7 +36,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                max = NumOps<T>.Max(max, Offset(rSpan, i));
+                max = NumOps<T>.Max(max, rSpan.Offset(i));
             }
 
             return max;
@@ -64,10 +64,10 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    vMax = Vector.Max(vMax, vSelector.Invoke(Offset(vrSpan, i)));
+                    vMax = Vector.Max(vMax, vSelector.Invoke(vrSpan.Offset(i)));
                 }
 
-                for (int j = 0; j < Vector<T>.Count; ++j)
+                for (int j = 0; j < Vector<T>.Count; j++)
                 {
                     max = NumOps<T>.Max(max, vMax[j]);
                 }
@@ -77,7 +77,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                max = NumOps<T>.Max(max, selector.Invoke(Offset(rSpan, i)));
+                max = NumOps<T>.Max(max, selector.Invoke(rSpan.Offset(i)));
             }
 
             return max;

@@ -23,7 +23,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    vSum += Offset(vrSpan, i);
+                    Vector.Add(vSum, vrSpan.Offset(i));
                 }
 
                 sum = Vector.Dot(vSum, Vector<T>.One);
@@ -33,7 +33,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                sum = NumOps<T>.Add(sum, Offset(rSpan, i));
+                sum = NumOps<T>.Add(sum, rSpan.Offset(i));
             }
 
             return sum;
@@ -62,7 +62,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    vSum += vSelector.Invoke(Offset(vrSpan, i));
+                    Vector.Add(vSum, vSelector.Invoke(vrSpan.Offset(i)));
                 }
 
                 sum = Vector.Dot(vSum, Vector<T>.One);
@@ -72,7 +72,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                sum = NumOps<T>.Add(sum, selector.Invoke(Offset(rSpan, i)));
+                sum = NumOps<T>.Add(sum, selector.Invoke(rSpan.Offset(i)));
             }
 
             return sum;
