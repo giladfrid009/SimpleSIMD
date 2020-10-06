@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Add(in ReadOnlySpan<T> left, T right, in ReadOnlySpan<T> result)
+        public static void Add(in ReadOnlySpan<T> left, T right, in Span<T> result)
         {
             if (result.Length != left.Length)
             {
@@ -40,7 +40,7 @@ namespace SimpleSimd
             }
         }
 
-        public static void Add(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, in ReadOnlySpan<T> result)
+        public static void Add(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, in Span<T> result)
         {
             if (right.Length != left.Length)
             {

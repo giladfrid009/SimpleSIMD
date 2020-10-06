@@ -16,6 +16,11 @@ namespace SimpleSimd
         {
             return ref MemoryMarshal.GetReference(span);
         }
+
+        private static ref U GetRef<U>(Span<U> span) where U : unmanaged
+        {
+            return ref MemoryMarshal.GetReference(span);
+        }
     }
 
     internal static class SimdOps

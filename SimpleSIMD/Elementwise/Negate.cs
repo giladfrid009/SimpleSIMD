@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Negate(in ReadOnlySpan<T> span, in ReadOnlySpan<T> result)
+        public static void Negate(in ReadOnlySpan<T> span, in Span<T> result)
         {
             if (result.Length != span.Length)
             {

@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {   
-        public static void Concat<TRes, F1, F2>(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, in ReadOnlySpan<TRes> result)
+        public static void Concat<TRes, F1, F2>(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, in Span<TRes> result)
 
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>

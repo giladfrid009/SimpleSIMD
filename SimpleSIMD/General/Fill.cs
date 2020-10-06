@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Fill(in ReadOnlySpan<T> span, T value)
+        public static void Fill(in Span<T> span, T value)
         {
             ref var rSpan = ref GetRef(span);
 
@@ -34,7 +34,7 @@ namespace SimpleSimd
         }
 
 
-        public static void Fill<F1, F2>(in ReadOnlySpan<T> span, F1 vFunc, F2 func)
+        public static void Fill<F1, F2>(in Span<T> span, F1 vFunc, F2 func)
 
             where F1 : struct, IFunc<Vector<T>>
             where F2 : struct, IFunc<T>
