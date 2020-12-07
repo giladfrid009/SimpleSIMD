@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>SimpleSimd</RootNamespace>
     <nullable>enable</nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -11,12 +11,13 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Easy to use SIMD accelerated span and array methods</Description>
     <Copyright>Copyright 2020 (c) Gilad Freidkin, All rights reserved</Copyright>
-    <Version>2.4.3</Version>
-    <PackageReleaseNotes>Reverted accepting ReadOnlySpan as result and writing to it. Now accepting Span.</PackageReleaseNotes>
+    <Version>2.5.0</Version>
+    <PackageReleaseNotes>Upgraded to .NET 5.0
+</PackageReleaseNotes>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
 </Project>
