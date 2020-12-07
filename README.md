@@ -126,8 +126,6 @@ public static T Sum<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
 | ValueDelegate |   100000 |     8,519.340 ns |     41.2833 ns |     38.6164 ns |  0.29 |
 |      Delegate |  1000000 |   304,228.749 ns |  1,995.9951 ns |  1,769.3976 ns |  1.00 |
 | ValueDelegate |  1000000 |    85,619.207 ns |    316.5366 ns |    280.6015 ns |  0.28 |
-|      Delegate | 10000000 | 3,181,029.471 ns |  5,987.0172 ns |  5,600.2596 ns |  1.00 |
-| ValueDelegate | 10000000 | 2,615,592.902 ns | 13,642.9671 ns | 12,761.6399 ns |  0.82 |
 
 ```
 BenchmarkDotNet=v0.12.1, OS=Windows 10.0.14393.3930 (1607/AnniversaryUpdate/Redstone1)
