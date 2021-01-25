@@ -54,7 +54,7 @@ namespace SimpleSimd
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vLeft = new Vector<T>(right);
+                var vLeft = new Vector<T>(left);
 
                 ref var vrRight = ref AsVector(rRight);
                 ref var vrResult = ref AsVector(rResult);
