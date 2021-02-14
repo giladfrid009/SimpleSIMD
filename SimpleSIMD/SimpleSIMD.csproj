@@ -11,8 +11,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Easy to use SIMD accelerated span and array methods</Description>
     <Copyright>Copyright 2020 (c) Gilad Freidkin, All rights reserved</Copyright>
-    <Version>2.5.0</Version>
-    <PackageReleaseNotes>Upgraded to .NET 5.0
+    <Version>3.00</Version>
+    <PackageReleaseNotes>Major rewrite, code simplification and trimming
 </PackageReleaseNotes>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>

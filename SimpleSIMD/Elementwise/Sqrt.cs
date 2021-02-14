@@ -23,7 +23,7 @@ namespace SimpleSimd
 
         public static void Sqrt(in ReadOnlySpan<T> span, in Span<T> result)
         {
-            Select(span, new Abs_VSelector(), new Abs_Selector(), result);
+            Select(span, new Sqrt_VSelector(), new Sqrt_Selector(), result);
         }
 
         public static T[] Sqrt(T[] array)

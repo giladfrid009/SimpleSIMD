@@ -23,7 +23,7 @@ namespace SimpleSimd
 
         public static void Not(in ReadOnlySpan<T> span, in Span<T> result)
         {
-            Select(span, new Negate_VSelector(), new Negate_Selector(), result);
+            Select(span, new Not_VSelector(), new Not_Selector(), result);
         }
 
         public static T[] Not(T[] array)
