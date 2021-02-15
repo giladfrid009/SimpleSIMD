@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
+        [MethodImpl(MaxOpt)]
         public static void Fill(in Span<T> span, T value)
         {
             ref var rSpan = ref GetRef(span);
@@ -33,7 +35,7 @@ namespace SimpleSimd
             }
         }
 
-
+        [MethodImpl(MaxOpt)]
         public static void Fill<F1, F2>(in Span<T> span, F1 vFunc, F2 func)
 
             where F1 : struct, IFunc<Vector<T>>

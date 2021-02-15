@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace SimpleSimd
 {
     public static partial class SimdOps<T>
-    {        
+    {
+        [MethodImpl(MaxOpt)]
         public static void Foreach<F1, F2>(in ReadOnlySpan<T> span, F1 vAction, F2 action)
 
             where F1 : struct, IAction<Vector<T>>

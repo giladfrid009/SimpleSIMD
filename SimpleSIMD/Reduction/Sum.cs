@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
+        [MethodImpl(MaxOpt)]
         public static T Sum(in ReadOnlySpan<T> span)
         {
             T sum = NumOps<T>.Zero;
@@ -39,7 +41,7 @@ namespace SimpleSimd
             return sum;
         }
 
-        
+        [MethodImpl(MaxOpt)]
         public static T Sum<F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>

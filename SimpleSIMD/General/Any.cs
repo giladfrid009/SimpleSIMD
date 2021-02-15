@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
+        [MethodImpl(MaxOpt)]
         public static bool Any<F1, F2>(in ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
 
             where F1 : struct, IFunc<Vector<T>, bool>
@@ -44,6 +46,7 @@ namespace SimpleSimd
             return false;
         }
 
+        [MethodImpl(MaxOpt)]
         public static bool Any<F1, F2>(in ReadOnlySpan<T> left, T right, F1 vPredicate, F2 predicate)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>
@@ -85,6 +88,7 @@ namespace SimpleSimd
             return false;
         }
 
+        [MethodImpl(MaxOpt)]
         public static bool Any<F1, F2>(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, F1 vPredicate, F2 predicate)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>
