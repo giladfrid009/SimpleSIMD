@@ -7,7 +7,7 @@ namespace SimpleSimd
     {
         public static T Average(in ReadOnlySpan<T> span)
         {
-            return NumOps<T>.Divide(Sum(span), NumOps<int, T>.Convert(span.Length));
+            return Average(span, new ID_VSelector(), new ID_Selector());
         }
 
         public static T Average<F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector)

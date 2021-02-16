@@ -1,31 +1,17 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        private struct Max_VSelector : IFunc<Vector<T>, Vector<T>, Vector<T>>
-        {
-            public Vector<T> Invoke(Vector<T> left, Vector<T> right)
-            {
-                return Vector.Max(left, right);
-            }
-        }
-
-        private struct Max_Selector : IFunc<T, T, T>
-        {
-            public T Invoke(T left, T right)
-            {
-                return NumOps<T>.Max(left, right);
-            }
-        }
-
         public static T Max(in ReadOnlySpan<T> span)
         {
-            return Aggregate(span, NumOps<T>.MinValue, new Max_VSelector(), new Max_Selector());
+            return Max(span, new ID_VSelector(), new ID_Selector());
         }
 
+        [MethodImpl(MaxOpt)]
         public static T Max<F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
