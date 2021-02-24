@@ -7,8 +7,6 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T> where T : unmanaged
     {
-        private const MethodImplOptions MaxOpt = MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization;
-
         private static ref Vector<U> AsVector<U>(in U value) where U : unmanaged
         {
             return ref Unsafe.As<U, Vector<U>>(ref Unsafe.AsRef(value));

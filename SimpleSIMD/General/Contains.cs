@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 
 namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        [MethodImpl(MaxOpt)]
         public static bool Contains(in ReadOnlySpan<T> span, T value)
         {
             ref var rSpan = ref GetRef(span);

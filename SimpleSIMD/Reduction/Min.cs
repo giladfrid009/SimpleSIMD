@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 
 namespace SimpleSimd
 {
@@ -11,7 +10,6 @@ namespace SimpleSimd
             return Min(span, new ID_VSelector(), new ID_Selector());
         }
 
-        [MethodImpl(MaxOpt)]
         public static T Min<F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>

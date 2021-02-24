@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 
 namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        [MethodImpl(MaxOpt)]
         public static void Select<TRes, F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector, in Span<TRes> result)
 
             where TRes : unmanaged

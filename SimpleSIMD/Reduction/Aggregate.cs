@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 
 namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        [MethodImpl(MaxOpt)]
         public static T Aggregate<F1, F2>(in ReadOnlySpan<T> span, T seed, F1 vAccumulator, F2 accumulator)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<T>>
