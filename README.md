@@ -56,13 +56,14 @@ This approach could be combined with standard multithreading for massive perform
 
 ## Performance Benefits
 
-A simple benchmark to demonstrate performance gains of using SIMD:
+A simple benchmark to demonstrate performance gains of using SIMD.
 
 | Method | Length |           Mean |       Error |      StdDev | Ratio |
 |------- |------- |---------------:|------------:|------------:|------:|
 |   LINQ |     10 |      58.428 ns |   1.1658 ns |   1.4743 ns |  9.65 |
 |  Naive |     10 |       6.138 ns |   0.1226 ns |   0.1087 ns |  1.00 |
 |   SIMD |     10 |       5.739 ns |   0.1397 ns |   0.1372 ns |  0.93 |
+________________________________________________________________________
 |   LINQ |    100 |     475.290 ns |   9.3530 ns |  17.7951 ns |  7.36 |
 |  Naive |    100 |      65.447 ns |   0.8545 ns |   0.7575 ns |  1.00 |
 |   SIMD |    100 |      12.879 ns |   0.2039 ns |   0.1592 ns |  0.20 |
