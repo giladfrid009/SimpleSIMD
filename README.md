@@ -57,6 +57,7 @@ This approach could be combined with standard multithreading for massive perform
 ## Performance Benefits
 
 A simple benchmark to demonstrate performance gains of using SIMD.
+Benchmarked method was a Sum over an integer array.
 
 | Method | Length |           Mean |       Error |      StdDev | Ratio |
 |------- |------- |---------------:|------------:|------------:|------:|
