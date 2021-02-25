@@ -54,6 +54,32 @@ This approach could be combined with standard multithreading for massive perform
 * Fill
 * Foreach
 
+## Performance Benefits
+
+A simple benchmark to demonstrate performance gains of using SIMD:
+
+| Method | Length |           Mean |       Error |      StdDev | Ratio |
+|------- |------- |---------------:|------------:|------------:|------:|
+|   LINQ |     10 |      58.428 ns |   1.1658 ns |   1.4743 ns |  9.65 |
+|  Naive |     10 |       6.138 ns |   0.1226 ns |   0.1087 ns |  1.00 |
+|   SIMD |     10 |       5.739 ns |   0.1397 ns |   0.1372 ns |  0.93 |
+|        |        |                |             |             |       |
+|   LINQ |    100 |     475.290 ns |   9.3530 ns |  17.7951 ns |  7.36 |
+|  Naive |    100 |      65.447 ns |   0.8545 ns |   0.7575 ns |  1.00 |
+|   SIMD |    100 |      12.879 ns |   0.2039 ns |   0.1592 ns |  0.20 |
+|        |        |                |             |             |       |
+|   LINQ |   1000 |   4,620.020 ns |  80.4166 ns |  71.2872 ns |  7.47 |
+|  Naive |   1000 |     617.992 ns |   7.6832 ns |   7.1869 ns |  1.00 |
+|   SIMD |   1000 |      78.865 ns |   0.7991 ns |   0.6673 ns |  0.13 |
+|        |        |                |             |             |       |
+|   LINQ |  10000 |  43,103.800 ns | 700.6532 ns | 655.3915 ns |  6.99 |
+|  Naive |  10000 |   6,164.725 ns |  51.9217 ns |  48.5676 ns |  1.00 |
+|   SIMD |  10000 |     738.459 ns |  14.7266 ns |  32.3252 ns |  0.13 |
+|        |        |                |             |             |       |
+|   LINQ | 100000 | 393,739.178 ns | 755.6571 ns | 631.0079 ns |  6.73 |
+|  Naive | 100000 |  58,510.310 ns |  58.0928 ns |  54.3400 ns |  1.00 |
+|   SIMD | 100000 |   8,897.370 ns | 102.2559 ns |  95.6502 ns |  0.15 |
+
 ## Value Delegates
 This library extensively uses the value delegate pattern. This pattern is used as a replacement for delegates.  
 Calling functions using this patten may feel unusual since it requires creation of structs to pass as arguments instead of delegates, but it is very beneficial performance-wise. 
