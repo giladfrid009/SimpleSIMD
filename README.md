@@ -150,15 +150,6 @@ public static T Sum<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
 |      Delegate |  1000000 |   304,228.749 ns |  1,995.9951 ns |  1,769.3976 ns |  1.00 |
 | ValueDelegate |  1000000 |    85,619.207 ns |    316.5366 ns |    280.6015 ns |  0.28 |
 
-```
-BenchmarkDotNet=v0.12.1, OS=Windows 10.0.14393.3930 (1607/AnniversaryUpdate/Redstone1)
-Intel Core i7-4790 CPU 3.60GHz (Haswell), 1 CPU, 8 logical and 4 physical cores
-Frequency=3515621 Hz, Resolution=284.4448 ns, Timer=TSC
-.NET Core SDK = 3.1.401
-  [Host]     : .NET Core 3.1.7 (CoreCLR 4.700.20.36602, CoreFX 4.700.20.37001), X64 RyuJIT
-  DefaultJob : .NET Core 3.1.7 (CoreCLR 4.700.20.36602, CoreFX 4.700.20.37001), X64 RyuJIT
-```
-
 ## Limitations
 * Methods are not lazily evaluated as IEnumerable
 * Old hardware might not support SIMD
