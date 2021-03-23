@@ -5,37 +5,25 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
+        private struct Negate_VSelector : IFunc<Vector<T>, Vector<T>>
+        {
+            public Vector<T> Invoke(Vector<T> vec)
+            {
+                return Vector.Negate(vec);
+            }
+        }
+
+        private struct Negate_Selector : IFunc<T, T>
+        {
+            public T Invoke(T val)
+            {
+                return NumOps<T>.Negate(val);
+            }
+        }
+
         public static void Negate(in ReadOnlySpan<T> span, in Span<T> result)
         {
-            if (result.Length != span.Length)
-            {
-                Exceptions.ArgOutOfRange(nameof(result));
-            }
-
-            ref var rSpan = ref GetRef(span);
-            ref var rResult = ref GetRef(result);
-
-            int i = 0;
-
-            if (Vector.IsHardwareAccelerated)
-            {
-                ref var vrSpan = ref AsVector(rSpan);
-                ref var vrResult = ref AsVector(rResult);
-
-                int length = span.Length / Vector<T>.Count;
-
-                for (; i < length; i++)
-                {
-                    vrResult.Offset(i) = Vector.Negate(vrSpan.Offset(i));
-                }
-
-                i *= Vector<T>.Count;
-            }
-
-            for (; i < span.Length; i++)
-            {
-                rResult.Offset(i) = NumOps<T>.Negate(rSpan.Offset(i));
-            }
+            Select(span, new Negate_VSelector(), new Negate_Selector(), result);
         }
 
         public static T[] Negate(T[] array)

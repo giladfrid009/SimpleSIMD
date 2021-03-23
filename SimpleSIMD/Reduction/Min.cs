@@ -7,39 +7,7 @@ namespace SimpleSimd
     {
         public static T Min(in ReadOnlySpan<T> span)
         {
-            T min = NumOps<T>.MaxValue;
-
-            ref var rSpan = ref GetRef(span);
-
-            int i = 0;
-
-            if (Vector.IsHardwareAccelerated)
-            {
-                var vMin = new Vector<T>(min);
-
-                ref var vrSpan = ref AsVector(rSpan);
-
-                int length = span.Length / Vector<T>.Count;
-
-                for (; i < length; i++)
-                {
-                    vMin = Vector.Min(vMin, vrSpan.Offset(i));
-                }
-
-                for (int j = 0; j < Vector<T>.Count; j++)
-                {
-                    min = NumOps<T>.Min(min, vMin[j]);
-                }
-
-                i *= Vector<T>.Count;
-            }
-
-            for (; i < span.Length; i++)
-            {
-                min = NumOps<T>.Min(min, rSpan.Offset(i));
-            }
-
-            return min;
+            return Min(span, new ID_VSelector(), new ID_Selector());
         }
 
         public static T Min<F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector)

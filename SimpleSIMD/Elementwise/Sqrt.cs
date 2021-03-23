@@ -5,37 +5,25 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
+        private struct Sqrt_VSelector : IFunc<Vector<T>, Vector<T>>
+        {
+            public Vector<T> Invoke(Vector<T> vec)
+            {
+                return Vector.SquareRoot(vec);
+            }
+        }
+
+        private struct Sqrt_Selector : IFunc<T, T>
+        {
+            public T Invoke(T val)
+            {
+                return NumOps<double, T>.Convert(Math.Sqrt(NumOps<T, double>.Convert(val)));
+            }
+        }
+
         public static void Sqrt(in ReadOnlySpan<T> span, in Span<T> result)
         {
-            if (result.Length != span.Length)
-            {
-                Exceptions.ArgOutOfRange(nameof(result));
-            }
-
-            ref var rSpan = ref GetRef(span);
-            ref var rResult = ref GetRef(result);
-
-            int i = 0;
-
-            if (Vector.IsHardwareAccelerated)
-            {
-                ref var vrSpan = ref AsVector(rSpan);
-                ref var vrResult = ref AsVector(rResult);
-
-                int length = span.Length / Vector<T>.Count;
-
-                for (; i < length; i++)
-                {
-                    vrResult.Offset(i) = Vector.SquareRoot(vrSpan.Offset(i));
-                }
-
-                i *= Vector<T>.Count;
-            }
-
-            for (; i < span.Length; i++)
-            {
-                rResult.Offset(i) = NumOps<double, T>.Convert(Math.Sqrt(NumOps<T, double>.Convert(rSpan.Offset(i))));
-            }
+            Select(span, new Sqrt_VSelector(), new Sqrt_Selector(), result);
         }
 
         public static T[] Sqrt(T[] array)

@@ -5,37 +5,25 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
+        private struct Abs_VSelector : IFunc<Vector<T>, Vector<T>>
+        {
+            public Vector<T> Invoke(Vector<T> vec)
+            {
+                return Vector.Abs(vec);
+            }
+        }
+
+        private struct Abs_Selector : IFunc<T, T>
+        {
+            public T Invoke(T val)
+            {
+                return NumOps<T>.Abs(val);
+            }
+        }
+
         public static void Abs(in ReadOnlySpan<T> span, in Span<T> result)
         {
-            if (result.Length != span.Length)
-            {
-                Exceptions.ArgOutOfRange(nameof(result));
-            }
-
-            ref var rSpan = ref GetRef(span);
-            ref var rResult = ref GetRef(result);
-
-            int i = 0;
-
-            if (Vector.IsHardwareAccelerated)
-            {
-                ref var vrSpan = ref AsVector(rSpan);
-                ref var vrResult = ref AsVector(rResult);
-
-                int length = span.Length / Vector<T>.Count;
-
-                for (; i < length; i++)
-                {
-                    vrResult.Offset(i) = Vector.Abs(vrSpan.Offset(i));
-                }
-
-                i *= Vector<T>.Count;
-            }      
-
-            for (; i < span.Length; i++)
-            {
-                rResult.Offset(i) = NumOps<T>.Abs(rSpan.Offset(i));
-            }
+            Select(span, new Abs_VSelector(), new Abs_Selector(), result);
         }
 
         public static T[] Abs(T[] array)
