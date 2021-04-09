@@ -11,13 +11,13 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T, bool>
 
         {
-            ref var rSpan = ref GetRef(span);
+            ref T rSpan = ref GetRef(span);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                ref var vrSpan = ref AsVector(rSpan);
+                ref Vector<T> vrSpan = ref AsVector(rSpan);
 
                 int length = span.Length / Vector<T>.Count;
 
@@ -50,15 +50,15 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T, T, bool>
 
         {
-            ref var rLeft = ref GetRef(left);
+            ref T rLeft = ref GetRef(left);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vRight = new Vector<T>(right);
+                Vector<T> vRight = new(right);
 
-                ref var vrLeft = ref AsVector(rLeft);
+                ref Vector<T> vrLeft = ref AsVector(rLeft);
 
                 int length = left.Length / Vector<T>.Count;
 
@@ -96,15 +96,15 @@ namespace SimpleSimd
                 Exceptions.ArgOutOfRange(nameof(right));
             }
 
-            ref var rLeft = ref GetRef(left);
-            ref var rRight = ref GetRef(right);
+            ref T rLeft = ref GetRef(left);
+            ref T rRight = ref GetRef(right);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                ref var vrLeft = ref AsVector(rLeft);
-                ref var vrRight = ref AsVector(rRight);
+                ref Vector<T> vrLeft = ref AsVector(rLeft);
+                ref Vector<T> vrRight = ref AsVector(rRight);
 
                 int length = left.Length / Vector<T>.Count;
 

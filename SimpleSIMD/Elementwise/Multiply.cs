@@ -31,18 +31,18 @@ namespace SimpleSimd
             Concat(left, right, new Multiply_VSelector(), new Multiply_Selector(), result);
         }
 
-        public static T[] Multiply(T[] left, T right)
+        public static T[] Multiply(in ReadOnlySpan<T> left, T right)
         {
-            var result = new T[left.Length];
+            T[] result = new T[left.Length];
 
             Multiply(left, right, result);
 
             return result;
         }
 
-        public static T[] Multiply(T[] left, T[] right)
+        public static T[] Multiply(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
         {
-            var result = new T[left.Length];
+            T[] result = new T[left.Length];
 
             Multiply(left, right, result);
 

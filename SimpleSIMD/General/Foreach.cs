@@ -11,13 +11,13 @@ namespace SimpleSimd
             where F2 : struct, IAction<T>
 
         {
-            ref var rSpan = ref GetRef(span);
+            ref T rSpan = ref GetRef(span);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                ref var vrSpan = ref AsVector(rSpan);
+                ref Vector<T> vrSpan = ref AsVector(rSpan);
 
                 int length = span.Length / Vector<T>.Count;
 

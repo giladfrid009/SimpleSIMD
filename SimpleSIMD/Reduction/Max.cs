@@ -18,15 +18,15 @@ namespace SimpleSimd
         {
             T max = NumOps<T>.MinValue;
 
-            ref var rSpan = ref GetRef(span);
+            ref T rSpan = ref GetRef(span);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vMax = new Vector<T>(max);
+                Vector<T> vMax = new(max);
 
-                ref var vrSpan = ref AsVector(rSpan);
+                ref Vector<T> vrSpan = ref AsVector(rSpan);
 
                 int length = span.Length / Vector<T>.Count;
 

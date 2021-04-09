@@ -31,18 +31,18 @@ namespace SimpleSimd
             Concat(left, right, new Xor_VSelector(), new Xor_Selector(), result);
         }
 
-        public static T[] Xor(T[] left, T right)
+        public static T[] Xor(in ReadOnlySpan<T> left, T right)
         {
-            var result = new T[left.Length];
+            T[] result = new T[left.Length];
 
             Xor(left, right, result);
 
             return result;
         }
 
-        public static T[] Xor(T[] left, T[] right)
+        public static T[] Xor(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
         {
-            var result = new T[left.Length];
+            T[] result = new T[left.Length];
 
             Xor(left, right, result);
 

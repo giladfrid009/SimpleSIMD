@@ -36,27 +36,27 @@ namespace SimpleSimd
             Concat(left, right, new Subtract_VSelector(), new Subtract_Selector(), result);
         }
 
-        public static T[] Subtract(T[] left, T right)
+        public static T[] Subtract(in ReadOnlySpan<T> left, T right)
         {
-            var result = new T[left.Length];
+            T[] result = new T[left.Length];
 
             Subtract(left, right, result);
 
             return result;
         }
 
-        public static T[] Subtract(T left, T[] right)
+        public static T[] Subtract(T left, in ReadOnlySpan<T> right)
         {
-            var result = new T[right.Length];
+            T[] result = new T[right.Length];
 
             Subtract(left, right, result);
 
             return result;
         }
 
-        public static T[] Subtract(T[] left, T[] right)
+        public static T[] Subtract(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
         {
-            var result = new T[left.Length];
+            T[] result = new T[left.Length];
 
             Subtract(left, right, result);
 

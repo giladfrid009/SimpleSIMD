@@ -22,15 +22,15 @@ namespace SimpleSimd
                 Exceptions.InvalidCast(typeof(TRes).Name);
             }
 
-            ref var rSpan = ref GetRef(span);
-            ref var rResult = ref GetRef(result);
+            ref T rSpan = ref GetRef(span);
+            ref TRes rResult = ref GetRef(result);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                ref var vrSpan = ref AsVector(rSpan);
-                ref var vrResult = ref AsVector(rResult);
+                ref Vector<T> vrSpan = ref AsVector(rSpan);
+                ref Vector<TRes> vrResult = ref AsVector(rResult);
 
                 int length = span.Length / Vector<T>.Count;
 
@@ -48,16 +48,16 @@ namespace SimpleSimd
             }
         }
 
-        public static TRes[] Select<TRes, F1, F2>(T[] array, F1 vSelector, F2 selector)
+        public static TRes[] Select<TRes, F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector)
 
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, TRes>
 
         {
-            var result = new TRes[array.Length];
+            TRes[] result = new TRes[span.Length];
 
-            Select<TRes, F1, F2>(array, vSelector, selector, result);
+            Select<TRes, F1, F2>(span, vSelector, selector, result);
 
             return result;
         }

@@ -22,17 +22,17 @@ namespace SimpleSimd
                 Exceptions.InvalidCast(typeof(TRes).Name);
             }
 
-            ref var rLeft = ref GetRef(left);
-            ref var rResult = ref GetRef(result);
+            ref T rLeft = ref GetRef(left);
+            ref TRes rResult = ref GetRef(result);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vRight = new Vector<T>(right);
+                Vector<T> vRight = new(right);
 
-                ref var vrLeft = ref AsVector(rLeft);
-                ref var vrResult = ref AsVector(rResult);
+                ref Vector<T> vrLeft = ref AsVector(rLeft);
+                ref Vector<TRes> vrResult = ref AsVector(rResult);
 
                 int length = left.Length / Vector<T>.Count;
 
@@ -67,17 +67,17 @@ namespace SimpleSimd
                 Exceptions.InvalidCast(typeof(TRes).Name);
             }
 
-            ref var rRight = ref GetRef(right);
-            ref var rResult = ref GetRef(result);
+            ref T rRight = ref GetRef(right);
+            ref TRes rResult = ref GetRef(result);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vLeft = new Vector<T>(left);
+                Vector<T> vLeft = new(left);
 
-                ref var vrRight = ref AsVector(rRight);
-                ref var vrResult = ref AsVector(rResult);
+                ref Vector<T> vrRight = ref AsVector(rRight);
+                ref Vector<TRes> vrResult = ref AsVector(rResult);
 
                 int length = right.Length / Vector<T>.Count;
 
@@ -117,17 +117,17 @@ namespace SimpleSimd
                 Exceptions.InvalidCast(typeof(TRes).Name);
             }        
 
-            ref var rLeft = ref GetRef(left);
-            ref var rRight = ref GetRef(right);
-            ref var rResult = ref GetRef(result);
+            ref T rLeft = ref GetRef(left);
+            ref T rRight = ref GetRef(right);
+            ref TRes rResult = ref GetRef(result);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                ref var vrLeft = ref AsVector(rLeft);
-                ref var vrRight = ref AsVector(rRight);
-                ref var vrResult = ref AsVector(rResult);
+                ref Vector<T> vrLeft = ref AsVector(rLeft);
+                ref Vector<T> vrRight = ref AsVector(rRight);
+                ref Vector<TRes> vrResult = ref AsVector(rResult);
 
                 int length = left.Length / Vector<T>.Count;
 
@@ -145,42 +145,42 @@ namespace SimpleSimd
             }
         }
 
-        public static TRes[] Concat<TRes, F1, F2>(T[] left, T right, F1 vCombiner, F2 combiner)
+        public static TRes[] Concat<TRes, F1, F2>(in ReadOnlySpan<T> left, T right, F1 vCombiner, F2 combiner)
 
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
 
         {
-            var result = new TRes[left.Length];
+            TRes[] result = new TRes[left.Length];
 
             Concat<TRes, F1, F2>(left, right, vCombiner, combiner, result);
 
             return result;
         }
 
-        public static TRes[] Concat<TRes, F1, F2>(T left, T[] right, F1 vCombiner, F2 combiner)
+        public static TRes[] Concat<TRes, F1, F2>(T left, in ReadOnlySpan<T> right, F1 vCombiner, F2 combiner)
 
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
 
         {
-            var result = new TRes[right.Length];
+            TRes[] result = new TRes[right.Length];
 
             Concat<TRes, F1, F2>(left, right, vCombiner, combiner, result);
 
             return result;
         }
 
-        public static TRes[] Concat<TRes, F1, F2>(T[] left, T[] right, F1 vCombiner, F2 combiner)
+        public static TRes[] Concat<TRes, F1, F2>(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, F1 vCombiner, F2 combiner)
             
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
 
         {
-            var result = new TRes[left.Length];
+            TRes[] result = new TRes[left.Length];
 
             Concat<TRes, F1, F2>(left, right, vCombiner, combiner, result);
 

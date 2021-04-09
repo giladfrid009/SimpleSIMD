@@ -26,11 +26,11 @@ namespace SimpleSimd
             Select(span, new Not_VSelector(), new Not_Selector(), result);
         }
 
-        public static T[] Not(T[] array)
+        public static T[] Not(in ReadOnlySpan<T> span)
         {
-            var result = new T[array.Length];
+            T[] result = new T[span.Length];
 
-            Not(array, result);
+            Not(span, result);
 
             return result;
         }

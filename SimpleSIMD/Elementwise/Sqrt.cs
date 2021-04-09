@@ -26,11 +26,11 @@ namespace SimpleSimd
             Select(span, new Sqrt_VSelector(), new Sqrt_Selector(), result);
         }
 
-        public static T[] Sqrt(T[] array)
+        public static T[] Sqrt(in ReadOnlySpan<T> span)
         {
-            var result = new T[array.Length];
+            T[] result = new T[span.Length];
 
-            Sqrt(array, result);
+            Sqrt(span, result);
 
             return result;
         }

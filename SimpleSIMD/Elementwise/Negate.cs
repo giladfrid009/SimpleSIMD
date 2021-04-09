@@ -26,11 +26,11 @@ namespace SimpleSimd
             Select(span, new Negate_VSelector(), new Negate_Selector(), result);
         }
 
-        public static T[] Negate(T[] array)
+        public static T[] Negate(in ReadOnlySpan<T> span)
         {
-            var result = new T[array.Length];
+            T[] result = new T[span.Length];
 
-            Negate(array, result);
+            Negate(span, result);
 
             return result;
         }

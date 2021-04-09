@@ -7,15 +7,15 @@ namespace SimpleSimd
     {
         public static int IndexOf(in ReadOnlySpan<T> span, T value)
         {
-            ref var rSpan = ref GetRef(span);
+            ref T rSpan = ref GetRef(span);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vValue = new Vector<T>(value);
+                Vector<T> vValue = new(value);
 
-                ref var vrSpan = ref AsVector(rSpan);
+                ref Vector<T> vrSpan = ref AsVector(rSpan);
 
                 int length = span.Length / Vector<T>.Count;
 
@@ -56,13 +56,13 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T, bool>
 
         {
-            ref var rSpan = ref GetRef(span);
+            ref T rSpan = ref GetRef(span);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                ref var vrSpan = ref AsVector(rSpan);
+                ref Vector<T> vrSpan = ref AsVector(rSpan);
 
                 int length = span.Length / Vector<T>.Count;
 

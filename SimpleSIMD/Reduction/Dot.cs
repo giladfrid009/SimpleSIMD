@@ -9,16 +9,16 @@ namespace SimpleSimd
         {        
             T dot = NumOps<T>.Zero;
 
-            ref var rLeft = ref GetRef(left);
+            ref T rLeft = ref GetRef(left);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vDot = Vector<T>.Zero;
-                var vRight = new Vector<T>(right);
+                Vector<T> vDot = Vector<T>.Zero;
+                Vector<T> vRight = new(right);
 
-                ref var vrLeft = ref AsVector(rLeft);
+                ref Vector<T> vrLeft = ref AsVector(rLeft);
 
                 int length = left.Length / Vector<T>.Count;
 
@@ -49,17 +49,17 @@ namespace SimpleSimd
 
             T dot = NumOps<T>.Zero;
 
-            ref var rLeft = ref GetRef(left);
-            ref var rRight = ref GetRef(right);
+            ref T rLeft = ref GetRef(left);
+            ref T rRight = ref GetRef(right);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vDot = Vector<T>.Zero;
+                Vector<T> vDot = Vector<T>.Zero;
                 
-                ref var vrLeft = ref AsVector(rLeft);
-                ref var vrRight = ref AsVector(rRight);
+                ref Vector<T> vrLeft = ref AsVector(rLeft);
+                ref Vector<T> vrRight = ref AsVector(rRight);
 
                 int length = left.Length / Vector<T>.Count;
 

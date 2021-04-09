@@ -13,15 +13,15 @@ namespace SimpleSimd
         {
             T res = seed;
 
-            ref var rSpan = ref GetRef(span);
+            ref T rSpan = ref GetRef(span);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vRes = new Vector<T>(seed);
+                Vector<T> vRes = new(seed);
 
-                ref var vrSpan = ref AsVector(rSpan);
+                ref Vector<T> vrSpan = ref AsVector(rSpan);
 
                 int length = span.Length / Vector<T>.Count;
 

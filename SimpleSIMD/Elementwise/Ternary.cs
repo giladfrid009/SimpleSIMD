@@ -16,18 +16,18 @@ namespace SimpleSimd
                 Exceptions.ArgOutOfRange(nameof(result));
             }
 
-            ref var rSpan = ref GetRef(span);
-            ref var rResult = ref GetRef(result);
+            ref T rSpan = ref GetRef(span);
+            ref T rResult = ref GetRef(result);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vTrue = new Vector<T>(trueValue);
-                var vFalse = new Vector<T>(falseValue);
+                Vector<T> vTrue = new(trueValue);
+                Vector<T> vFalse = new(falseValue);
 
-                ref var vrSpan = ref AsVector(rSpan);
-                ref var vrResult = ref AsVector(rResult);
+                ref Vector<T> vrSpan = ref AsVector(rSpan);
+                ref Vector<T> vrResult = ref AsVector(rResult);
 
                 int length = span.Length / Vector<T>.Count;
 
@@ -60,15 +60,15 @@ namespace SimpleSimd
                 Exceptions.ArgOutOfRange(nameof(result));
             }
 
-            ref var rSpan = ref GetRef(span);
-            ref var rResult = ref GetRef(result);
+            ref T rSpan = ref GetRef(span);
+            ref T rResult = ref GetRef(result);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                ref var vrSpan = ref AsVector(rSpan);
-                ref var vrResult = ref AsVector(rResult);
+                ref Vector<T> vrSpan = ref AsVector(rSpan);
+                ref Vector<T> vrResult = ref AsVector(rResult);
 
                 int length = span.Length / Vector<T>.Count;
 
@@ -86,20 +86,20 @@ namespace SimpleSimd
             }
         }
 
-        public static T[] Ternary<F1, F2>(T[] array, F1 vCondition, F2 condition, T trueValue, T falseValue)
+        public static T[] Ternary<F1, F2>(in ReadOnlySpan<T> span, F1 vCondition, F2 condition, T trueValue, T falseValue)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, bool>
 
         {
-            var result = new T[array.Length];
+            T[] result = new T[span.Length];
 
-            Ternary(array, vCondition, condition, trueValue, falseValue, result);
+            Ternary(span, vCondition, condition, trueValue, falseValue, result);
 
             return result;
         }
 
-        public static T[] Ternary<F1, F2, F3, F4, F5, F6>(T[] array, F1 vCondition, F2 vTrueSelector, F3 vFalseSelector, F4 condition, F5 trueSelector, F6 falseSelector)
+        public static T[] Ternary<F1, F2, F3, F4, F5, F6>(in ReadOnlySpan<T> span, F1 vCondition, F2 vTrueSelector, F3 vFalseSelector, F4 condition, F5 trueSelector, F6 falseSelector)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<Vector<T>, Vector<T>>
@@ -109,9 +109,9 @@ namespace SimpleSimd
             where F6 : struct, IFunc<T, T>
 
         {
-            var result = new T[array.Length];
+            T[] result = new T[span.Length];
 
-            Ternary(array, vCondition, vTrueSelector, vFalseSelector, condition, trueSelector, falseSelector, result);
+            Ternary(span, vCondition, vTrueSelector, vFalseSelector, condition, trueSelector, falseSelector, result);
 
             return result;
         }

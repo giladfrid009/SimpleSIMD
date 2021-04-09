@@ -26,11 +26,11 @@ namespace SimpleSimd
             Select(span, new Abs_VSelector(), new Abs_Selector(), result);
         }
 
-        public static T[] Abs(T[] array)
+        public static T[] Abs(in ReadOnlySpan<T> span)
         {
-            var result = new T[array.Length];
+            T[] result = new T[span.Length];
 
-            Abs(array, result);
+            Abs(span, result);
 
             return result;
         }

@@ -31,18 +31,18 @@ namespace SimpleSimd
             Concat(left, right, new And_VSelector(), new And_Selector(), result);
         }       
 
-        public static T[] And(T[] left, T right)
+        public static T[] And(in ReadOnlySpan<T> left, T right)
         {
-            var result = new T[left.Length];
+            T[] result = new T[left.Length];
 
             And(left, right, result);
 
             return result;
         }
 
-        public static T[] And(T[] left, T[] right)
+        public static T[] And(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
         {
-            var result = new T[left.Length];
+            T[] result = new T[left.Length];
 
             And(left, right, result);
 

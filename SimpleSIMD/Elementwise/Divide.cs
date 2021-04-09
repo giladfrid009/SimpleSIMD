@@ -36,27 +36,27 @@ namespace SimpleSimd
             Concat(left, right, new Divide_VSelector(), new Divide_Selector(), result);
         }
 
-        public static T[] Divide(T[] left, T right)
+        public static T[] Divide(in ReadOnlySpan<T> left, T right)
         {
-            var result = new T[left.Length];
+            T[] result = new T[left.Length];
 
             Divide(left, right, result);
 
             return result;
         }
 
-        public static T[] Divide(T left, T[] right)
+        public static T[] Divide(T left, in ReadOnlySpan<T> right)
         {
-            var result = new T[right.Length];
+            T[] result = new T[right.Length];
 
             Divide(left, right, result);
 
             return result;
         }
 
-        public static T[] Divide(T[] left, T[] right)
+        public static T[] Divide(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
         {
-            var result = new T[left.Length];
+            T[] result = new T[left.Length];
 
             Divide(left, right, result);
 
