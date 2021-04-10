@@ -16,18 +16,20 @@ namespace SimpleSimd
             [MethodImpl(MaxOpt)]
             get
             {
-                if (typeof(T) == typeof(byte)) return (T)(object)byte.MinValue;
-                if (typeof(T) == typeof(sbyte)) return (T)(object)sbyte.MinValue;
-                if (typeof(T) == typeof(ushort)) return (T)(object)ushort.MinValue;
-                if (typeof(T) == typeof(short)) return (T)(object)short.MinValue;
-                if (typeof(T) == typeof(uint)) return (T)(object)uint.MinValue;
-                if (typeof(T) == typeof(int)) return (T)(object)int.MinValue;
-                if (typeof(T) == typeof(ulong)) return (T)(object)ulong.MinValue;
-                if (typeof(T) == typeof(long)) return (T)(object)long.MinValue;
-                if (typeof(T) == typeof(float)) return (T)(object)float.MinValue;
-                if (typeof(T) == typeof(double)) return (T)(object)double.MinValue;
-
-                throw new NotSupportedException(typeof(T).Name);
+                return default(T) switch
+                {
+                    byte => (T)(object)byte.MinValue,
+                    sbyte => (T)(object)sbyte.MinValue,
+                    ushort => (T)(object)ushort.MinValue,
+                    short => (T)(object)short.MinValue,
+                    uint => (T)(object)uint.MinValue,
+                    int => (T)(object)int.MinValue,
+                    ulong => (T)(object)ulong.MinValue,
+                    long => (T)(object)long.MinValue,
+                    float => (T)(object)float.MinValue,
+                    double => (T)(object)double.MinValue,
+                    _ => throw new NotSupportedException(typeof(T).Name)
+                };
             }
         }
 
@@ -36,242 +38,274 @@ namespace SimpleSimd
             [MethodImpl(MaxOpt)]
             get
             {
-                if (typeof(T) == typeof(byte)) return (T)(object)byte.MaxValue;
-                if (typeof(T) == typeof(sbyte)) return (T)(object)sbyte.MaxValue;
-                if (typeof(T) == typeof(ushort)) return (T)(object)ushort.MaxValue;
-                if (typeof(T) == typeof(short)) return (T)(object)short.MaxValue;
-                if (typeof(T) == typeof(uint)) return (T)(object)uint.MaxValue;
-                if (typeof(T) == typeof(int)) return (T)(object)int.MaxValue;
-                if (typeof(T) == typeof(ulong)) return (T)(object)ulong.MaxValue;
-                if (typeof(T) == typeof(long)) return (T)(object)long.MaxValue;
-                if (typeof(T) == typeof(float)) return (T)(object)float.MaxValue;
-                if (typeof(T) == typeof(double)) return (T)(object)double.MaxValue;
-
-                throw new NotSupportedException(typeof(T).Name);
+                return default(T) switch
+                {
+                    byte => (T)(object)byte.MaxValue,
+                    sbyte => (T)(object)sbyte.MaxValue,
+                    ushort => (T)(object)ushort.MaxValue,
+                    short => (T)(object)short.MaxValue,
+                    uint => (T)(object)uint.MaxValue,
+                    int => (T)(object)int.MaxValue,
+                    ulong => (T)(object)ulong.MaxValue,
+                    long => (T)(object)long.MaxValue,
+                    float => (T)(object)float.MaxValue,
+                    double => (T)(object)double.MaxValue,
+                    _ => throw new NotSupportedException(typeof(T).Name)
+                };
             }
         }
 
         [MethodImpl(MaxOpt)]
         public static T Not(T value)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)(byte)~(byte)(object)value;
-            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)~(sbyte)(object)value;
-            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)~(ushort)(object)value;
-            if (typeof(T) == typeof(short)) return (T)(object)(short)~(short)(object)value;
-            if (typeof(T) == typeof(uint)) return (T)(object)~(uint)(object)value;
-            if (typeof(T) == typeof(int)) return (T)(object)~(int)(object)value;
-            if (typeof(T) == typeof(ulong)) return (T)(object)~(ulong)(object)value;
-            if (typeof(T) == typeof(long)) return (T)(object)~(long)(object)value;
-
-            throw new NotSupportedException(typeof(T).Name);
+            return value switch
+            {
+                byte X => (T)(object)(byte)~X,
+                sbyte X => (T)(object)(sbyte)~X,
+                ushort X => (T)(object)(ushort)~X,
+                short X => (T)(object)(short)~X,
+                uint X => (T)(object)(uint)~X,
+                int X => (T)(object)(int)~X,
+                ulong X => (T)(object)(ulong)~X,
+                long X => (T)(object)(long)~X,
+                _ => throw new NotSupportedException(typeof(T).Name)
+            };
         }
 
         [MethodImpl(MaxOpt)]
         public static T Add(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left + (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left + (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left + (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left + (short)(object)right);
-            if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left + (uint)(object)right);
-            if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left + (int)(object)right);
-            if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left + (ulong)(object)right);
-            if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left + (long)(object)right);
-            if (typeof(T) == typeof(float)) return (T)(object)((float)(object)left + (float)(object)right);
-            if (typeof(T) == typeof(double)) return (T)(object)((double)(object)left + (double)(object)right);
-
-            throw new NotSupportedException(typeof(T).Name);
+            return (left, right) switch
+            {
+                (byte L, byte R) => (T)(object)(byte)(L + R),
+                (sbyte L, sbyte R) => (T)(object)(sbyte)(L + R),
+                (ushort L, ushort R) => (T)(object)(ushort)(L + R),
+                (short L, short R) => (T)(object)(short)(L + R),
+                (uint L, uint R) => (T)(object)(uint)(L + R),
+                (int L, int R) => (T)(object)(int)(L + R),
+                (ulong L, ulong R) => (T)(object)(ulong)(L + R),
+                (long L, long R) => (T)(object)(long)(L + R),
+                (float L, float R) => (T)(object)(float)(L + R),
+                (double L, double R) => (T)(object)(double)(L + R),
+                _ => throw new NotSupportedException(typeof(T).Name)
+            };
         }
 
         [MethodImpl(MaxOpt)]
         public static T Subtract(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left - (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left - (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left - (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left - (short)(object)right);
-            if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left - (uint)(object)right);
-            if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left - (int)(object)right);
-            if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left - (ulong)(object)right);
-            if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left - (long)(object)right);
-            if (typeof(T) == typeof(float)) return (T)(object)((float)(object)left - (float)(object)right);
-            if (typeof(T) == typeof(double)) return (T)(object)((double)(object)left - (double)(object)right);
-
-            throw new NotSupportedException(typeof(T).Name);
+            return (left, right) switch
+            {
+                (byte L, byte R) => (T)(object)(byte)(L - R),
+                (sbyte L, sbyte R) => (T)(object)(sbyte)(L - R),
+                (ushort L, ushort R) => (T)(object)(ushort)(L - R),
+                (short L, short R) => (T)(object)(short)(L - R),
+                (uint L, uint R) => (T)(object)(uint)(L - R),
+                (int L, int R) => (T)(object)(int)(L - R),
+                (ulong L, ulong R) => (T)(object)(ulong)(L - R),
+                (long L, long R) => (T)(object)(long)(L - R),
+                (float L, float R) => (T)(object)(float)(L - R),
+                (double L, double R) => (T)(object)(double)(L - R),
+                _ => throw new NotSupportedException(typeof(T).Name)
+            };
         }
 
         [MethodImpl(MaxOpt)]
         public static T Multiply(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left * (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left * (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left * (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left * (short)(object)right);
-            if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left * (uint)(object)right);
-            if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left * (int)(object)right);
-            if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left * (ulong)(object)right);
-            if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left * (long)(object)right);
-            if (typeof(T) == typeof(float)) return (T)(object)((float)(object)left * (float)(object)right);
-            if (typeof(T) == typeof(double)) return (T)(object)((double)(object)left * (double)(object)right);
-
-            throw new NotSupportedException(typeof(T).Name);
+            return (left, right) switch
+            {
+                (byte L, byte R) => (T)(object)(byte)(L * R),
+                (sbyte L, sbyte R) => (T)(object)(sbyte)(L * R),
+                (ushort L, ushort R) => (T)(object)(ushort)(L * R),
+                (short L, short R) => (T)(object)(short)(L * R),
+                (uint L, uint R) => (T)(object)(uint)(L * R),
+                (int L, int R) => (T)(object)(int)(L * R),
+                (ulong L, ulong R) => (T)(object)(ulong)(L * R),
+                (long L, long R) => (T)(object)(long)(L * R),
+                (float L, float R) => (T)(object)(float)(L * R),
+                (double L, double R) => (T)(object)(double)(L * R),
+                _ => throw new NotSupportedException(typeof(T).Name)
+            };
         }
 
         [MethodImpl(MaxOpt)]
         public static T Divide(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left / (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left / (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left / (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left / (short)(object)right);
-            if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left / (uint)(object)right);
-            if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left / (int)(object)right);
-            if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left / (ulong)(object)right);
-            if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left / (long)(object)right);
-            if (typeof(T) == typeof(float)) return (T)(object)((float)(object)left / (float)(object)right);
-            if (typeof(T) == typeof(double)) return (T)(object)((double)(object)left / (double)(object)right);
-
-            throw new NotSupportedException(typeof(T).Name);
+            return (left, right) switch
+            {
+                (byte L, byte R) => (T)(object)(byte)(L / R),
+                (sbyte L, sbyte R) => (T)(object)(sbyte)(L / R),
+                (ushort L, ushort R) => (T)(object)(ushort)(L / R),
+                (short L, short R) => (T)(object)(short)(L / R),
+                (uint L, uint R) => (T)(object)(uint)(L / R),
+                (int L, int R) => (T)(object)(int)(L / R),
+                (ulong L, ulong R) => (T)(object)(ulong)(L / R),
+                (long L, long R) => (T)(object)(long)(L / R),
+                (float L, float R) => (T)(object)(float)(L / R),
+                (double L, double R) => (T)(object)(double)(L / R),
+                _ => throw new NotSupportedException(typeof(T).Name)
+            };
         }
 
         [MethodImpl(MaxOpt)]
         public static T Modulus(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left % (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left % (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left % (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left % (short)(object)right);
-            if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left % (uint)(object)right);
-            if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left % (int)(object)right);
-            if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left % (ulong)(object)right);
-            if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left % (long)(object)right);
-            if (typeof(T) == typeof(float)) return (T)(object)((float)(object)left % (float)(object)right);
-            if (typeof(T) == typeof(double)) return (T)(object)((double)(object)left % (double)(object)right);
-
-            throw new NotSupportedException(typeof(T).Name);
+            return (left, right) switch
+            {
+                (byte L, byte R) => (T)(object)(byte)(L % R),
+                (sbyte L, sbyte R) => (T)(object)(sbyte)(L % R),
+                (ushort L, ushort R) => (T)(object)(ushort)(L % R),
+                (short L, short R) => (T)(object)(short)(L % R),
+                (uint L, uint R) => (T)(object)(uint)(L % R),
+                (int L, int R) => (T)(object)(int)(L % R),
+                (ulong L, ulong R) => (T)(object)(ulong)(L % R),
+                (long L, long R) => (T)(object)(long)(L % R),
+                (float L, float R) => (T)(object)(float)(L % R),
+                (double L, double R) => (T)(object)(double)(L % R),
+                _ => throw new NotSupportedException(typeof(T).Name)
+            };
         }
 
         [MethodImpl(MaxOpt)]
         public static T And(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left & (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left & (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left & (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left & (short)(object)right);
-            if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left & (uint)(object)right);
-            if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left & (int)(object)right);
-            if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left & (ulong)(object)right);
-            if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left & (long)(object)right);
-
-            throw new NotSupportedException(typeof(T).Name);
+            return (left, right) switch
+            {
+                (byte L, byte R) => (T)(object)(byte)(L & R),
+                (sbyte L, sbyte R) => (T)(object)(sbyte)(L & R),
+                (ushort L, ushort R) => (T)(object)(ushort)(L & R),
+                (short L, short R) => (T)(object)(short)(L & R),
+                (uint L, uint R) => (T)(object)(uint)(L & R),
+                (int L, int R) => (T)(object)(int)(L & R),
+                (ulong L, ulong R) => (T)(object)(ulong)(L & R),
+                (long L, long R) => (T)(object)(long)(L & R),
+                _ => throw new NotSupportedException(typeof(T).Name)
+            };
         }
 
         [MethodImpl(MaxOpt)]
         public static T Or(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left | (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left | (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left | (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left | (short)(object)right);
-            if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left | (uint)(object)right);
-            if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left | (int)(object)right);
-            if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left | (ulong)(object)right);
-            if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left | (long)(object)right);
-
-            throw new NotSupportedException(typeof(T).Name);
+            return (left, right) switch
+            {
+                (byte L, byte R) => (T)(object)(byte)(L | R),
+                (sbyte L, sbyte R) => (T)(object)(sbyte)(L | R),
+                (ushort L, ushort R) => (T)(object)(ushort)(L | R),
+                (short L, short R) => (T)(object)(short)(L | R),
+                (uint L, uint R) => (T)(object)(L | R),
+                (int L, int R) => (T)(object)(int)(L | R),
+                (ulong L, ulong R) => (T)(object)(ulong)(L | R),
+                (long L, long R) => (T)(object)(long)(L | R),
+                _ => throw new NotSupportedException(typeof(T).Name)
+            };
         }
 
         [MethodImpl(MaxOpt)]
         public static T Xor(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (T)(object)(byte)((byte)(object)left ^ (byte)(object)right);
-            if (typeof(T) == typeof(sbyte)) return (T)(object)(sbyte)((sbyte)(object)left ^ (sbyte)(object)right);
-            if (typeof(T) == typeof(ushort)) return (T)(object)(ushort)((ushort)(object)left ^ (ushort)(object)right);
-            if (typeof(T) == typeof(short)) return (T)(object)(short)((short)(object)left ^ (short)(object)right);
-            if (typeof(T) == typeof(uint)) return (T)(object)((uint)(object)left ^ (uint)(object)right);
-            if (typeof(T) == typeof(int)) return (T)(object)((int)(object)left ^ (int)(object)right);
-            if (typeof(T) == typeof(ulong)) return (T)(object)((ulong)(object)left ^ (ulong)(object)right);
-            if (typeof(T) == typeof(long)) return (T)(object)((long)(object)left ^ (long)(object)right);
-
-            throw new NotSupportedException(typeof(T).Name);
+            return (left, right) switch
+            {
+                (byte L, byte R) => (T)(object)(byte)(L ^ R),
+                (sbyte L, sbyte R) => (T)(object)(sbyte)(L ^ R),
+                (ushort L, ushort R) => (T)(object)(ushort)(L ^ R),
+                (short L, short R) => (T)(object)(short)(L ^ R),
+                (uint L, uint R) => (T)(object)(uint)(L ^ R),
+                (int L, int R) => (T)(object)(int)(L ^ R),
+                (ulong L, ulong R) => (T)(object)(ulong)(L ^ R),
+                (long L, long R) => (T)(object)(long)(L ^ R),
+                _ => throw new NotSupportedException(typeof(T).Name)
+            };
         }
 
         [MethodImpl(MaxOpt)]
         public static bool Equal(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (byte)(object)left == (byte)(object)right;
-            if (typeof(T) == typeof(sbyte)) return (sbyte)(object)left == (sbyte)(object)right;
-            if (typeof(T) == typeof(ushort)) return (ushort)(object)left == (ushort)(object)right;
-            if (typeof(T) == typeof(short)) return (short)(object)left == (short)(object)right;
-            if (typeof(T) == typeof(uint)) return (uint)(object)left == (uint)(object)right;
-            if (typeof(T) == typeof(int)) return (int)(object)left == (int)(object)right;
-            if (typeof(T) == typeof(ulong)) return (ulong)(object)left == (ulong)(object)right;
-            if (typeof(T) == typeof(long)) return (long)(object)left == (long)(object)right;
-            if (typeof(T) == typeof(float)) return (float)(object)left == (float)(object)right;
-            if (typeof(T) == typeof(double)) return (double)(object)left == (double)(object)right;
-
-            throw new NotSupportedException(typeof(T).Name);
+            return (left, right) switch
+            {
+                (byte L, byte R) => L == R,
+                (sbyte L, sbyte R) => L == R,
+                (ushort L, ushort R) => L == R,
+                (short L, short R) => L == R,
+                (uint L, uint R) => L == R,
+                (int L, int R) => L == R,
+                (ulong L, ulong R) => L == R,
+                (long L, long R) => L == R,
+                (float L, float R) => L == R,
+                (double L, double R) => L == R,
+                _ => throw new NotSupportedException(typeof(T).Name)
+            };
         }
 
         [MethodImpl(MaxOpt)]
         public static bool Greater(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (byte)(object)left > (byte)(object)right;
-            if (typeof(T) == typeof(sbyte)) return (sbyte)(object)left > (sbyte)(object)right;
-            if (typeof(T) == typeof(ushort)) return (ushort)(object)left > (ushort)(object)right;
-            if (typeof(T) == typeof(short)) return (short)(object)left > (short)(object)right;
-            if (typeof(T) == typeof(uint)) return (uint)(object)left > (uint)(object)right;
-            if (typeof(T) == typeof(int)) return (int)(object)left > (int)(object)right;
-            if (typeof(T) == typeof(ulong)) return (ulong)(object)left > (ulong)(object)right;
-            if (typeof(T) == typeof(long)) return (long)(object)left > (long)(object)right;
-            if (typeof(T) == typeof(float)) return (float)(object)left > (float)(object)right;
-            if (typeof(T) == typeof(double)) return (double)(object)left > (double)(object)right;
-
-            throw new NotSupportedException(typeof(T).Name);
+            return (left, right) switch
+            {
+                (byte L, byte R) => L > R,
+                (sbyte L, sbyte R) => L > R,
+                (ushort L, ushort R) => L > R,
+                (short L, short R) => L > R,
+                (uint L, uint R) => L > R,
+                (int L, int R) => L > R,
+                (ulong L, ulong R) => L > R,
+                (long L, long R) => L > R,
+                (float L, float R) => L > R,
+                (double L, double R) => L > R,
+                _ => throw new NotSupportedException(typeof(T).Name)
+            };
         }
 
         [MethodImpl(MaxOpt)]
         public static bool Less(T left, T right)
         {
-            if (typeof(T) == typeof(byte)) return (byte)(object)left < (byte)(object)right;
-            if (typeof(T) == typeof(sbyte)) return (sbyte)(object)left < (sbyte)(object)right;
-            if (typeof(T) == typeof(ushort)) return (ushort)(object)left < (ushort)(object)right;
-            if (typeof(T) == typeof(short)) return (short)(object)left < (short)(object)right;
-            if (typeof(T) == typeof(uint)) return (uint)(object)left < (uint)(object)right;
-            if (typeof(T) == typeof(int)) return (int)(object)left < (int)(object)right;
-            if (typeof(T) == typeof(ulong)) return (ulong)(object)left < (ulong)(object)right;
-            if (typeof(T) == typeof(long)) return (long)(object)left < (long)(object)right;
-            if (typeof(T) == typeof(float)) return (float)(object)left < (float)(object)right;
-            if (typeof(T) == typeof(double)) return (double)(object)left < (double)(object)right;
-
-            throw new NotSupportedException(typeof(T).Name);
+            return (left, right) switch
+            {
+                (byte L, byte R) => L < R,
+                (sbyte L, sbyte R) => L < R,
+                (ushort L, ushort R) => L < R,
+                (short L, short R) => L < R,
+                (uint L, uint R) => L < R,
+                (int L, int R) => L < R,
+                (ulong L, ulong R) => L < R,
+                (long L, long R) => L < R,
+                (float L, float R) => L < R,
+                (double L, double R) => L < R,
+                _ => throw new NotSupportedException(typeof(T).Name)
+            };
         }
 
+        [MethodImpl(MaxOpt)]
         public static T Min(T left, T right)
         {
             return Less(left, right) ? left : right;
         }
 
+        [MethodImpl(MaxOpt)]
         public static T Max(T left, T right)
         {
             return Greater(left, right) ? left : right;
         }
 
+        [MethodImpl(MaxOpt)]
         public static T Negate(T value)
         {
             return Subtract(Zero, value);
         }
 
+        [MethodImpl(MaxOpt)]
         public static T Abs(T value)
         {
             return Less(value, Zero) ? Negate(value) : value;
         }
 
+        [MethodImpl(MaxOpt)]
         public static bool LessOrEqual(T left, T right)
         {
             return !Greater(left, right);
         }
 
+        [MethodImpl(MaxOpt)]
         public static bool GreaterOrEqual(T left, T right)
         {
             return !Less(left, right);
