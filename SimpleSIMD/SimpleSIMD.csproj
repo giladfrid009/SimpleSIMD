@@ -11,8 +11,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Easy to use SIMD accelerated span and array methods</Description>
     <Copyright>Copyright 2020 (c) Gilad Freidkin, All rights reserved</Copyright>
-    <Version>3.00</Version>
-    <PackageReleaseNotes>Major rewrite, code simplification and trimming
+    <Version>3.01</Version>
+    <PackageReleaseNotes>Major rewrite, code simplification and trimming. Allow wrapping a delegate with a value-delegate via extension methods.
 </PackageReleaseNotes>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
