@@ -1,19 +1,15 @@
-﻿#pragma warning disable IDE0011
-
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 
 namespace SimpleSimd
 {
     public static class NumOps<T> where T : unmanaged
     {
-        private const MethodImplOptions MaxOpt = MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization;
-
         public static T Zero => default;
 
         public static T MinValue
         {
-            [MethodImpl(MaxOpt)]
+            [MethodImpl(Impl.Inline)]
             get
             {
                 return default(T) switch
@@ -35,7 +31,7 @@ namespace SimpleSimd
 
         public static T MaxValue
         {
-            [MethodImpl(MaxOpt)]
+            [MethodImpl(Impl.Inline)]
             get
             {
                 return default(T) switch
@@ -55,7 +51,7 @@ namespace SimpleSimd
             }
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static T Not(T value)
         {
             return value switch
@@ -72,7 +68,7 @@ namespace SimpleSimd
             };
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static T Add(T left, T right)
         {
             return (left, right) switch
@@ -91,7 +87,7 @@ namespace SimpleSimd
             };
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static T Subtract(T left, T right)
         {
             return (left, right) switch
@@ -110,7 +106,7 @@ namespace SimpleSimd
             };
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static T Multiply(T left, T right)
         {
             return (left, right) switch
@@ -129,7 +125,7 @@ namespace SimpleSimd
             };
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static T Divide(T left, T right)
         {
             return (left, right) switch
@@ -148,7 +144,7 @@ namespace SimpleSimd
             };
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static T Modulus(T left, T right)
         {
             return (left, right) switch
@@ -167,7 +163,7 @@ namespace SimpleSimd
             };
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static T And(T left, T right)
         {
             return (left, right) switch
@@ -184,7 +180,7 @@ namespace SimpleSimd
             };
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static T Or(T left, T right)
         {
             return (left, right) switch
@@ -201,7 +197,7 @@ namespace SimpleSimd
             };
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static T Xor(T left, T right)
         {
             return (left, right) switch
@@ -218,7 +214,7 @@ namespace SimpleSimd
             };
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static bool Equal(T left, T right)
         {
             return (left, right) switch
@@ -237,7 +233,7 @@ namespace SimpleSimd
             };
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static bool Greater(T left, T right)
         {
             return (left, right) switch
@@ -256,7 +252,7 @@ namespace SimpleSimd
             };
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static bool Less(T left, T right)
         {
             return (left, right) switch
@@ -275,37 +271,37 @@ namespace SimpleSimd
             };
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static T Min(T left, T right)
         {
             return Less(left, right) ? left : right;
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static T Max(T left, T right)
         {
             return Greater(left, right) ? left : right;
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static T Negate(T value)
         {
             return Subtract(Zero, value);
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static T Abs(T value)
         {
             return Less(value, Zero) ? Negate(value) : value;
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static bool LessOrEqual(T left, T right)
         {
             return !Greater(left, right);
         }
 
-        [MethodImpl(MaxOpt)]
+        [MethodImpl(Impl.Inline)]
         public static bool GreaterOrEqual(T left, T right)
         {
             return !Less(left, right);
