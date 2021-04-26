@@ -25,7 +25,7 @@ namespace SimpleSimd
 
     internal static class SimdOps
     {
-        internal static ref U Offset<U>(this ref U source, int count) where U : struct
+        internal static ref T Offset<T>(this ref T source, int count) where T : struct
         {
             return ref Unsafe.Add(ref source, count);
         }
