@@ -38,7 +38,7 @@ namespace SimpleSimd
         public TRes Invoke(T1 param1, T2 param2) => delRef(param1, param2);
     }
 
-    public static class Extensions
+    public static class Wrapper
     {
         public static ActionWrapper<T> Wrap<T>(this Action<T> delRef) where T : struct
         {
