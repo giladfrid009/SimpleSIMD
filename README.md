@@ -83,7 +83,7 @@ Calling functions using this patten may feel unusual since it requires creation 
 The performance difference makes using this pattern worthwhile in performance critical places.  
 Since the focus of this library is **pure performance**, we use this pattern wherever possible.
 
-Wrap extension method is included to wrap regular delegates as Value Delegates.  
+Wrap extension methods are included (``SimpleSimd.Wrapper.Wrap(delegate)``) to wrap regular delegates as Value Delegates.  
 Note that wrapping a regular delegate results in a performance hit - prefer using Value Delegates directly as shown below.
 #### Usage:
 
