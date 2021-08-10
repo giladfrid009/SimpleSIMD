@@ -9,6 +9,8 @@ namespace SimpleSimd
         public ActionWrapper(Action<T> del) => delRef = del;
 
         public void Invoke(T param) => delRef(param);
+
+        public static implicit operator Action<T>(ActionWrapper<T> wrapper) => wrapper.delRef;
     }
 
     public struct FuncWrapper<TRes> : IFunc<TRes> where TRes : struct
@@ -18,6 +20,8 @@ namespace SimpleSimd
         public FuncWrapper(Func<TRes> del) => delRef = del;
 
         public TRes Invoke() => delRef();
+
+        public static implicit operator Func<TRes>(FuncWrapper<TRes> wrapper) => wrapper.delRef;
     }
 
     public struct FuncWrapper<T, TRes> : IFunc<T, TRes> where T : struct where TRes : struct
@@ -27,15 +31,19 @@ namespace SimpleSimd
         public FuncWrapper(Func<T, TRes> del) => delRef = del;
 
         public TRes Invoke(T param) => delRef(param);
+
+        public static implicit operator Func<T, TRes>(FuncWrapper<T, TRes> wrapper) => wrapper.delRef;
     }
 
-    public struct FuncWrapper<T1, T2, TRes> : IFunc<T1, T2, TRes> where T1 : struct where TRes : struct where T2 : struct
+    public struct FuncWrapper<T1, T2, TRes> : IFunc<T1, T2, TRes> where T1 : struct where T2 : struct where TRes : struct 
     {
         private readonly Func<T1, T2, TRes> delRef;
 
         public FuncWrapper(Func<T1, T2, TRes> del) => delRef = del;
 
         public TRes Invoke(T1 param1, T2 param2) => delRef(param1, param2);
+
+        public static implicit operator Func<T1, T2, TRes>(FuncWrapper<T1, T2, TRes> wrapper) => wrapper.delRef;
     }
 
     public static class Wrapper
