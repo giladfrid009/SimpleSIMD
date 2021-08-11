@@ -16,7 +16,7 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T, T>
 
         {
-            return NumOps<T>.Divide(Sum(span, vSelector, selector), NumOps<int, T>.Convert(span.Length));
+            return Sum(span, vSelector, selector) / T.Create(span.Length);
         }
     }
 }

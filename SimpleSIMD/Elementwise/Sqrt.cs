@@ -17,7 +17,7 @@ namespace SimpleSimd
         {
             public T Invoke(T val)
             {
-                return NumOps<double, T>.Convert(Math.Sqrt(NumOps<T, double>.Convert(val)));
+                return T.Create(Math.Sqrt(Convert<double>(val)));
             }
         }
 

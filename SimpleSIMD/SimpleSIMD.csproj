@@ -1,9 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>SimpleSimd</RootNamespace>
-    <nullable>enable</nullable>
+	<EnablePreviewFeatures>true</EnablePreviewFeatures>
+	<LangVersion>preview</LangVersion>
+	<nullable>enable</nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Gilad Freidkin</Authors>
     <RepositoryUrl>https://github.com/giladfrid009/SimpleSIMD</RepositoryUrl>
@@ -11,7 +13,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Easy to use SIMD accelerated span and array methods</Description>
     <Copyright>Copyright 2020 (c) Gilad Freidkin, All rights reserved</Copyright>
-    <Version>3.1.1</Version>
+    <Version>4.00-alpha</Version>
     <PackageReleaseNotes>SimdpleSimd.Extensions renamed to SimpleSimd.Wrapper. 
     Added implicit conversions to Func and Action from wrapper classes.
 </PackageReleaseNotes>
@@ -20,5 +22,9 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.Experimental" Version="6.0.0-preview.7.21377.19" />
+  </ItemGroup>
 
 </Project>

@@ -17,7 +17,7 @@ namespace SimpleSimd
         {
             public T Invoke(T left, T right)
             {
-                return NumOps<T>.Xor(left, right);
+                return left ^ right;
             }
         }
 

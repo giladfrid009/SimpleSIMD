@@ -17,7 +17,7 @@ namespace SimpleSimd
         {
             public bool Invoke(T left, T right)
             {
-                return NumOps<T>.Less(left, right);
+                return left < right;
             }
         }
 

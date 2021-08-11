@@ -16,7 +16,7 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T, T>
 
         {
-            T sum = NumOps<T>.Zero;
+            T sum = T.Zero;
 
             ref T rSpan = ref GetRef(span);
 
@@ -32,7 +32,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    vSum = Vector.Add(vSum, vSelector.Invoke(vrSpan.Offset(i)));
+                    vSum += vSelector.Invoke(vrSpan.Offset(i));
                 }
 
                 sum = Vector.Dot(vSum, Vector<T>.One);
@@ -42,7 +42,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                sum = NumOps<T>.Add(sum, selector.Invoke(rSpan.Offset(i)));
+                sum += selector.Invoke(rSpan.Offset(i));
             }
 
             return sum;

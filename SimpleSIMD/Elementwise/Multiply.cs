@@ -17,7 +17,7 @@ namespace SimpleSimd
         {
             public T Invoke(T left, T right)
             {
-                return NumOps<T>.Multiply(left, right);
+                return left * right;
             }
         }
 

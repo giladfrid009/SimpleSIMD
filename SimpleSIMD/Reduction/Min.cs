@@ -16,7 +16,7 @@ namespace SimpleSimd
             where F2 : struct, IFunc<T, T>
 
         {
-            T min = NumOps<T>.MaxValue;
+            T min = T.MaxValue;
 
             ref T rSpan = ref GetRef(span);
 
@@ -37,7 +37,7 @@ namespace SimpleSimd
 
                 for (int j = 0; j < Vector<T>.Count; j++)
                 {
-                    min = NumOps<T>.Min(min, vMin[j]);
+                    min = T.Min(min, vMin[j]);
                 }
 
                 i *= Vector<T>.Count;
@@ -45,7 +45,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                min = NumOps<T>.Min(min, selector.Invoke(rSpan.Offset(i)));
+                min = T.Min(min, selector.Invoke(rSpan.Offset(i)));
             }
 
             return min;

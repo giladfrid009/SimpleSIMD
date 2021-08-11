@@ -32,7 +32,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                if (NumOps<T>.Equal(rSpan.Offset(i), value))
+                if (rSpan.Offset(i) == value)
                 {
                     return true;
                 }

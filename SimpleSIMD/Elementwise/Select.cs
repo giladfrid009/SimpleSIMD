@@ -7,7 +7,7 @@ namespace SimpleSimd
     {
         public static void Select<TRes, F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector, in Span<TRes> result)
 
-            where TRes : unmanaged
+            where TRes : unmanaged, IBinaryNumber<TRes>
             where F1 : struct, IFunc<Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, TRes>
 
@@ -50,7 +50,7 @@ namespace SimpleSimd
 
         public static TRes[] Select<TRes, F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector)
 
-            where TRes : unmanaged
+            where TRes : unmanaged, IBinaryNumber<TRes>
             where F1 : struct, IFunc<Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, TRes>
 

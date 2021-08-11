@@ -17,7 +17,7 @@ namespace SimpleSimd
         {
             public T Invoke(T val)
             {
-                return NumOps<T>.Not(val);
+                return ~val;
             }
         }
 

@@ -28,7 +28,7 @@ namespace SimpleSimd
 
                         for (; j < l; j++)
                         {
-                            if (NumOps<T>.Equal(rSpan.Offset(j) , value))
+                            if (rSpan.Offset(j) == value)
                             {
                                 return j;
                             }
@@ -41,7 +41,7 @@ namespace SimpleSimd
 
             for (; i < span.Length; i++)
             {
-                if (NumOps<T>.Equal(rSpan.Offset(i), value))
+                if (rSpan.Offset(i) == value)
                 {
                     return i;
                 }
