@@ -21,12 +21,12 @@ namespace SimpleSimd
             }
         }
 
-        public static void Sqrt(in ReadOnlySpan<T> span, in Span<T> result)
+        public static void Sqrt(ReadOnlySpan<T> span, Span<T> result)
         {
             Select(span, new Sqrt_VSelector(), new Sqrt_Selector(), result);
         }
 
-        public static T[] Sqrt(in ReadOnlySpan<T> span)
+        public static T[] Sqrt(ReadOnlySpan<T> span)
         {
             T[] result = new T[span.Length];
 

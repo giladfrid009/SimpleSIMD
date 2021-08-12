@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Concat<TRes, F1, F2>(in ReadOnlySpan<T> left, T right, F1 vSelector, F2 selector, in Span<TRes> result)
+        public static void Concat<TRes, F1, F2>(ReadOnlySpan<T> left, T right, F1 vSelector, F2 selector, Span<TRes> result)
 
             where TRes : unmanaged, IBinaryNumber<TRes>
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
@@ -50,7 +50,7 @@ namespace SimpleSimd
             }
         }
 
-        public static void Concat<TRes, F1, F2>(T left, ReadOnlySpan<T> right, F1 vSelector, F2 selector, in Span<TRes> result)
+        public static void Concat<TRes, F1, F2>(T left, ReadOnlySpan<T> right, F1 vSelector, F2 selector, Span<TRes> result)
 
             where TRes : unmanaged, IBinaryNumber<TRes>
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
@@ -95,7 +95,7 @@ namespace SimpleSimd
             }
         }
 
-        public static void Concat<TRes, F1, F2>(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, in Span<TRes> result)
+        public static void Concat<TRes, F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, Span<TRes> result)
 
             where TRes : unmanaged, IBinaryNumber<TRes>
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
@@ -145,7 +145,7 @@ namespace SimpleSimd
             }
         }
 
-        public static TRes[] Concat<TRes, F1, F2>(in ReadOnlySpan<T> left, T right, F1 vCombiner, F2 combiner)
+        public static TRes[] Concat<TRes, F1, F2>(ReadOnlySpan<T> left, T right, F1 vCombiner, F2 combiner)
 
             where TRes : unmanaged, IBinaryNumber<TRes>
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
@@ -159,7 +159,7 @@ namespace SimpleSimd
             return result;
         }
 
-        public static TRes[] Concat<TRes, F1, F2>(T left, in ReadOnlySpan<T> right, F1 vCombiner, F2 combiner)
+        public static TRes[] Concat<TRes, F1, F2>(T left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner)
 
             where TRes : unmanaged, IBinaryNumber<TRes>
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
@@ -173,7 +173,7 @@ namespace SimpleSimd
             return result;
         }
 
-        public static TRes[] Concat<TRes, F1, F2>(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, F1 vCombiner, F2 combiner)
+        public static TRes[] Concat<TRes, F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner)
             
             where TRes : unmanaged, IBinaryNumber<TRes>
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>

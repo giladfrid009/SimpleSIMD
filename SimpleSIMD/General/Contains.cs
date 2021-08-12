@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static bool Contains(in ReadOnlySpan<T> span, T value)
+        public static bool Contains(ReadOnlySpan<T> span, T value)
         {
             ref T rSpan = ref GetRef(span);
 

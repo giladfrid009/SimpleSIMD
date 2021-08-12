@@ -21,12 +21,12 @@ namespace SimpleSimd
             }
         }
 
-        public static bool Less(in ReadOnlySpan<T> left, T right)
+        public static bool Less(ReadOnlySpan<T> left, T right)
         {
             return All(left, right, new Less_VSelector(), new Less_Selector());
         }
 
-        public static bool Less(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
+        public static bool Less(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
         {
             return All(left, right, new Less_VSelector(), new Less_Selector());
         }

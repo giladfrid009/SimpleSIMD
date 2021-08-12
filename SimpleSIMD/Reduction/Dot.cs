@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static T Dot(in ReadOnlySpan<T> left, T right)
+        public static T Dot(ReadOnlySpan<T> left, T right)
         {        
             T dot = T.Zero;
 
@@ -40,7 +40,7 @@ namespace SimpleSimd
             return dot;
         }
 
-        public static T Dot(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
+        public static T Dot(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
         {
             if (right.Length != left.Length)
             {

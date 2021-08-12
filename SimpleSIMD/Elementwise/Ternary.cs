@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Ternary<F1, F2>(in ReadOnlySpan<T> span, F1 vCondition, F2 condition, T trueValue, T falseValue, in Span<T> result)
+        public static void Ternary<F1, F2>(ReadOnlySpan<T> span, F1 vCondition, F2 condition, T trueValue, T falseValue, Span<T> result)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, bool>
@@ -45,7 +45,7 @@ namespace SimpleSimd
             }
         }
 
-        public static void Ternary<F1, F2, F3, F4, F5, F6>(in ReadOnlySpan<T> span, F1 vCondition, F2 vTrueSelector, F3 vFalseSelector, F4 condition, F5 trueSelector, F6 falseSelector, in Span<T> result)
+        public static void Ternary<F1, F2, F3, F4, F5, F6>(ReadOnlySpan<T> span, F1 vCondition, F2 vTrueSelector, F3 vFalseSelector, F4 condition, F5 trueSelector, F6 falseSelector, Span<T> result)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<Vector<T>, Vector<T>>
@@ -86,7 +86,7 @@ namespace SimpleSimd
             }
         }
 
-        public static T[] Ternary<F1, F2>(in ReadOnlySpan<T> span, F1 vCondition, F2 condition, T trueValue, T falseValue)
+        public static T[] Ternary<F1, F2>(ReadOnlySpan<T> span, F1 vCondition, F2 condition, T trueValue, T falseValue)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, bool>
@@ -99,7 +99,7 @@ namespace SimpleSimd
             return result;
         }
 
-        public static T[] Ternary<F1, F2, F3, F4, F5, F6>(in ReadOnlySpan<T> span, F1 vCondition, F2 vTrueSelector, F3 vFalseSelector, F4 condition, F5 trueSelector, F6 falseSelector)
+        public static T[] Ternary<F1, F2, F3, F4, F5, F6>(ReadOnlySpan<T> span, F1 vCondition, F2 vTrueSelector, F3 vFalseSelector, F4 condition, F5 trueSelector, F6 falseSelector)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<Vector<T>, Vector<T>>

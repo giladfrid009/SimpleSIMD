@@ -21,17 +21,17 @@ namespace SimpleSimd
             }
         }
 
-        public static void Or(in ReadOnlySpan<T> left, T right, in Span<T> result)
+        public static void Or(ReadOnlySpan<T> left, T right, Span<T> result)
         {
             Concat(left, right, new Or_VSelector(), new Or_Selector(), result);
         }
 
-        public static void Or(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, in Span<T> result)
+        public static void Or(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new Or_VSelector(), new Or_Selector(), result);
         }
 
-        public static T[] Or(in ReadOnlySpan<T> left, T right)
+        public static T[] Or(ReadOnlySpan<T> left, T right)
         {
             T[] result = new T[left.Length];
 
@@ -40,7 +40,7 @@ namespace SimpleSimd
             return result;
         }
 
-        public static T[] Or(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
+        public static T[] Or(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
         {
             T[] result = new T[left.Length];
 
