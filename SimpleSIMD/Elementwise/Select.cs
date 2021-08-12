@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Select<TRes, F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector, in Span<TRes> result)
+        public static void Select<TRes, F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector, Span<TRes> result)
 
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<TRes>>
@@ -48,7 +48,7 @@ namespace SimpleSimd
             }
         }
 
-        public static TRes[] Select<TRes, F1, F2>(in ReadOnlySpan<T> span, F1 vSelector, F2 selector)
+        public static TRes[] Select<TRes, F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector)
 
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<TRes>>

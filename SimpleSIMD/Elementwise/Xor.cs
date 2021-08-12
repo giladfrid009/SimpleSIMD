@@ -21,17 +21,17 @@ namespace SimpleSimd
             }
         }
 
-        public static void Xor(in ReadOnlySpan<T> left, T right, in Span<T> result)
+        public static void Xor(ReadOnlySpan<T> left, T right, Span<T> result)
         {
             Concat(left, right, new Xor_VSelector(), new Xor_Selector(), result);
         }
 
-        public static void Xor(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, in Span<T> result)
+        public static void Xor(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new Xor_VSelector(), new Xor_Selector(), result);
         }
 
-        public static T[] Xor(in ReadOnlySpan<T> left, T right)
+        public static T[] Xor(ReadOnlySpan<T> left, T right)
         {
             T[] result = new T[left.Length];
 
@@ -40,7 +40,7 @@ namespace SimpleSimd
             return result;
         }
 
-        public static T[] Xor(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
+        public static T[] Xor(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
         {
             T[] result = new T[left.Length];
 

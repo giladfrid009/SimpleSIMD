@@ -21,12 +21,12 @@ namespace SimpleSimd
             }
         }
 
-        public static void Not(in ReadOnlySpan<T> span, in Span<T> result)
+        public static void Not(ReadOnlySpan<T> span, Span<T> result)
         {
             Select(span, new Not_VSelector(), new Not_Selector(), result);
         }
 
-        public static T[] Not(in ReadOnlySpan<T> span)
+        public static T[] Not(ReadOnlySpan<T> span)
         {
             T[] result = new T[span.Length];
 

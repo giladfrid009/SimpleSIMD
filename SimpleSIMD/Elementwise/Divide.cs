@@ -21,22 +21,22 @@ namespace SimpleSimd
             }
         }
 
-        public static void Divide(in ReadOnlySpan<T> left, T right, in Span<T> result)
+        public static void Divide(ReadOnlySpan<T> left, T right, Span<T> result)
         {
             Concat(left, right, new Divide_VSelector(), new Divide_Selector(), result);
         }
 
-        public static void Divide(T left, in ReadOnlySpan<T> right, in Span<T> result)
+        public static void Divide(T left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new Divide_VSelector(), new Divide_Selector(), result);
         }
 
-        public static void Divide(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, in Span<T> result)
+        public static void Divide(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new Divide_VSelector(), new Divide_Selector(), result);
         }
 
-        public static T[] Divide(in ReadOnlySpan<T> left, T right)
+        public static T[] Divide(ReadOnlySpan<T> left, T right)
         {
             T[] result = new T[left.Length];
 
@@ -45,7 +45,7 @@ namespace SimpleSimd
             return result;
         }
 
-        public static T[] Divide(T left, in ReadOnlySpan<T> right)
+        public static T[] Divide(T left, ReadOnlySpan<T> right)
         {
             T[] result = new T[right.Length];
 
@@ -54,7 +54,7 @@ namespace SimpleSimd
             return result;
         }
 
-        public static T[] Divide(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
+        public static T[] Divide(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
         {
             T[] result = new T[left.Length];
 

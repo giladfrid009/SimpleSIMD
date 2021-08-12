@@ -11,9 +11,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Easy to use SIMD accelerated span and array methods</Description>
     <Copyright>Copyright 2020 (c) Gilad Freidkin, All rights reserved</Copyright>
-    <Version>3.1.1</Version>
-    <PackageReleaseNotes>SimdpleSimd.Extensions renamed to SimpleSimd.Wrapper. 
-    Added implicit conversions to Func and Action from wrapper classes.
+    <Version>3.1.2</Version>
+    <PackageReleaseNotes>Not passing spans by reference anymore
 </PackageReleaseNotes>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>

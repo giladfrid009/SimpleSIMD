@@ -21,12 +21,12 @@ namespace SimpleSimd
             }
         }
 
-        public static bool Greater(in ReadOnlySpan<T> left, T right)
+        public static bool Greater(ReadOnlySpan<T> left, T right)
         {
             return All(left, right, new Greater_VSelector(), new Greater_Selector());
         }
 
-        public static bool Greater(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
+        public static bool Greater(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
         {
             return All(left, right, new Greater_VSelector(), new Greater_Selector());
         }

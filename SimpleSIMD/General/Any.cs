@@ -5,7 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static bool Any<F1, F2>(in ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
+        public static bool Any<F1, F2>(ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
 
             where F1 : struct, IFunc<Vector<T>, bool>
             where F2 : struct, IFunc<T, bool>
@@ -44,7 +44,7 @@ namespace SimpleSimd
             return false;
         }
 
-        public static bool Any<F1, F2>(in ReadOnlySpan<T> left, T right, F1 vPredicate, F2 predicate)
+        public static bool Any<F1, F2>(ReadOnlySpan<T> left, T right, F1 vPredicate, F2 predicate)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>
             where F2 : struct, IFunc<T, T, bool>
@@ -85,7 +85,7 @@ namespace SimpleSimd
             return false;
         }
 
-        public static bool Any<F1, F2>(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, F1 vPredicate, F2 predicate)
+        public static bool Any<F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vPredicate, F2 predicate)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>
             where F2 : struct, IFunc<T, T, bool>

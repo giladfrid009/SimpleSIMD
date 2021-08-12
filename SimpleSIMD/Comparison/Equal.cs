@@ -21,12 +21,12 @@ namespace SimpleSimd
             }
         }
 
-        public static bool Equal(in ReadOnlySpan<T> left, T right)
+        public static bool Equal(ReadOnlySpan<T> left, T right)
         {
             return All(left, right, new Equal_VSelector(), new Equal_Selector());
         }
 
-        public static bool Equal(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
+        public static bool Equal(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
         {
             return All(left, right, new Equal_VSelector(), new Equal_Selector());
         }

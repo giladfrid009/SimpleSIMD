@@ -21,22 +21,22 @@ namespace SimpleSimd
             }
         }
 
-        public static void Subtract(in ReadOnlySpan<T> left, T right, in Span<T> result)
+        public static void Subtract(ReadOnlySpan<T> left, T right, Span<T> result)
         {
             Concat(left, right, new Subtract_VSelector(), new Subtract_Selector(), result);
         }
 
-        public static void Subtract(T left, in ReadOnlySpan<T> right, in Span<T> result)
+        public static void Subtract(T left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new Subtract_VSelector(), new Subtract_Selector(), result);
         }
 
-        public static void Subtract(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right, in Span<T> result)
+        public static void Subtract(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new Subtract_VSelector(), new Subtract_Selector(), result);
         }
 
-        public static T[] Subtract(in ReadOnlySpan<T> left, T right)
+        public static T[] Subtract(ReadOnlySpan<T> left, T right)
         {
             T[] result = new T[left.Length];
 
@@ -45,7 +45,7 @@ namespace SimpleSimd
             return result;
         }
 
-        public static T[] Subtract(T left, in ReadOnlySpan<T> right)
+        public static T[] Subtract(T left, ReadOnlySpan<T> right)
         {
             T[] result = new T[right.Length];
 
@@ -54,7 +54,7 @@ namespace SimpleSimd
             return result;
         }
 
-        public static T[] Subtract(in ReadOnlySpan<T> left, in ReadOnlySpan<T> right)
+        public static T[] Subtract(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
         {
             T[] result = new T[left.Length];
 
