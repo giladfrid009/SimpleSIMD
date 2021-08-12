@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 namespace SimpleSimd
 {
     public static class NumOps<T> where T : unmanaged
-    {       
+    {
         public static T Zero => default;
         public static T One { get; }
 
@@ -12,7 +12,7 @@ namespace SimpleSimd
         {
             One = NumOps<int, T>.Convert(1);
         }
-        
+
         public static T MinValue
         {
             [MethodImpl(Impl.Inline)]

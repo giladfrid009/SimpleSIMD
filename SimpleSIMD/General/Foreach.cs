@@ -6,10 +6,8 @@ namespace SimpleSimd
     public static partial class SimdOps<T>
     {
         public static void Foreach<F1, F2>(ReadOnlySpan<T> span, F1 vAction, F2 action)
-
             where F1 : struct, IAction<Vector<T>>
             where F2 : struct, IAction<T>
-
         {
             ref T rSpan = ref GetRef(span);
 

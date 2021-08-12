@@ -18,7 +18,7 @@ namespace SimpleSimd
                 ref Vector<T> vrSpan = ref AsVector(rSpan);
 
                 int length = span.Length / Vector<T>.Count;
-                
+
                 for (; i < length; i++)
                 {
                     vrSpan.Offset(i) = vValue;
@@ -34,10 +34,8 @@ namespace SimpleSimd
         }
 
         public static void Fill<F1, F2>(Span<T> span, F1 vFunc, F2 func)
-
             where F1 : struct, IFunc<Vector<T>>
             where F2 : struct, IFunc<T>
-
         {
             ref T rSpan = ref GetRef(span);
 
@@ -46,7 +44,7 @@ namespace SimpleSimd
             if (Vector.IsHardwareAccelerated)
             {
                 ref Vector<T> vrSpan = ref AsVector(rSpan);
-                
+
                 int length = span.Length / Vector<T>.Count;
 
                 for (; i < length; i++)

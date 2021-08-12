@@ -5,12 +5,10 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
-        public static void Concat<TRes, F1, F2>(ReadOnlySpan<T> left, T right, F1 vSelector, F2 selector, Span<TRes> result)
-
+        public static void Concat<TRes, F1, F2>(ReadOnlySpan<T> left, T right, F1 vCombiner, F2 combiner, Span<TRes> result)
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
-
         {
             if (result.Length != left.Length)
             {
@@ -38,7 +36,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    vrResult.Offset(i) = vSelector.Invoke(vrLeft.Offset(i), vRight);
+                    vrResult.Offset(i) = vCombiner.Invoke(vrLeft.Offset(i), vRight);
                 }
 
                 i *= Vector<T>.Count;
@@ -46,16 +44,14 @@ namespace SimpleSimd
 
             for (; i < left.Length; i++)
             {
-                rResult.Offset(i) = selector.Invoke(rLeft.Offset(i), right);
+                rResult.Offset(i) = combiner.Invoke(rLeft.Offset(i), right);
             }
         }
 
-        public static void Concat<TRes, F1, F2>(T left, ReadOnlySpan<T> right, F1 vSelector, F2 selector, Span<TRes> result)
-
+        public static void Concat<TRes, F1, F2>(T left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, Span<TRes> result)
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
-
         {
             if (result.Length != right.Length)
             {
@@ -83,7 +79,7 @@ namespace SimpleSimd
 
                 for (; i < length; i++)
                 {
-                    vrResult.Offset(i) = vSelector.Invoke(vLeft, vrRight.Offset(i));
+                    vrResult.Offset(i) = vCombiner.Invoke(vLeft, vrRight.Offset(i));
                 }
 
                 i *= Vector<T>.Count;
@@ -91,16 +87,14 @@ namespace SimpleSimd
 
             for (; i < right.Length; i++)
             {
-                rResult.Offset(i) = selector.Invoke(left, rRight.Offset(i));
+                rResult.Offset(i) = combiner.Invoke(left, rRight.Offset(i));
             }
         }
 
         public static void Concat<TRes, F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, Span<TRes> result)
-
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
-
         {
             if (right.Length != left.Length)
             {
@@ -115,7 +109,7 @@ namespace SimpleSimd
             if (Vector<TRes>.Count != Vector<T>.Count)
             {
                 Exceptions.InvalidCast(typeof(TRes).Name);
-            }        
+            }
 
             ref T rLeft = ref GetRef(left);
             ref T rRight = ref GetRef(right);
@@ -146,11 +140,9 @@ namespace SimpleSimd
         }
 
         public static TRes[] Concat<TRes, F1, F2>(ReadOnlySpan<T> left, T right, F1 vCombiner, F2 combiner)
-
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
-
         {
             TRes[] result = new TRes[left.Length];
 
@@ -160,11 +152,9 @@ namespace SimpleSimd
         }
 
         public static TRes[] Concat<TRes, F1, F2>(T left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner)
-
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
-
         {
             TRes[] result = new TRes[right.Length];
 
@@ -174,11 +164,9 @@ namespace SimpleSimd
         }
 
         public static TRes[] Concat<TRes, F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner)
-            
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
-
         {
             TRes[] result = new TRes[left.Length];
 

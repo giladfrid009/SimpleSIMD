@@ -6,10 +6,8 @@ namespace SimpleSimd
     public static partial class SimdOps<T>
     {
         public static void Ternary<F1, F2>(ReadOnlySpan<T> span, F1 vCondition, F2 condition, T trueValue, T falseValue, Span<T> result)
-
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, bool>
-
         {
             if (result.Length != span.Length)
             {
@@ -46,14 +44,12 @@ namespace SimpleSimd
         }
 
         public static void Ternary<F1, F2, F3, F4, F5, F6>(ReadOnlySpan<T> span, F1 vCondition, F2 vTrueSelector, F3 vFalseSelector, F4 condition, F5 trueSelector, F6 falseSelector, Span<T> result)
-
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<Vector<T>, Vector<T>>
             where F3 : struct, IFunc<Vector<T>, Vector<T>>
             where F4 : struct, IFunc<T, bool>
             where F5 : struct, IFunc<T, T>
             where F6 : struct, IFunc<T, T>
-
         {
             if (result.Length != span.Length)
             {
@@ -87,10 +83,8 @@ namespace SimpleSimd
         }
 
         public static T[] Ternary<F1, F2>(ReadOnlySpan<T> span, F1 vCondition, F2 condition, T trueValue, T falseValue)
-
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, bool>
-
         {
             T[] result = new T[span.Length];
 
@@ -100,14 +94,12 @@ namespace SimpleSimd
         }
 
         public static T[] Ternary<F1, F2, F3, F4, F5, F6>(ReadOnlySpan<T> span, F1 vCondition, F2 vTrueSelector, F3 vFalseSelector, F4 condition, F5 trueSelector, F6 falseSelector)
-
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<Vector<T>, Vector<T>>
             where F3 : struct, IFunc<Vector<T>, Vector<T>>
             where F4 : struct, IFunc<T, bool>
             where F5 : struct, IFunc<T, T>
             where F6 : struct, IFunc<T, T>
-
         {
             T[] result = new T[span.Length];
 

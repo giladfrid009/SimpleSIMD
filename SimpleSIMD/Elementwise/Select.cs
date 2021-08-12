@@ -6,16 +6,14 @@ namespace SimpleSimd
     public static partial class SimdOps<T>
     {
         public static void Select<TRes, F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector, Span<TRes> result)
-
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, TRes>
-
         {
             if (result.Length != span.Length)
             {
                 Exceptions.ArgOutOfRange(nameof(result));
-            }       
+            }
 
             if (Vector<TRes>.Count != Vector<T>.Count)
             {
@@ -40,7 +38,7 @@ namespace SimpleSimd
                 }
 
                 i *= Vector<T>.Count;
-            }        
+            }
 
             for (; i < span.Length; i++)
             {
@@ -49,11 +47,9 @@ namespace SimpleSimd
         }
 
         public static TRes[] Select<TRes, F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector)
-
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, TRes>
-
         {
             TRes[] result = new TRes[span.Length];
 

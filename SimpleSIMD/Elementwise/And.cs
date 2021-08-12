@@ -29,7 +29,7 @@ namespace SimpleSimd
         public static void And(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new And_VSelector(), new And_Selector(), result);
-        }       
+        }
 
         public static T[] And(ReadOnlySpan<T> left, T right)
         {

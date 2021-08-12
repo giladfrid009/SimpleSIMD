@@ -11,10 +11,8 @@ namespace SimpleSimd
         }
 
         public static T Sum<F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector)
-
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, T>
-
         {
             T sum = NumOps<T>.Zero;
 
