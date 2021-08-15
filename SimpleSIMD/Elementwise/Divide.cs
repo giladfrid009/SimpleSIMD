@@ -1,5 +1,4 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace SimpleSimd
 {
@@ -21,46 +20,22 @@ namespace SimpleSimd
             }
         }
 
+        [ArrOverload]
         public static void Divide(ReadOnlySpan<T> left, T right, Span<T> result)
         {
             Concat(left, right, new Divide_VSelector(), new Divide_Selector(), result);
         }
 
+        [ArrOverload]
         public static void Divide(T left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new Divide_VSelector(), new Divide_Selector(), result);
         }
 
+        [ArrOverload]
         public static void Divide(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new Divide_VSelector(), new Divide_Selector(), result);
-        }
-
-        public static T[] Divide(ReadOnlySpan<T> left, T right)
-        {
-            T[] result = new T[left.Length];
-
-            Divide(left, right, result);
-
-            return result;
-        }
-
-        public static T[] Divide(T left, ReadOnlySpan<T> right)
-        {
-            T[] result = new T[right.Length];
-
-            Divide(left, right, result);
-
-            return result;
-        }
-
-        public static T[] Divide(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
-        {
-            T[] result = new T[left.Length];
-
-            Divide(left, right, result);
-
-            return result;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace SimpleSimd
 {
@@ -21,18 +20,10 @@ namespace SimpleSimd
             }
         }
 
+        [ArrOverload]
         public static void Not(ReadOnlySpan<T> span, Span<T> result)
         {
             Select(span, new Not_VSelector(), new Not_Selector(), result);
-        }
-
-        public static T[] Not(ReadOnlySpan<T> span)
-        {
-            T[] result = new T[span.Length];
-
-            Not(span, result);
-
-            return result;
         }
     }
 }

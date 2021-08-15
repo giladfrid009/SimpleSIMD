@@ -1,5 +1,4 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace SimpleSimd
 {
@@ -18,7 +17,7 @@ namespace SimpleSimd
                 ref Vector<T> vrSpan = ref AsVector(rSpan);
 
                 int length = span.Length / Vector<T>.Count;
-                
+
                 for (; i < length; i++)
                 {
                     vrSpan.Offset(i) = vValue;
@@ -46,7 +45,7 @@ namespace SimpleSimd
             if (Vector.IsHardwareAccelerated)
             {
                 ref Vector<T> vrSpan = ref AsVector(rSpan);
-                
+
                 int length = span.Length / Vector<T>.Count;
 
                 for (; i < length; i++)

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
+        [ArrOverload]
         public static void Ternary<F1, F2>(ReadOnlySpan<T> span, F1 vCondition, F2 condition, T trueValue, T falseValue, Span<T> result)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
@@ -45,6 +45,7 @@ namespace SimpleSimd
             }
         }
 
+        [ArrOverload]
         public static void Ternary<F1, F2, F3, F4, F5, F6>(ReadOnlySpan<T> span, F1 vCondition, F2 vTrueSelector, F3 vFalseSelector, F4 condition, F5 trueSelector, F6 falseSelector, Span<T> result)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
@@ -84,36 +85,6 @@ namespace SimpleSimd
             {
                 rResult.Offset(i) = condition.Invoke(rSpan.Offset(i)) ? trueSelector.Invoke(rSpan.Offset(i)) : falseSelector.Invoke(rSpan.Offset(i));
             }
-        }
-
-        public static T[] Ternary<F1, F2>(ReadOnlySpan<T> span, F1 vCondition, F2 condition, T trueValue, T falseValue)
-
-            where F1 : struct, IFunc<Vector<T>, Vector<T>>
-            where F2 : struct, IFunc<T, bool>
-
-        {
-            T[] result = new T[span.Length];
-
-            Ternary(span, vCondition, condition, trueValue, falseValue, result);
-
-            return result;
-        }
-
-        public static T[] Ternary<F1, F2, F3, F4, F5, F6>(ReadOnlySpan<T> span, F1 vCondition, F2 vTrueSelector, F3 vFalseSelector, F4 condition, F5 trueSelector, F6 falseSelector)
-
-            where F1 : struct, IFunc<Vector<T>, Vector<T>>
-            where F2 : struct, IFunc<Vector<T>, Vector<T>>
-            where F3 : struct, IFunc<Vector<T>, Vector<T>>
-            where F4 : struct, IFunc<T, bool>
-            where F5 : struct, IFunc<T, T>
-            where F6 : struct, IFunc<T, T>
-
-        {
-            T[] result = new T[span.Length];
-
-            Ternary(span, vCondition, vTrueSelector, vFalseSelector, condition, trueSelector, falseSelector, result);
-
-            return result;
         }
     }
 }

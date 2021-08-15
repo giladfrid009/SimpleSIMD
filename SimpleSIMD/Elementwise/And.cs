@@ -1,5 +1,4 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace SimpleSimd
 {
@@ -21,32 +20,16 @@ namespace SimpleSimd
             }
         }
 
+        [ArrOverload]
         public static void And(ReadOnlySpan<T> left, T right, Span<T> result)
         {
             Concat(left, right, new And_VSelector(), new And_Selector(), result);
         }
 
+        [ArrOverload]
         public static void And(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new And_VSelector(), new And_Selector(), result);
-        }       
-
-        public static T[] And(ReadOnlySpan<T> left, T right)
-        {
-            T[] result = new T[left.Length];
-
-            And(left, right, result);
-
-            return result;
-        }
-
-        public static T[] And(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
-        {
-            T[] result = new T[left.Length];
-
-            And(left, right, result);
-
-            return result;
         }
     }
 }

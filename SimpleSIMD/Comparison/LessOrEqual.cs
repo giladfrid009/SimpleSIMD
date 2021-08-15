@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SimpleSimd
+﻿namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {

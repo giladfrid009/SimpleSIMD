@@ -1,5 +1,4 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace SimpleSimd
 {
@@ -21,32 +20,16 @@ namespace SimpleSimd
             }
         }
 
+        [ArrOverload]
         public static void Xor(ReadOnlySpan<T> left, T right, Span<T> result)
         {
             Concat(left, right, new Xor_VSelector(), new Xor_Selector(), result);
         }
 
+        [ArrOverload]
         public static void Xor(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new Xor_VSelector(), new Xor_Selector(), result);
-        }
-
-        public static T[] Xor(ReadOnlySpan<T> left, T right)
-        {
-            T[] result = new T[left.Length];
-
-            Xor(left, right, result);
-
-            return result;
-        }
-
-        public static T[] Xor(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
-        {
-            T[] result = new T[left.Length];
-
-            Xor(left, right, result);
-
-            return result;
         }
     }
 }

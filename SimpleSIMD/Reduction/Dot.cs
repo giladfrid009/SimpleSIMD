@@ -1,12 +1,11 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
         public static T Dot(ReadOnlySpan<T> left, T right)
-        {        
+        {
             T dot = T.Zero;
 
             ref T rLeft = ref GetRef(left);
@@ -57,7 +56,7 @@ namespace SimpleSimd
             if (Vector.IsHardwareAccelerated)
             {
                 Vector<T> vDot = Vector<T>.Zero;
-                
+
                 ref Vector<T> vrLeft = ref AsVector(rLeft);
                 ref Vector<T> vrRight = ref AsVector(rRight);
 
@@ -71,7 +70,7 @@ namespace SimpleSimd
                 dot = Vector.Dot(vDot, Vector<T>.One);
 
                 i *= Vector<T>.Count;
-            }  
+            }
 
             for (; i < left.Length; i++)
             {
