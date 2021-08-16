@@ -2,7 +2,6 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -92,6 +91,7 @@ namespace Generator
         {
             var source = new StringBuilder(
                 $@"
+                #nullable enable
                 namespace {NamespaceName}
                 {{
                     using System;
