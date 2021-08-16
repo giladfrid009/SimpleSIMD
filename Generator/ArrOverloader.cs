@@ -23,7 +23,7 @@ namespace Generator
             if (string.IsNullOrEmpty(returnType)) return;
 
             string lengthArgument = LengthArgument(methodSymbol);
-            
+
             if (string.IsNullOrEmpty(lengthArgument)) return;
 
             string methodName = methodSymbol.Name;
@@ -52,9 +52,7 @@ namespace Generator
 
         private string ReturnType(IMethodSymbol methodSymbol)
         {
-            var resultParameter = methodSymbol.Parameters[methodSymbol.Parameters.Length - 1].Type as INamedTypeSymbol;
-
-            if (resultParameter is null)
+            if (methodSymbol.Parameters[methodSymbol.Parameters.Length - 1].Type is not INamedTypeSymbol resultParameter)
             {
                 return string.Empty;
             }

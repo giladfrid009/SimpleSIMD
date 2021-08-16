@@ -5,7 +5,9 @@ VisualStudioVersion = 17.0.31606.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleSIMD", "SimpleSIMD\SimpleSIMD.csproj", "{B8C57B9A-F7FC-4F91-B28B-974A1DA0BC78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Generator\Generator.csproj", "{4EB8CE9A-2A0D-4C32-B96A-DB6F0A202094}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "Generator\Generator.csproj", "{4EB8CE9A-2A0D-4C32-B96A-DB6F0A202094}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{271D246F-FD21-4245-8D76-1577B7117DB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

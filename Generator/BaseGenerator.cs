@@ -21,7 +21,7 @@ namespace Generator
             AttributeName = attrName;
             FileName = fileName;
 
-            AttributeSource = 
+            AttributeSource =
                 $@"
                 using System;
                 namespace {NamespaceName}
@@ -52,9 +52,7 @@ namespace Generator
         {
             context.AddSource(AttributeName, SourceText.From(AttributeSource, Encoding.UTF8));
 
-            var syntaxReciever = context.SyntaxReceiver as SyntaxReceiver;
-
-            if (syntaxReciever is null)
+            if (context.SyntaxReceiver is not SyntaxReceiver syntaxReciever)
             {
                 return;
             }
@@ -132,7 +130,7 @@ namespace Generator
         }
 
         protected string MethodConstraints(IMethodSymbol methodSymbol)
-        {          
+        {
             var builder = new StringBuilder();
 
             foreach (var typeSymbol in methodSymbol.TypeParameters)
@@ -140,7 +138,7 @@ namespace Generator
                 builder.Append(TypeConstraints(typeSymbol));
             }
 
-            return builder.ToString();            
+            return builder.ToString();
         }
 
         protected string TypeConstraints(ITypeParameterSymbol typeSymbol)

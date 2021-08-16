@@ -10,7 +10,10 @@ namespace Generator
 
         public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
         {
-            var methodNode = syntaxNode as MethodDeclarationSyntax;
+            if (syntaxNode is not MethodDeclarationSyntax methodNode)
+            {
+                return;
+            }
 
             if (methodNode is null)
             {

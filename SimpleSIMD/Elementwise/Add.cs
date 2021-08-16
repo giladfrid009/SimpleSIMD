@@ -30,6 +30,6 @@ namespace SimpleSimd
         public static void Add(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new Add_VSelector(), new Add_Selector(), result);
-        }        
+        }
     }
 }
