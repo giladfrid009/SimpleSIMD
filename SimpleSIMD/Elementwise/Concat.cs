@@ -5,6 +5,7 @@ namespace SimpleSimd
     public static partial class SimdOps<T>
     {
         [ArrOverload]
+        [DelOverload]
         public static void Concat<TRes, F1, F2>(ReadOnlySpan<T> left, T right, F1 vSelector, F2 selector, Span<TRes> result)
 
             where TRes : unmanaged, IBinaryNumber<TRes>
@@ -51,6 +52,7 @@ namespace SimpleSimd
         }
 
         [ArrOverload]
+        [DelOverload]
         public static void Concat<TRes, F1, F2>(T left, ReadOnlySpan<T> right, F1 vSelector, F2 selector, Span<TRes> result)
 
             where TRes : unmanaged, IBinaryNumber<TRes>
@@ -97,6 +99,7 @@ namespace SimpleSimd
         }
 
         [ArrOverload]
+        [DelOverload]
         public static void Concat<TRes, F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, Span<TRes> result)
 
             where TRes : unmanaged, IBinaryNumber<TRes>

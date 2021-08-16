@@ -4,6 +4,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
+        [DelOverload]
         public static bool All<F1, F2>(ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
 
             where F1 : struct, IFunc<Vector<T>, bool>
@@ -43,6 +44,7 @@ namespace SimpleSimd
             return true;
         }
 
+        [DelOverload]
         public static bool All<F1, F2>(ReadOnlySpan<T> left, T right, F1 vPredicate, F2 predicate)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>
@@ -84,6 +86,7 @@ namespace SimpleSimd
             return true;
         }
 
+        [DelOverload]
         public static bool All<F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vPredicate, F2 predicate)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>

@@ -5,6 +5,7 @@ namespace SimpleSimd
     public static partial class SimdOps<T>
     {
         [ArrOverload]
+        [DelOverload]
         public static void Select<TRes, F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector, Span<TRes> result)
 
             where TRes : unmanaged, IBinaryNumber<TRes>

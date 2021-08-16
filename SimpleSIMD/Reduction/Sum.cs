@@ -9,6 +9,7 @@ namespace SimpleSimd
             return Sum(span, new ID_VSelector(), new ID_Selector());
         }
 
+        [DelOverload]
         public static T Sum<F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>

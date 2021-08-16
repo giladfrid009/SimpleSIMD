@@ -5,6 +5,7 @@ namespace SimpleSimd
     public static partial class SimdOps<T>
     {
         [ArrOverload]
+        [DelOverload]
         public static void Ternary<F1, F2>(ReadOnlySpan<T> span, F1 vCondition, F2 condition, T trueValue, T falseValue, Span<T> result)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
@@ -46,6 +47,7 @@ namespace SimpleSimd
         }
 
         [ArrOverload]
+        [DelOverload]
         public static void Ternary<F1, F2, F3, F4, F5, F6>(ReadOnlySpan<T> span, F1 vCondition, F2 vTrueSelector, F3 vFalseSelector, F4 condition, F5 trueSelector, F6 falseSelector, Span<T> result)
 
             where F1 : struct, IFunc<Vector<T>, Vector<T>>

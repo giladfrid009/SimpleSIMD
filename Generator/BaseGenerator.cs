@@ -93,6 +93,10 @@ namespace Generator
                 $@"
                 namespace {NamespaceName}
                 {{
+                    using System;
+                    using System.Numerics;
+                    using System.Runtime.CompilerServices;
+
                     public partial class {ClassName}
                     {{
                 ");

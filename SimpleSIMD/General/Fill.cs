@@ -32,6 +32,7 @@ namespace SimpleSimd
             }
         }
 
+        [DelOverload]
         public static void Fill<F1, F2>(Span<T> span, F1 vFunc, F2 func)
 
             where F1 : struct, IFunc<Vector<T>>

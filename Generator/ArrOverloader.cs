@@ -7,8 +7,6 @@ namespace Generator
     [Generator]
     public class ArrOverloader : BaseGenerator
     {
-        const string ImplNamespace = "System.Runtime.CompilerServices";
-
         public ArrOverloader() : base("ArrOverloadAttribute", "ArrayOverloads")
         {
 
@@ -20,11 +18,11 @@ namespace Generator
 
             var paramSymbols = method.Parameters.Take(method.Parameters.Length - 1);
 
-            var genericParams = method.TypeParameters;
+            var genericSymbols = method.TypeParameters;
 
-            string resultType = ResultType(method);
+            string methodReturn = ResultType(method);
 
-            if (string.IsNullOrEmpty(resultType)) return;
+            if (string.IsNullOrEmpty(methodReturn)) return;
 
             string lengthParam = LengthParam(method);
             
@@ -32,21 +30,21 @@ namespace Generator
 
             string methodName = method.Name;
 
-            string paramNames = string.Join(",", paramSymbols.Names());
+            string methodParams = string.Join(",", paramSymbols.Names());
 
-            string paramSignatures = string.Join(",", paramSymbols.TypesNames().Select(S => $"{S.Type} {S.Name}"));
+            string methodSignatures = string.Join(",", paramSymbols.TypesNames().Select(S => $"{S.Type} {S.Name}"));
 
-            string genericTypes = method.IsGenericMethod ? $"<{string.Join(",", genericParams.Names())}>" : string.Empty;
+            string methodGenerics = method.IsGenericMethod ? $"<{string.Join(",", genericSymbols.Names())}>" : string.Empty;
 
-            string genericConstraints = AllConstraintsFormat(genericParams);
+            string methodConstraints = AllConstraintsFormat(genericSymbols);
 
             source.Append(
                 $@"
-                [{ImplNamespace}.MethodImpl({ImplNamespace}.MethodImplOptions.AggressiveInlining)]
-                public static {resultType}[] {methodName}{genericTypes}({paramSignatures}) {genericConstraints}
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                public static {methodReturn}[] {methodName}{methodGenerics}({methodSignatures}) {methodConstraints}
                 {{
-                    {resultType}[] result = new {resultType}[{lengthParam}.Length];
-                    {methodName}{genericTypes}({paramNames}, result);
+                    {methodReturn}[] result = new {methodReturn}[{lengthParam}.Length];
+                    {methodName}{methodGenerics}({methodParams}, result);
                     return result;
                 }}"
                 );

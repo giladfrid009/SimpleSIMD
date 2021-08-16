@@ -1,7 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Text;
+using System.Diagnostics;
 using System.Linq;
+using System.Text;
 
 namespace Generator
 {
@@ -15,62 +16,62 @@ namespace Generator
 
         protected override void ProcessMethod(StringBuilder source, IMethodSymbol method)
         {
-            //var node = (MethodDeclarationSyntax)method.DeclaringSyntaxReferences[0].GetSyntax();
-
-            //if(node == null)
-            //{
-            //    return;
-            //}
-
-            //var body = node.Body.GetText();
-
             if (method.IsGenericMethod == false) return;
 
-            var paramSymbols = method.Parameters;
+            var genericSymbols = method.TypeParameters;
 
-            var genericParams = method.TypeParameters;
+            if (genericSymbols.All(S => GetValueDelegate(S) is null)) return;
 
-            foreach (var typeSymbol in genericParams)
-            {
-                var constraints = TypeConstraints(typeSymbol);
+            var methodNode = (MethodDeclarationSyntax)method.DeclaringSyntaxReferences[0].GetSyntax();
 
-                string valDelegate = constraints.FirstOrDefault(C => C.Contains("IFunc") || C.Contains("IAction"));
-
-                if (string.IsNullOrEmpty(valDelegate) == false)
-                {
-                    string delegateStr = valDelegate.Replace("IFunc", "Func").Replace("IAction", "Action");
-
-                    
-                }
-                else // doesnt have valDelegate constraint
-                {
-
-                }
-            }
-
-            
+            var methodBody = methodNode?.Body?.GetText();
 
             string methodName = method.Name;
 
-            string paramNames = string.Join(",", paramSymbols.Names());
+            string methodReturn = method.ReturnsVoid ? "void" : method.ReturnType.ToDisplayString();
 
-            //string paramSignatures = string.Join(",", paramSymbols.TypesNames().Select(S => $"{S.Type} {S.Name}"));
+            string methodSignature = string.Join(",", method.Parameters.TypesNames().Select(S => $"{S.Type} {S.Name}"));
 
-            //string genericTypes = method.IsGenericMethod ? $"<{string.Join(",", method.TypeParameters.Names())}>" : string.Empty;
+            var notVDelegates = genericSymbols.Where(P => GetValueDelegate(P) is null).Names();
 
-            
+            string methodGenerics = notVDelegates.Any() ? $"<{string.Join(",", notVDelegates)}>" : string.Empty;
 
+            var methodConstraints = new StringBuilder();
 
+            foreach (var typeSymbol in genericSymbols)
+            {
+                var valueDelegate = GetValueDelegate(typeSymbol);
 
-            string genericConstraints = AllConstraintsFormat(method.TypeParameters);
+                if (valueDelegate is null)
+                {
+                    methodConstraints.Append(TypeConstraintsFormat(typeSymbol));
+                    continue;
+                }
 
-            /*
-             * TODO: find which generic arguments are IFunc<> or IAction<>
-             * Find generic arg in signature and replace with Func, Action
-             * Remove from genericTypes - check if empty
-             * Remove from genericConstraints - check if empty
-             * Add original method body
-            */
+                methodSignature = methodSignature.Replace(typeSymbol.Name, ToDelegate(valueDelegate.ToDisplayString()));
+            }
+
+            source.Append($@"public static {methodReturn} {methodName} {methodGenerics} ({methodSignature}) {methodConstraints} {methodBody}");
+        }
+
+        protected ITypeSymbol? GetValueDelegate(ITypeParameterSymbol typeSymbol)
+        {
+            if (typeSymbol.ConstraintTypes.Length == 0) return null;
+
+            foreach (var S in typeSymbol.ConstraintTypes)
+            {
+                if (S.Name == "IAction" || S.Name == "IFunc")
+                {
+                    return S;
+                }
+            }
+
+            return null;
+        }
+
+        protected string ToDelegate(string valueDelegate)
+        {
+            return valueDelegate.Replace("SimpleSimd.IFunc", "System.Func").Replace("SimpleSimd.IAction", "System.Action");
         }
     }
 }
