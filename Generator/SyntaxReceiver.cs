@@ -6,11 +6,11 @@ namespace Generator
 {
     class SyntaxReceiver : ISyntaxReceiver
     {
-        public List<MethodDeclarationSyntax> CandidateMethods { get; } = new List<MethodDeclarationSyntax>();
+        public List<MethodDeclarationSyntax> CandidateMethods { get; } = new();
 
         public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
         {
-            MethodDeclarationSyntax? method = syntaxNode as MethodDeclarationSyntax;
+            var method = syntaxNode as MethodDeclarationSyntax;
 
             if (method is null)
             {

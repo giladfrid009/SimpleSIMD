@@ -9,27 +9,27 @@ namespace Generator
 {
     public abstract class BaseGenerator : ISourceGenerator
     {
-        protected string AttrName { get; }
+        protected string AttributeName { get; }
         protected string FileName { get; }
         protected string NamespaceName { get; } = "SimpleSimd";
         protected string ClassName { get; } = "SimdOps<T>";
 
-        protected string AttrSource { get; }
+        protected string AttributeSource { get; }
 
         protected BaseGenerator(string attrName, string fileName)
         {
-            AttrName = attrName;
+            AttributeName = attrName;
             FileName = fileName;
 
-            AttrSource = 
+            AttributeSource = 
                 $@"
                 using System;
                 namespace {NamespaceName}
                 {{
                     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-                    sealed class {AttrName} : Attribute
+                    sealed class {AttributeName} : Attribute
                     {{
-                        public {AttrName}()
+                        public {AttributeName}()
                         {{
                         }}
                     }}
@@ -37,7 +37,7 @@ namespace Generator
                 ";
         }
 
-        protected BaseGenerator(string attrName, string fileName, string namespaceName, string className) : this(attrName, fileName)
+        protected BaseGenerator(string attributeName, string fileName, string namespaceName, string className) : this(attributeName, fileName)
         {
             NamespaceName = namespaceName;
             ClassName = className;
@@ -50,7 +50,7 @@ namespace Generator
 
         public void Execute(GeneratorExecutionContext context)
         {
-            context.AddSource(AttrName, SourceText.From(AttrSource, Encoding.UTF8));
+            context.AddSource(AttributeName, SourceText.From(AttributeSource, Encoding.UTF8));
 
             var syntaxReciever = context.SyntaxReceiver as SyntaxReceiver;
 
@@ -61,33 +61,33 @@ namespace Generator
 
             var parseOptions = ((CSharpCompilation)context.Compilation).SyntaxTrees[0].Options as CSharpParseOptions;
 
-            var compilation = context.Compilation.AddSyntaxTrees(CSharpSyntaxTree.ParseText(SourceText.From(AttrSource, Encoding.UTF8), parseOptions));
+            var compilation = context.Compilation.AddSyntaxTrees(CSharpSyntaxTree.ParseText(SourceText.From(AttributeSource, Encoding.UTF8), parseOptions));
 
-            var methods = new List<IMethodSymbol>();
+            var methodSymbols = new List<IMethodSymbol>();
 
-            foreach (var declaration in syntaxReciever.CandidateMethods)
+            foreach (var methodDeclarations in syntaxReciever.CandidateMethods)
             {
-                var model = compilation.GetSemanticModel(declaration.SyntaxTree);
+                var semanticModel = compilation.GetSemanticModel(methodDeclarations.SyntaxTree);
 
-                var method = model.GetDeclaredSymbol(declaration);
+                var methodSymbol = semanticModel.GetDeclaredSymbol(methodDeclarations);
 
-                if (method == null || method.ContainingType.ToDisplayString() != $"{NamespaceName}.{ClassName}")
+                if (methodSymbol == null || methodSymbol.ContainingType.ToDisplayString() != $"{NamespaceName}.{ClassName}")
                 {
                     continue;
                 }
 
-                if (method.GetAttributes().Any(A => A.AttributeClass?.ToDisplayString() == $"{NamespaceName}.{AttrName}"))
+                if (methodSymbol.GetAttributes().Any(A => A.AttributeClass?.ToDisplayString() == $"{NamespaceName}.{AttributeName}"))
                 {
-                    methods.Add(method);
+                    methodSymbols.Add(methodSymbol);
                 }
             }
 
-            string source = CreateSource(methods);
+            string source = CreateSource(methodSymbols);
 
             context.AddSource($"{FileName}.cs", SourceText.From(source, Encoding.UTF8));
         }
 
-        private string CreateSource(IEnumerable<IMethodSymbol> methods)
+        private string CreateSource(IEnumerable<IMethodSymbol> methodSymbols)
         {
             var source = new StringBuilder(
                 $@"
@@ -97,7 +97,7 @@ namespace Generator
                     {{
                 ");
 
-            foreach (var method in methods)
+            foreach (var method in methodSymbols)
             {
                 ProcessMethod(source, method);
             }
@@ -107,49 +107,33 @@ namespace Generator
             return source.ToString();
         }
 
-        protected abstract void ProcessMethod(StringBuilder source, IMethodSymbol methodSymbol);
+        protected abstract void ProcessMethod(StringBuilder source, IMethodSymbol methodSymbol);  
 
-        protected string ParamNames(IEnumerable<IParameterSymbol> paramSymbols)
-        {
-            return string.Join(",", paramSymbols.Select(P => P.Name));
-        }
+        protected string AllConstraintsFormat(IEnumerable<ITypeParameterSymbol> typeSymbols)
+        {          
+            var str = new StringBuilder();
 
-        protected string ParamSignatures(IEnumerable<IParameterSymbol> paramSymbols)
-        {
-            return string.Join(",", paramSymbols.Select(P => $"{P.ToDisplayString()} {P.Name}"));
-        }
-
-        protected string GenericTypes(IMethodSymbol methodSymbol)
-        {
-            if (methodSymbol.IsGenericMethod)
+            foreach (var typeSymbol in typeSymbols)
             {
-                return string.Format($"<{string.Join(",", methodSymbol.TypeParameters.Select(P => P.Name))}>");
+                str.Append(TypeConstraintsFormat(typeSymbol));
             }
 
-            return "";
+            return str.ToString();            
         }
 
-        protected string GenericConstraints(IMethodSymbol methodSymbol)
+        protected string TypeConstraintsFormat(ITypeParameterSymbol typeSymbol)
         {
-            var genericConstsraints = new StringBuilder();
+            var constraints = TypeConstraints(typeSymbol);
 
-            if (methodSymbol.IsGenericMethod)
+            if (constraints.Any())
             {
-                foreach (var genericType in methodSymbol.TypeParameters)
-                {
-                    string typeConstrains = string.Join(",", TypeConstraints(genericType));
-
-                    if (typeConstrains.Length > 0)
-                    {
-                        genericConstsraints.Append($"where {genericType.Name} : {typeConstrains} ");
-                    }
-                }
+                return $"where {typeSymbol.Name} : {string.Join(",", constraints)}";
             }
 
-            return genericConstsraints.ToString();
+            return string.Empty;
         }
 
-        private IEnumerable<string> TypeConstraints(ITypeParameterSymbol typeSymbol)
+        protected IEnumerable<string> TypeConstraints(ITypeParameterSymbol typeSymbol)
         {
             if (typeSymbol.HasNotNullConstraint)
             {
@@ -176,9 +160,11 @@ namespace Generator
                 yield return "new()";
             }
 
-            foreach (var T in typeSymbol.ConstraintTypes)
+            var types = typeSymbol.ConstraintTypes.Types();
+
+            foreach (var type in types)
             {
-                yield return T.ToDisplayString();
+                yield return type;
             }
         }
     }

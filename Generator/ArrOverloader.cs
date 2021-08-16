@@ -6,7 +6,9 @@ namespace Generator
 {
     [Generator]
     public class ArrOverloader : BaseGenerator
-    {        
+    {
+        const string ImplNamespace = "System.Runtime.CompilerServices";
+
         public ArrOverloader() : base("ArrOverloadAttribute", "ArrayOverloads")
         {
 
@@ -14,22 +16,33 @@ namespace Generator
 
         protected override void ProcessMethod(StringBuilder source, IMethodSymbol method)
         {
+            if (method.Parameters.Length <= 1) return;
+
             var paramSymbols = method.Parameters.Take(method.Parameters.Length - 1);
 
+            var genericParams = method.TypeParameters;
+
             string resultType = ResultType(method);
-            if (resultType == "") return;
+
+            if (string.IsNullOrEmpty(resultType)) return;
 
             string lengthParam = LengthParam(method);
-            if (lengthParam == "") return;
+            
+            if (string.IsNullOrEmpty(lengthParam)) return;
 
             string methodName = method.Name;
-            string paramNames = ParamNames(paramSymbols);
-            string paramSignatures = ParamSignatures(paramSymbols);
-            string genericTypes = GenericTypes(method);
-            string genericConstraints = GenericConstraints(method);
+
+            string paramNames = string.Join(",", paramSymbols.Names());
+
+            string paramSignatures = string.Join(",", paramSymbols.TypesNames().Select(S => $"{S.Type} {S.Name}"));
+
+            string genericTypes = method.IsGenericMethod ? $"<{string.Join(",", genericParams.Names())}>" : string.Empty;
+
+            string genericConstraints = AllConstraintsFormat(genericParams);
 
             source.Append(
                 $@"
+                [{ImplNamespace}.MethodImpl({ImplNamespace}.MethodImplOptions.AggressiveInlining)]
                 public static {resultType}[] {methodName}{genericTypes}({paramSignatures}) {genericConstraints}
                 {{
                     {resultType}[] result = new {resultType}[{lengthParam}.Length];
@@ -43,36 +56,39 @@ namespace Generator
         {
             var allParams = method.Parameters;
 
-            string resultType = allParams[allParams.Length - 1].ToDisplayString();
+            var resultParam = allParams[allParams.Length - 1].Type as INamedTypeSymbol;
 
-            return resultType switch
+            if (resultParam is null)
             {
-                "System.Span<T>" => "T",
-                "System.Span<TRes>" => "TRes",
-                _ => ""
-            };
+                return string.Empty;
+            }
+
+            if (resultParam.Name != "Span")
+            {
+                return string.Empty;
+            }
+
+            if (resultParam.IsGenericType)
+            {
+                return resultParam.TypeArguments[0].Name;
+            }
+
+            return string.Empty;
         }
 
         private string LengthParam(IMethodSymbol method)
         {
             var allParams = method.Parameters;
 
-            if (allParams.Length == 0)
+            for (int i = 0; i < allParams.Length - 1; i++)
             {
-                return "";
+                if ((allParams[i].Type as INamedTypeSymbol)?.Name == "ReadOnlySpan")
+                {
+                    return allParams[i].Name;
+                }
             }
 
-            if (allParams[0].ToDisplayString() == "System.ReadOnlySpan<T>")
-            {
-                return allParams[0].Name;
-            }
-
-            if (allParams.Length > 1 && allParams[1].ToDisplayString() == "System.ReadOnlySpan<T>")
-            {
-                return allParams[1].Name;
-            }
-
-            return "";
-        }        
+            return string.Empty;
+        }
     }
 }
