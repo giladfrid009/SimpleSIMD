@@ -15,6 +15,7 @@ This approach could be combined with standard multithreading for massive perform
 * Performs less allocations compared to standard LINQ implementations
 
 ## Available Functions
+
 #### Comparison:
 * Equal
 * Greater
@@ -54,8 +55,14 @@ This approach could be combined with standard multithreading for massive perform
 * Fill
 * Foreach
 
-## Performance Benefits
+### Auto-Generated Functions
+For any of the ``Elementwise`` functions, an auto-generated overload is generated, which doesn't accept ```Span<T> result```,  
+and instead creates ```T[]``` internally and returns the result within this array.  
+  
+For any of the functions with `Value Delagate` pattern, an auto-generated overload is generated, which accepts regular delegates.
+Note that using this overload results in performence losses. Check `Value Delegates - Benchmark` section for more info.  
 
+## Performance Benefits
 A simple benchmark to demonstrate performance gains of using SIMD.  
 Benchmarked method was a ``Sum`` over an ``int[]``.
 
@@ -78,13 +85,11 @@ Benchmarked method was a ``Sum`` over an ``int[]``.
 |   SIMD | 100000 |   8,897.370 ns | 102.2559 ns |  95.6502 ns |  0.15 |
 
 ## Value Delegates
-This library extensively uses the value delegate pattern. This pattern is used as a replacement for delegates.  
+This library uses the value delegate pattern. This pattern is used as a replacement for regular delegates. 
 Calling functions using this patten may feel unusual since it requires creation of structs to pass as arguments instead of delegates, but it is very beneficial performance-wise. 
 The performance difference makes using this pattern worthwhile in performance critical places.  
 Since the focus of this library is **pure performance**, we use this pattern wherever possible.
 
-Wrap extension methods are included (``SimpleSimd.Wrapper.Wrap(delegate)``) to wrap regular delegates as Value Delegates.  
-Note that wrapping a regular delegate results in a performance hit - prefer using Value Delegates directly as shown below.
 #### Usage:
 
 ``` csharp
@@ -123,7 +128,7 @@ namespace MyProgram
 }
 ```
 
-#### benchmark:
+#### Benchmark:
 
 Both of the benchmarked methods have the exactly same code, both of them are accelerated using SIMD,  
 the only difference is the argument types.
