@@ -12,77 +12,75 @@ namespace Generator
 
         }
 
-        protected override void ProcessMethod(StringBuilder source, IMethodSymbol method)
+        protected override void ProcessMethod(StringBuilder source, IMethodSymbol methodSymbol)
         {
-            if (method.Parameters.Length <= 1) return;
+            if (methodSymbol.Parameters.Length <= 1) return;
 
-            var paramSymbols = method.Parameters.Take(method.Parameters.Length - 1);
+            var paramSymbols = methodSymbol.Parameters.Take(methodSymbol.Parameters.Length - 1);
 
-            var genericSymbols = method.TypeParameters;
+            string returnType = ReturnType(methodSymbol);
 
-            string methodReturn = ResultType(method);
+            if (string.IsNullOrEmpty(returnType)) return;
 
-            if (string.IsNullOrEmpty(methodReturn)) return;
-
-            string lengthParam = LengthParam(method);
+            string lengthArgument = LengthArgument(methodSymbol);
             
-            if (string.IsNullOrEmpty(lengthParam)) return;
+            if (string.IsNullOrEmpty(lengthArgument)) return;
 
-            string methodName = method.Name;
+            string methodName = methodSymbol.Name;
 
-            string methodParams = string.Join(",", paramSymbols.Names());
+            string staticModifier = MethodStaticModifier(methodSymbol);
 
-            string methodSignatures = string.Join(",", paramSymbols.TypesNames().Select(S => $"{S.Type} {S.Name}"));
+            string arguments = string.Join(",", paramSymbols.Names());
 
-            string methodGenerics = method.IsGenericMethod ? $"<{string.Join(",", genericSymbols.Names())}>" : string.Empty;
+            string parameters = string.Join(",", paramSymbols.TypesNames().Select(S => $"{S.Type} {S.Name}"));
 
-            string methodConstraints = AllConstraintsFormat(genericSymbols);
+            string generics = MethodGenerics(methodSymbol);
+
+            string constraints = MethodConstraints(methodSymbol);
 
             source.Append(
                 $@"
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                public static {methodReturn}[] {methodName}{methodGenerics}({methodSignatures}) {methodConstraints}
+                public {staticModifier} {returnType}[] {methodName} {generics} ({parameters}) {constraints}
                 {{
-                    {methodReturn}[] result = new {methodReturn}[{lengthParam}.Length];
-                    {methodName}{methodGenerics}({methodParams}, result);
+                    {returnType} [] result = new {returnType} [{lengthArgument}.Length];
+                    {methodName} {generics} ({arguments}, result);
                     return result;
                 }}"
                 );
         }
 
-        private string ResultType(IMethodSymbol method)
+        private string ReturnType(IMethodSymbol methodSymbol)
         {
-            var allParams = method.Parameters;
+            var resultParameter = methodSymbol.Parameters[methodSymbol.Parameters.Length - 1].Type as INamedTypeSymbol;
 
-            var resultParam = allParams[allParams.Length - 1].Type as INamedTypeSymbol;
-
-            if (resultParam is null)
+            if (resultParameter is null)
             {
                 return string.Empty;
             }
 
-            if (resultParam.Name != "Span")
+            if (resultParameter.Name != "Span")
             {
                 return string.Empty;
             }
 
-            if (resultParam.IsGenericType)
+            if (resultParameter.IsGenericType)
             {
-                return resultParam.TypeArguments[0].Name;
+                return resultParameter.TypeArguments[0].Name;
             }
 
             return string.Empty;
         }
 
-        private string LengthParam(IMethodSymbol method)
+        private string LengthArgument(IMethodSymbol methodSymbol)
         {
-            var allParams = method.Parameters;
+            var parameterSymbols = methodSymbol.Parameters;
 
-            for (int i = 0; i < allParams.Length - 1; i++)
+            for (int i = 0; i < parameterSymbols.Length - 1; i++)
             {
-                if ((allParams[i].Type as INamedTypeSymbol)?.Name == "ReadOnlySpan")
+                if ((parameterSymbols[i].Type as INamedTypeSymbol)?.Name == "ReadOnlySpan")
                 {
-                    return allParams[i].Name;
+                    return parameterSymbols[i].Name;
                 }
             }
 

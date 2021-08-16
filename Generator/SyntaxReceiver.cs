@@ -10,19 +10,19 @@ namespace Generator
 
         public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
         {
-            var method = syntaxNode as MethodDeclarationSyntax;
+            var methodNode = syntaxNode as MethodDeclarationSyntax;
 
-            if (method is null)
+            if (methodNode is null)
             {
                 return;
             }
 
-            if (method.AttributeLists.Count == 0)
+            if (methodNode.AttributeLists.Count == 0)
             {
                 return;
             }
 
-            CandidateMethods.Add(method);
+            CandidateMethods.Add(methodNode);
         }
     }
 }

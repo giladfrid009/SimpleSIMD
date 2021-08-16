@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -111,23 +112,40 @@ namespace Generator
             return source.ToString();
         }
 
-        protected abstract void ProcessMethod(StringBuilder source, IMethodSymbol methodSymbol);  
+        protected abstract void ProcessMethod(StringBuilder source, IMethodSymbol methodSymbol);
 
-        protected string AllConstraintsFormat(IEnumerable<ITypeParameterSymbol> typeSymbols)
-        {          
-            var str = new StringBuilder();
-
-            foreach (var typeSymbol in typeSymbols)
-            {
-                str.Append(TypeConstraintsFormat(typeSymbol));
-            }
-
-            return str.ToString();            
+        protected string MethodParameters(IMethodSymbol methodSymbol)
+        {
+            return string.Join(",", methodSymbol.Parameters.TypesNames().Select(S => $"{S.Type} {S.Name}"));
         }
 
-        protected string TypeConstraintsFormat(ITypeParameterSymbol typeSymbol)
+        protected string MethodStaticModifier(IMethodSymbol methodSymbol)
         {
-            var constraints = TypeConstraints(typeSymbol);
+            return methodSymbol.IsStatic ? "static" : string.Empty;
+        }
+
+        protected string MethodGenerics(IMethodSymbol methodSymbol)
+        {
+            if (methodSymbol.IsGenericMethod == false) return string.Empty;
+
+            return $"<{string.Join(",", methodSymbol.TypeParameters.Names())}>";
+        }
+
+        protected string MethodConstraints(IMethodSymbol methodSymbol)
+        {          
+            var builder = new StringBuilder();
+
+            foreach (var typeSymbol in methodSymbol.TypeParameters)
+            {
+                builder.Append(TypeConstraints(typeSymbol));
+            }
+
+            return builder.ToString();            
+        }
+
+        protected string TypeConstraints(ITypeParameterSymbol typeSymbol)
+        {
+            var constraints = GetConstraints(typeSymbol);
 
             if (constraints.Any())
             {
@@ -137,7 +155,7 @@ namespace Generator
             return string.Empty;
         }
 
-        protected IEnumerable<string> TypeConstraints(ITypeParameterSymbol typeSymbol)
+        private IEnumerable<string> GetConstraints(ITypeParameterSymbol typeSymbol)
         {
             if (typeSymbol.HasNotNullConstraint)
             {
