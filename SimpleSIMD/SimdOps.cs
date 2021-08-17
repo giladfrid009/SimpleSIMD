@@ -4,24 +4,24 @@ using System.Runtime.InteropServices;
 
 namespace SimpleSimd
 {
-    public static partial class SimdOps<T> where T : unmanaged, IBinaryNumber<T>, IMinMaxValue<T>
+    public static partial class SimdOps<T> where T : struct, IBinaryNumber<T>, IMinMaxValue<T>
     {
-        private static ref Vector<U> AsVector<U>(in U value) where U : unmanaged, IBinaryNumber<U>
+        private static ref Vector<U> AsVector<U>(in U value) where U : struct, IBinaryNumber<U>
         {
             return ref Unsafe.As<U, Vector<U>>(ref Unsafe.AsRef(value));
         }
 
-        private static ref U GetRef<U>(ReadOnlySpan<U> span) where U : unmanaged, IBinaryNumber<U>
+        private static ref U GetRef<U>(ReadOnlySpan<U> span) where U : struct, IBinaryNumber<U>
         {
             return ref MemoryMarshal.GetReference(span);
         }
 
-        private static ref U GetRef<U>(Span<U> span) where U : unmanaged, IBinaryNumber<U>
+        private static ref U GetRef<U>(Span<U> span) where U : struct, IBinaryNumber<U>
         {
             return ref MemoryMarshal.GetReference(span);
         }
 
-        private static U Convert<U>(T value) where U : unmanaged, IBinaryNumber<U>
+        private static U Convert<U>(T value) where U : struct, IBinaryNumber<U>
         {
             return U.Create(value);
         }

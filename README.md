@@ -162,9 +162,9 @@ public static T Sum<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
 * Methods are not lazily evaluated as IEnumerable
 * Old hardware might not support SIMD
 * Supported collection types:
-  * ```T[] where T : unmanaged```
-  * ```Span<T> where T : unmanaged```
-  * ```ReadOnlySpan<T> where T : unmanaged```
+  * ```T[]```
+  * ```Span<T>```
+  * ```ReadOnlySpan<T>```
 * Supports only **Primitive Numeric Types** as array elements. Supported types are:
   * ```byte, sbyte```
   * ```short, ushort```
