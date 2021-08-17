@@ -165,7 +165,7 @@ public static T Sum<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
   * ```T[]```
   * ```Span<T>```
   * ```ReadOnlySpan<T>```
-* Supports All the types supported by ```System.Numerics.vector<T>```. Supported types are:
+* Supports All the types supported by ```Vector<T>```. Supported types are:
   * ```byte, sbyte```
   * ```short, ushort```
   * ```int, uint```
