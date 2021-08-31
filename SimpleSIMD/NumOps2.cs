@@ -13,6 +13,9 @@ namespace SimpleSimd
             convFunc = Expression.Lambda<Func<T, TRes>>(Expression.Convert(X, typeof(TRes)), X).Compile();
         }
 
-        public static TRes Convert(T value) => convFunc(value);
+        public static TRes Convert(T value)
+        {
+            return convFunc(value);
+        }
     }
 }

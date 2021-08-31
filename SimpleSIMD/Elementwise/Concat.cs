@@ -5,6 +5,8 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
+        [ArrOverload]
+        [DelOverload]
         public static void Concat<TRes, F1, F2>(ReadOnlySpan<T> left, T right, F1 vCombiner, F2 combiner, Span<TRes> result)
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
@@ -48,6 +50,8 @@ namespace SimpleSimd
             }
         }
 
+        [ArrOverload]
+        [DelOverload]
         public static void Concat<TRes, F1, F2>(T left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, Span<TRes> result)
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
@@ -91,6 +95,8 @@ namespace SimpleSimd
             }
         }
 
+        [ArrOverload]
+        [DelOverload]
         public static void Concat<TRes, F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, Span<TRes> result)
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
@@ -137,42 +143,6 @@ namespace SimpleSimd
             {
                 rResult.Offset(i) = combiner.Invoke(rLeft.Offset(i), rRight.Offset(i));
             }
-        }
-
-        public static TRes[] Concat<TRes, F1, F2>(ReadOnlySpan<T> left, T right, F1 vCombiner, F2 combiner)
-            where TRes : unmanaged
-            where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
-            where F2 : struct, IFunc<T, T, TRes>
-        {
-            TRes[] result = new TRes[left.Length];
-
-            Concat<TRes, F1, F2>(left, right, vCombiner, combiner, result);
-
-            return result;
-        }
-
-        public static TRes[] Concat<TRes, F1, F2>(T left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner)
-            where TRes : unmanaged
-            where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
-            where F2 : struct, IFunc<T, T, TRes>
-        {
-            TRes[] result = new TRes[right.Length];
-
-            Concat<TRes, F1, F2>(left, right, vCombiner, combiner, result);
-
-            return result;
-        }
-
-        public static TRes[] Concat<TRes, F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner)
-            where TRes : unmanaged
-            where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
-            where F2 : struct, IFunc<T, T, TRes>
-        {
-            TRes[] result = new TRes[left.Length];
-
-            Concat<TRes, F1, F2>(left, right, vCombiner, combiner, result);
-
-            return result;
         }
     }
 }

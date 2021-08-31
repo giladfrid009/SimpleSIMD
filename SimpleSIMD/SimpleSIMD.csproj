@@ -11,13 +11,28 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Easy to use SIMD accelerated span and array methods</Description>
     <Copyright>Copyright 2020 (c) Gilad Freidkin, All rights reserved</Copyright>
-    <Version>3.1.2</Version>
-    <PackageReleaseNotes>Not passing spans by reference anymore
+    <Version>3.3</Version>
+    <PackageReleaseNotes>
+		Added source generator to generate regular delegate overloads, for any method accepting value delegates.	
+        Removed wrappers as obsolete now - use generated methods instead.
+        Added source generator to generate functions that return T[] as result for any method accepting a result Span.
 </PackageReleaseNotes>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Generator\Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
 
 </Project>

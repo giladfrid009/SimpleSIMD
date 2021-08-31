@@ -21,46 +21,22 @@ namespace SimpleSimd
             }
         }
 
+        [ArrOverload]
         public static void Subtract(ReadOnlySpan<T> left, T right, Span<T> result)
         {
             Concat(left, right, new Subtract_VSelector(), new Subtract_Selector(), result);
         }
 
+        [ArrOverload]
         public static void Subtract(T left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new Subtract_VSelector(), new Subtract_Selector(), result);
         }
 
+        [ArrOverload]
         public static void Subtract(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new Subtract_VSelector(), new Subtract_Selector(), result);
-        }
-
-        public static T[] Subtract(ReadOnlySpan<T> left, T right)
-        {
-            T[] result = new T[left.Length];
-
-            Subtract(left, right, result);
-
-            return result;
-        }
-
-        public static T[] Subtract(T left, ReadOnlySpan<T> right)
-        {
-            T[] result = new T[right.Length];
-
-            Subtract(left, right, result);
-
-            return result;
-        }
-
-        public static T[] Subtract(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
-        {
-            T[] result = new T[left.Length];
-
-            Subtract(left, right, result);
-
-            return result;
         }
     }
 }

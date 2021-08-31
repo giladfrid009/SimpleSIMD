@@ -21,18 +21,10 @@ namespace SimpleSimd
             }
         }
 
+        [ArrOverload]
         public static void Abs(ReadOnlySpan<T> span, Span<T> result)
         {
             Select(span, new Abs_VSelector(), new Abs_Selector(), result);
-        }
-
-        public static T[] Abs(ReadOnlySpan<T> span)
-        {
-            T[] result = new T[span.Length];
-
-            Abs(span, result);
-
-            return result;
         }
     }
 }

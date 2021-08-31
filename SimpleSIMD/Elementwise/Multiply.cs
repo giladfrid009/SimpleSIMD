@@ -21,32 +21,16 @@ namespace SimpleSimd
             }
         }
 
+        [ArrOverload]
         public static void Multiply(ReadOnlySpan<T> left, T right, Span<T> result)
         {
             Concat(left, right, new Multiply_VSelector(), new Multiply_Selector(), result);
         }
 
+        [ArrOverload]
         public static void Multiply(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
         {
             Concat(left, right, new Multiply_VSelector(), new Multiply_Selector(), result);
-        }
-
-        public static T[] Multiply(ReadOnlySpan<T> left, T right)
-        {
-            T[] result = new T[left.Length];
-
-            Multiply(left, right, result);
-
-            return result;
-        }
-
-        public static T[] Multiply(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
-        {
-            T[] result = new T[left.Length];
-
-            Multiply(left, right, result);
-
-            return result;
         }
     }
 }

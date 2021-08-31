@@ -5,6 +5,7 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
+        [DelOverload]
         public static bool All<F1, F2>(ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
             where F1 : struct, IFunc<Vector<T>, bool>
             where F2 : struct, IFunc<T, bool>
@@ -30,7 +31,6 @@ namespace SimpleSimd
                 i *= Vector<T>.Count;
             }
 
-
             for (; i < span.Length; i++)
             {
                 if (predicate.Invoke(rSpan.Offset(i)) == false)
@@ -42,6 +42,7 @@ namespace SimpleSimd
             return true;
         }
 
+        [DelOverload]
         public static bool All<F1, F2>(ReadOnlySpan<T> left, T right, F1 vPredicate, F2 predicate)
             where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>
             where F2 : struct, IFunc<T, T, bool>
@@ -69,7 +70,6 @@ namespace SimpleSimd
                 i *= Vector<T>.Count;
             }
 
-
             for (; i < left.Length; i++)
             {
                 if (predicate.Invoke(rLeft.Offset(i), right) == false)
@@ -81,6 +81,7 @@ namespace SimpleSimd
             return true;
         }
 
+        [DelOverload]
         public static bool All<F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vPredicate, F2 predicate)
             where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>
             where F2 : struct, IFunc<T, T, bool>
@@ -112,7 +113,6 @@ namespace SimpleSimd
 
                 i *= Vector<T>.Count;
             }
-
 
             for (; i < left.Length; i++)
             {

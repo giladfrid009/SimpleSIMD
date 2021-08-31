@@ -10,6 +10,7 @@ namespace SimpleSimd
             return Max(span, new ID_VSelector(), new ID_Selector());
         }
 
+        [DelOverload]
         public static T Max<F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector)
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, T>

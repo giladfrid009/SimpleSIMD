@@ -5,6 +5,8 @@ namespace SimpleSimd
 {
     public static partial class SimdOps<T>
     {
+        [ArrOverload]
+        [DelOverload]
         public static void Select<TRes, F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector, Span<TRes> result)
             where TRes : unmanaged
             where F1 : struct, IFunc<Vector<T>, Vector<TRes>>
@@ -44,18 +46,6 @@ namespace SimpleSimd
             {
                 rResult.Offset(i) = selector.Invoke(rSpan.Offset(i));
             }
-        }
-
-        public static TRes[] Select<TRes, F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector)
-            where TRes : unmanaged
-            where F1 : struct, IFunc<Vector<T>, Vector<TRes>>
-            where F2 : struct, IFunc<T, TRes>
-        {
-            TRes[] result = new TRes[span.Length];
-
-            Select<TRes, F1, F2>(span, vSelector, selector, result);
-
-            return result;
         }
     }
 }

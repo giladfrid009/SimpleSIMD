@@ -50,6 +50,7 @@ namespace SimpleSimd
             return -1;
         }
 
+        [DelOverload]
         public static int IndexOf<F1, F2>(ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
             where F1 : struct, IFunc<Vector<T>, bool>
             where F2 : struct, IFunc<T, bool>
