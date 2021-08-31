@@ -26,7 +26,7 @@ namespace Generator
                return;
             }
 
-            string methodBody = MethodBody(methodSymbol);
+            string methodBody = GetMethodBody(methodSymbol);
 
             if (string.IsNullOrEmpty(methodBody))
             {
@@ -34,17 +34,17 @@ namespace Generator
             }
 
             string methodName = methodSymbol.Name;
-            string accessibility = Accessibility(methodSymbol);
-            string staticModifier = StaticModifier(methodSymbol);
-            string returnType = ReturnType(methodSymbol);
-            string parameters = Parameters(methodSymbol);
-            string generics = Generics(methodSymbol);
-            string constraints = Constraints(methodSymbol);
+            string accessibility = GetAccessibility(methodSymbol);
+            string staticModifier = GetStaticModifier(methodSymbol);
+            string returnType = GetReturnType(methodSymbol);
+            string parameters = GetParameters(methodSymbol);
+            string generics = GetGenerics(methodSymbol);
+            string constraints = GetConstraints(methodSymbol);
 
             source.Append($"{accessibility} {staticModifier} {returnType} {methodName} {generics} ({parameters}) {constraints} {methodBody}");
         }
 
-        protected override string Generics(IMethodSymbol methodSymbol)
+        protected override string GetGenerics(IMethodSymbol methodSymbol)
         {
             var generics = methodSymbol.TypeParameters
                 .Where(P => IsValueDelegate(P) == false)
@@ -53,9 +53,9 @@ namespace Generator
             return generics.Any() ? $"<{generics.CommaSeperated()}>" : string.Empty;
         }
 
-        protected override string Parameters(IMethodSymbol methodSymbol)
+        protected override string GetParameters(IMethodSymbol methodSymbol)
         {
-            string parameters = base.Parameters(methodSymbol);
+            string parameters = base.GetParameters(methodSymbol);
 
             foreach (var typeSymbol in methodSymbol.TypeParameters)
             {
@@ -81,7 +81,7 @@ namespace Generator
             return parameters;
         }
 
-        protected override string Constraints(IMethodSymbol methodSymbol)
+        protected override string GetConstraints(IMethodSymbol methodSymbol)
         {
             var constraints = new StringBuilder();
 
@@ -89,7 +89,7 @@ namespace Generator
             {
                 if (IsValueDelegate(typeSymbol) == false)
                 {
-                    constraints.Append(Constraints(typeSymbol));
+                    constraints.Append(GetConstraints(typeSymbol));
                 }
             }
 
@@ -109,7 +109,7 @@ namespace Generator
             return false;
         }
 
-        protected string MethodBody(IMethodSymbol methodSymbol)
+        protected string GetMethodBody(IMethodSymbol methodSymbol)
         {
             var methodNode = methodSymbol.DeclaringSyntaxReferences[0].GetSyntax() as MethodDeclarationSyntax;
 

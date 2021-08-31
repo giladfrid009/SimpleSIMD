@@ -10,7 +10,7 @@
     <PackageTags>SIMD, Library, Performance, Parallel, Math, Generic, Allocation, Array, Span</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Easy to use SIMD accelerated span and array methods</Description>
-    <Copyright>Copyright 2020 (c) Gilad Freidkin, All rights reserved</Copyright>
+    <Copyright>Copyright 2020-2021 (c) Gilad Freidkin, All rights reserved</Copyright>
     <Version>3.3</Version>
     <PackageReleaseNotes>
 		Added source generator to generate regular delegate overloads, for any method accepting value delegates.	
@@ -19,6 +19,7 @@
 </PackageReleaseNotes>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

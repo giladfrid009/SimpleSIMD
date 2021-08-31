@@ -141,7 +141,7 @@ namespace Generator
                 return string.Empty;
             }
 
-            string accessibility = Accessibility(classSymbol);
+            string accessibility = GetAccessibility(classSymbol);
 
             if (accessibility is not "public" or "internal")
             {
@@ -196,27 +196,27 @@ namespace Generator
             return $"<{classSymbol.TypeParameters.Names().CommaSeperated()}>";
         }
 
-        protected string Accessibility(ISymbol symbol)
+        protected string GetAccessibility(ISymbol symbol)
         {
             return SyntaxFacts.GetText(symbol.DeclaredAccessibility);
         }
 
-        protected string StaticModifier(ISymbol symbol)
+        protected string GetStaticModifier(ISymbol symbol)
         {
             return symbol.IsStatic ? "static" : string.Empty;
         }
 
-        protected virtual string ReturnType(IMethodSymbol methodSymbol)
+        protected virtual string GetReturnType(IMethodSymbol methodSymbol)
         {
             return methodSymbol.ReturnType.ToDisplayString();
         }
 
-        protected virtual string Arguments(IMethodSymbol methodSymbol)
+        protected virtual string GetArguments(IMethodSymbol methodSymbol)
         {
             return methodSymbol.Parameters.Names().CommaSeperated();
         }
 
-        protected virtual string Parameters(IMethodSymbol methodSymbol)
+        protected virtual string GetParameters(IMethodSymbol methodSymbol)
         {
             return methodSymbol.Parameters
                 .TypesNames()
@@ -224,7 +224,7 @@ namespace Generator
                 .CommaSeperated();
         }
 
-        protected virtual string Generics(IMethodSymbol methodSymbol)
+        protected virtual string GetGenerics(IMethodSymbol methodSymbol)
         {
             if (methodSymbol.IsGenericMethod == false)
             {
@@ -234,21 +234,21 @@ namespace Generator
             return $"<{methodSymbol.TypeParameters.Names().CommaSeperated()}>";
         }
 
-        protected virtual string Constraints(IMethodSymbol methodSymbol)
+        protected virtual string GetConstraints(IMethodSymbol methodSymbol)
         {
             var builder = new StringBuilder();
 
             foreach (var typeSymbol in methodSymbol.TypeParameters)
             {
-                builder.Append(Constraints(typeSymbol));
+                builder.Append(GetConstraints(typeSymbol));
             }
 
             return builder.ToString();
         }
 
-        protected string Constraints(ITypeParameterSymbol typeSymbol)
+        protected string GetConstraints(ITypeParameterSymbol typeSymbol)
         {
-            var constraints = GetConstraints(typeSymbol);
+            var constraints = EnumerateConstraint(typeSymbol);
 
             if (constraints.Any())
             {
@@ -258,7 +258,7 @@ namespace Generator
             return string.Empty;
         }
 
-        private IEnumerable<string> GetConstraints(ITypeParameterSymbol typeSymbol)
+        private IEnumerable<string> EnumerateConstraint(ITypeParameterSymbol typeSymbol)
         {
             if (typeSymbol.HasNotNullConstraint)
             {

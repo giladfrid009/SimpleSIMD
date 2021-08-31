@@ -13,7 +13,7 @@ namespace Generator
 
         protected override void ProcessMethod(StringBuilder source, IMethodSymbol methodSymbol)
         {
-            string returnType = ReturnType(methodSymbol);
+            string returnType = GetReturnType(methodSymbol);
 
             if (string.IsNullOrEmpty(returnType))
             {
@@ -27,7 +27,7 @@ namespace Generator
                 return;
             }
 
-            string lengthArgument = LengthArgument(methodSymbol);
+            string lengthArgument = GetLengthArgument(methodSymbol);
 
             if (string.IsNullOrEmpty(lengthArgument))
             {
@@ -42,12 +42,12 @@ namespace Generator
             }
             
             string methodName = methodSymbol.Name;
-            string accessibility = Accessibility(methodSymbol);
-            string staticModifier = StaticModifier(methodSymbol);
-            string arguments = Arguments(methodSymbol);
-            string parameters = Parameters(methodSymbol);
-            string generics = Generics(methodSymbol);
-            string constraints = Constraints(methodSymbol);
+            string accessibility = GetAccessibility(methodSymbol);
+            string staticModifier = GetStaticModifier(methodSymbol);
+            string arguments = GetArguments(methodSymbol);
+            string parameters = GetParameters(methodSymbol);
+            string generics = GetGenerics(methodSymbol);
+            string constraints = GetConstraints(methodSymbol);
 
             source.Append(
                 $@"
@@ -61,7 +61,7 @@ namespace Generator
                 );
         }
 
-        protected override string Arguments(IMethodSymbol methodSymbol)
+        protected override string GetArguments(IMethodSymbol methodSymbol)
         {
             return methodSymbol.Parameters
                 .Take(methodSymbol.Parameters.Length - 1)
@@ -69,7 +69,7 @@ namespace Generator
                 .CommaSeperated();
         }
 
-        protected override string Parameters(IMethodSymbol methodSymbol)
+        protected override string GetParameters(IMethodSymbol methodSymbol)
         {
             return methodSymbol.Parameters
                 .Take(methodSymbol.Parameters.Length - 1)
@@ -78,7 +78,7 @@ namespace Generator
                 .CommaSeperated();
         }
 
-        protected override string ReturnType(IMethodSymbol methodSymbol)
+        protected override string GetReturnType(IMethodSymbol methodSymbol)
         {
             if (methodSymbol.Parameters.Length == 0)
             {
@@ -103,7 +103,7 @@ namespace Generator
             return string.Empty;
         }
 
-        private string LengthArgument(IMethodSymbol methodSymbol)
+        private string GetLengthArgument(IMethodSymbol methodSymbol)
         {
             var parameterSymbols = methodSymbol.Parameters;
 
