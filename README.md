@@ -54,6 +54,13 @@ This approach could be combined with standard multithreading for massive perform
 * Fill
 * Foreach
 
+### Auto-Generated Functions
+For any of the ``Elementwise`` functions, an auto-generated overload is generated, which doesn't accept ```Span<T> result```, 
+and instead creates ```T[]``` internally and returns the result within this array.  
+  
+For any of the functions with the Value Delagate pattern, an auto-generated overload is generated, which accepts regular delegates.
+Note that using this overload results in performence losses. Check `Value Delegates - Benchmark` section for more info.  
+
 ## Performance Benefits
 
 A simple benchmark to demonstrate performance gains of using SIMD.  
