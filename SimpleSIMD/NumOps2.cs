@@ -9,7 +9,7 @@ namespace SimpleSimd
 
         static NumOps()
         {
-            ParameterExpression X = Expression.Parameter(typeof(T));
+            var X = Expression.Parameter(typeof(T));
             convFunc = Expression.Lambda<Func<T, TRes>>(Expression.Convert(X, typeof(TRes)), X).Compile();
         }
 

@@ -8,7 +8,6 @@ namespace Generator
     {
         public ArrOverloader() : base("ArrOverloadAttribute", "SimpleSimd")
         {
-
         }
 
         protected override void ProcessMethod(StringBuilder source, IMethodSymbol methodSymbol)
@@ -40,7 +39,7 @@ namespace Generator
 
                 return;
             }
-            
+
             string methodName = methodSymbol.Name;
             string accessibility = GetAccessibility(methodSymbol);
             string staticModifier = GetStaticModifier(methodSymbol);

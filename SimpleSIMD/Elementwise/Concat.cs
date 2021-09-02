@@ -22,8 +22,8 @@ namespace SimpleSimd
                 Exceptions.InvalidCast(typeof(TRes).Name);
             }
 
-            ref T rLeft = ref GetRef(left);
-            ref TRes rResult = ref GetRef(result);
+            ref var rLeft = ref GetRef(left);
+            ref var rResult = ref GetRef(result);
 
             int i = 0;
 
@@ -31,8 +31,8 @@ namespace SimpleSimd
             {
                 Vector<T> vRight = new(right);
 
-                ref Vector<T> vrLeft = ref AsVector(rLeft);
-                ref Vector<TRes> vrResult = ref AsVector(rResult);
+                ref var vrLeft = ref AsVector(rLeft);
+                ref var vrResult = ref AsVector(rResult);
 
                 int length = left.Length / Vector<T>.Count;
 
@@ -67,8 +67,8 @@ namespace SimpleSimd
                 Exceptions.InvalidCast(typeof(TRes).Name);
             }
 
-            ref T rRight = ref GetRef(right);
-            ref TRes rResult = ref GetRef(result);
+            ref var rRight = ref GetRef(right);
+            ref var rResult = ref GetRef(result);
 
             int i = 0;
 
@@ -76,8 +76,8 @@ namespace SimpleSimd
             {
                 Vector<T> vLeft = new(left);
 
-                ref Vector<T> vrRight = ref AsVector(rRight);
-                ref Vector<TRes> vrResult = ref AsVector(rResult);
+                ref var vrRight = ref AsVector(rRight);
+                ref var vrResult = ref AsVector(rResult);
 
                 int length = right.Length / Vector<T>.Count;
 
@@ -117,17 +117,17 @@ namespace SimpleSimd
                 Exceptions.InvalidCast(typeof(TRes).Name);
             }
 
-            ref T rLeft = ref GetRef(left);
-            ref T rRight = ref GetRef(right);
-            ref TRes rResult = ref GetRef(result);
+            ref var rLeft = ref GetRef(left);
+            ref var rRight = ref GetRef(right);
+            ref var rResult = ref GetRef(result);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                ref Vector<T> vrLeft = ref AsVector(rLeft);
-                ref Vector<T> vrRight = ref AsVector(rRight);
-                ref Vector<TRes> vrResult = ref AsVector(rResult);
+                ref var vrLeft = ref AsVector(rLeft);
+                ref var vrRight = ref AsVector(rRight);
+                ref var vrResult = ref AsVector(rResult);
 
                 int length = left.Length / Vector<T>.Count;
 

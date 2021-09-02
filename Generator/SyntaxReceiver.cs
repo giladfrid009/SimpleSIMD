@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Generator
 {
-    class SyntaxReceiver : ISyntaxReceiver
+    internal class SyntaxReceiver : ISyntaxReceiver
     {
         public List<MethodDeclarationSyntax> MethodCandidates { get; } = new();
 
@@ -20,7 +20,7 @@ namespace Generator
                 return;
             }
 
-            MethodCandidates.Add(methodNode);            
+            MethodCandidates.Add(methodNode);
         }
     }
 }

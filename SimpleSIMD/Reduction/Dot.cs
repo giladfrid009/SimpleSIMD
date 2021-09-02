@@ -7,18 +7,18 @@ namespace SimpleSimd
     {
         public static T Dot(ReadOnlySpan<T> left, T right)
         {
-            T dot = NumOps<T>.Zero;
+            var dot = NumOps<T>.Zero;
 
-            ref T rLeft = ref GetRef(left);
+            ref var rLeft = ref GetRef(left);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                Vector<T> vDot = Vector<T>.Zero;
+                var vDot = Vector<T>.Zero;
                 Vector<T> vRight = new(right);
 
-                ref Vector<T> vrLeft = ref AsVector(rLeft);
+                ref var vrLeft = ref AsVector(rLeft);
 
                 int length = left.Length / Vector<T>.Count;
 
@@ -47,19 +47,19 @@ namespace SimpleSimd
                 Exceptions.ArgOutOfRange(nameof(right));
             }
 
-            T dot = NumOps<T>.Zero;
+            var dot = NumOps<T>.Zero;
 
-            ref T rLeft = ref GetRef(left);
-            ref T rRight = ref GetRef(right);
+            ref var rLeft = ref GetRef(left);
+            ref var rRight = ref GetRef(right);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                Vector<T> vDot = Vector<T>.Zero;
+                var vDot = Vector<T>.Zero;
 
-                ref Vector<T> vrLeft = ref AsVector(rLeft);
-                ref Vector<T> vrRight = ref AsVector(rRight);
+                ref var vrLeft = ref AsVector(rLeft);
+                ref var vrRight = ref AsVector(rRight);
 
                 int length = left.Length / Vector<T>.Count;
 

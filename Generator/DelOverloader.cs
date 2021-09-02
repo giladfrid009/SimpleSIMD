@@ -9,12 +9,11 @@ namespace Generator
     {
         public DelOverloader() : base("DelOverloadAttribute", "SimpleSimd")
         {
-
         }
 
         protected override void ProcessMethod(StringBuilder source, IMethodSymbol methodSymbol)
         {
-            if (methodSymbol.TypeParameters.All(S => IsValueDelegate(S) == false))
+            if (methodSymbol.TypeParameters.All(S => !IsValueDelegate(S)))
             {
                 ReportDiagnostic(
                     "DSG001",
@@ -23,7 +22,7 @@ namespace Generator
                     "At least one of the parameters must be a generic type constrained as IFunc or IAction.",
                     methodSymbol);
 
-               return;
+                return;
             }
 
             string methodBody = GetMethodBody(methodSymbol);
@@ -47,7 +46,7 @@ namespace Generator
         protected override string GetGenerics(IMethodSymbol methodSymbol)
         {
             var generics = methodSymbol.TypeParameters
-                .Where(P => IsValueDelegate(P) == false)
+                .Where(P => !IsValueDelegate(P))
                 .Names();
 
             return generics.Any() ? $"<{generics.CommaSeperated()}>" : string.Empty;

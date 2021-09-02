@@ -16,8 +16,8 @@ namespace SimpleSimd
                 Exceptions.ArgOutOfRange(nameof(result));
             }
 
-            ref T rSpan = ref GetRef(span);
-            ref T rResult = ref GetRef(result);
+            ref var rSpan = ref GetRef(span);
+            ref var rResult = ref GetRef(result);
 
             int i = 0;
 
@@ -26,8 +26,8 @@ namespace SimpleSimd
                 Vector<T> vTrue = new(trueValue);
                 Vector<T> vFalse = new(falseValue);
 
-                ref Vector<T> vrSpan = ref AsVector(rSpan);
-                ref Vector<T> vrResult = ref AsVector(rResult);
+                ref var vrSpan = ref AsVector(rSpan);
+                ref var vrResult = ref AsVector(rResult);
 
                 int length = span.Length / Vector<T>.Count;
 
@@ -60,15 +60,15 @@ namespace SimpleSimd
                 Exceptions.ArgOutOfRange(nameof(result));
             }
 
-            ref T rSpan = ref GetRef(span);
-            ref T rResult = ref GetRef(result);
+            ref var rSpan = ref GetRef(span);
+            ref var rResult = ref GetRef(result);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                ref Vector<T> vrSpan = ref AsVector(rSpan);
-                ref Vector<T> vrResult = ref AsVector(rResult);
+                ref var vrSpan = ref AsVector(rSpan);
+                ref var vrResult = ref AsVector(rResult);
 
                 int length = span.Length / Vector<T>.Count;
 

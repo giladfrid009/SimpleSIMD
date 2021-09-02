@@ -15,9 +15,9 @@ namespace SimpleSimd
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, T>
         {
-            T max = NumOps<T>.MinValue;
+            var max = NumOps<T>.MinValue;
 
-            ref T rSpan = ref GetRef(span);
+            ref var rSpan = ref GetRef(span);
 
             int i = 0;
 
@@ -25,7 +25,7 @@ namespace SimpleSimd
             {
                 Vector<T> vMax = new(max);
 
-                ref Vector<T> vrSpan = ref AsVector(rSpan);
+                ref var vrSpan = ref AsVector(rSpan);
 
                 int length = span.Length / Vector<T>.Count;
 

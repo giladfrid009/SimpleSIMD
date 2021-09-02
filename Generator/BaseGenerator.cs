@@ -64,7 +64,7 @@ namespace Generator
 
                 context.AddSource(ToFileName(classSymbol.Name), SourceText.From(source, Encoding.UTF8));
             }
-        }        
+        }
 
         private Compilation InjectAttribute(GeneratorExecutionContext context)
         {
@@ -115,7 +115,7 @@ namespace Generator
             }
 
             return false;
-        }     
+        }
 
         protected void ReportDiagnostic(string id, string title, string message, ISymbol? sourceSymbol)
         {
