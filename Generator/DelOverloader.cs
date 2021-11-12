@@ -1,11 +1,9 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Collections.Generic;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Text;
 
 namespace Generator
 {
-    [Generator]
+    [Generator(LanguageNames.CSharp)]
     public class DelOverloader : BaseGenerator
     {
         public DelOverloader() : base("DelOverloadAttribute", "SimpleSimd")

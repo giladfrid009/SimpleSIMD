@@ -1,10 +1,9 @@
-﻿using Microsoft.CodeAnalysis;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Text;
 
 namespace Generator
 {
-    [Generator]
+    [Generator(LanguageNames.CSharp)]
     public class ArrOverloader : BaseGenerator
     {
         public ArrOverloader() : base("ArrOverloadAttribute", "SimpleSimd")
@@ -95,12 +94,13 @@ namespace Generator
                 return string.Empty;
             }
 
-            if (resultParameter.IsGenericType)
+            if (resultParameter.IsGenericType == false)
             {
-                return resultParameter.TypeArguments[0].Name;
+                return string.Empty;
+
             }
 
-            return string.Empty;
+            return resultParameter.TypeArguments[0].Name;
         }
 
         private string GetLengthArgument(IMethodSymbol methodSymbol)

@@ -1,7 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using System.Collections.Generic;
-
-namespace Generator
+﻿namespace Generator
 {
     internal static class Extensions
     {

@@ -1,9 +1,9 @@
-﻿global using System.Linq;
-using Microsoft.CodeAnalysis;
+﻿global using Microsoft.CodeAnalysis;
+global using System.Collections.Generic;
+global using System.Linq;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Generator
@@ -128,7 +128,7 @@ namespace Generator
 
         private string ProcessClass(INamedTypeSymbol classSymbol, IEnumerable<IMethodSymbol> classMethods)
         {
-            INamespaceSymbol namespaceSymbol = classSymbol.ContainingNamespace;
+            INamespaceSymbol? namespaceSymbol = classSymbol.ContainingNamespace;
 
             if (namespaceSymbol is null)
             {
