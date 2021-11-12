@@ -68,7 +68,7 @@ namespace Generator
 
         private Compilation InjectAttribute(GeneratorExecutionContext context)
         {
-            var source = SourceText.From(
+            SourceText source = SourceText.From(
                 $@"
                 using System;
                 namespace {AttributeNamespace}
@@ -88,7 +88,7 @@ namespace Generator
 
             context.AddSource(ToFileName(AttributeName), source);
 
-            var options = context.Compilation.SyntaxTrees.First().Options as CSharpParseOptions;
+            CSharpParseOptions? options = context.Compilation.SyntaxTrees.First().Options as CSharpParseOptions;
 
             SyntaxTree Syntaxtree = CSharpSyntaxTree.ParseText(source, options);
 

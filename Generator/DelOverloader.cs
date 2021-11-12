@@ -111,7 +111,7 @@ namespace Generator
 
         protected string GetMethodBody(IMethodSymbol methodSymbol)
         {
-            var methodNode = methodSymbol.DeclaringSyntaxReferences[0].GetSyntax() as MethodDeclarationSyntax;
+            MethodDeclarationSyntax? methodNode = methodSymbol.DeclaringSyntaxReferences[0].GetSyntax() as MethodDeclarationSyntax;
 
             return methodNode?.Body?.GetText().ToString() ?? string.Empty;
         }

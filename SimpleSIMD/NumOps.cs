@@ -66,10 +66,10 @@ namespace SimpleSimd
                 sbyte X => (T)(object)(sbyte)~X,
                 ushort X => (T)(object)(ushort)~X,
                 short X => (T)(object)(short)~X,
-                uint X => (T)(object)(uint)~X,
-                int X => (T)(object)(int)~X,
-                ulong X => (T)(object)(ulong)~X,
-                long X => (T)(object)(long)~X,
+                uint X => (T)(object)~X,
+                int X => (T)(object)~X,
+                ulong X => (T)(object)~X,
+                long X => (T)(object)~X,
                 _ => throw new NotSupportedException(typeof(T).Name)
             };
         }
@@ -83,10 +83,10 @@ namespace SimpleSimd
                 (sbyte L, sbyte R) => (T)(object)(sbyte)(L + R),
                 (ushort L, ushort R) => (T)(object)(ushort)(L + R),
                 (short L, short R) => (T)(object)(short)(L + R),
-                (uint L, uint R) => (T)(object)(uint)(L + R),
-                (int L, int R) => (T)(object)(int)(L + R),
-                (ulong L, ulong R) => (T)(object)(ulong)(L + R),
-                (long L, long R) => (T)(object)(long)(L + R),
+                (uint L, uint R) => (T)(object)(L + R),
+                (int L, int R) => (T)(object)(L + R),
+                (ulong L, ulong R) => (T)(object)(L + R),
+                (long L, long R) => (T)(object)(L + R),
                 (float L, float R) => (T)(object)(float)(L + R),
                 (double L, double R) => (T)(object)(double)(L + R),
                 _ => throw new NotSupportedException(typeof(T).Name)
@@ -102,10 +102,10 @@ namespace SimpleSimd
                 (sbyte L, sbyte R) => (T)(object)(sbyte)(L - R),
                 (ushort L, ushort R) => (T)(object)(ushort)(L - R),
                 (short L, short R) => (T)(object)(short)(L - R),
-                (uint L, uint R) => (T)(object)(uint)(L - R),
-                (int L, int R) => (T)(object)(int)(L - R),
-                (ulong L, ulong R) => (T)(object)(ulong)(L - R),
-                (long L, long R) => (T)(object)(long)(L - R),
+                (uint L, uint R) => (T)(object)(L - R),
+                (int L, int R) => (T)(object)(L - R),
+                (ulong L, ulong R) => (T)(object)(L - R),
+                (long L, long R) => (T)(object)(L - R),
                 (float L, float R) => (T)(object)(float)(L - R),
                 (double L, double R) => (T)(object)(double)(L - R),
                 _ => throw new NotSupportedException(typeof(T).Name)
@@ -121,10 +121,10 @@ namespace SimpleSimd
                 (sbyte L, sbyte R) => (T)(object)(sbyte)(L * R),
                 (ushort L, ushort R) => (T)(object)(ushort)(L * R),
                 (short L, short R) => (T)(object)(short)(L * R),
-                (uint L, uint R) => (T)(object)(uint)(L * R),
-                (int L, int R) => (T)(object)(int)(L * R),
-                (ulong L, ulong R) => (T)(object)(ulong)(L * R),
-                (long L, long R) => (T)(object)(long)(L * R),
+                (uint L, uint R) => (T)(object)(L * R),
+                (int L, int R) => (T)(object)(L * R),
+                (ulong L, ulong R) => (T)(object)(L * R),
+                (long L, long R) => (T)(object)(L * R),
                 (float L, float R) => (T)(object)(float)(L * R),
                 (double L, double R) => (T)(object)(double)(L * R),
                 _ => throw new NotSupportedException(typeof(T).Name)
@@ -140,10 +140,10 @@ namespace SimpleSimd
                 (sbyte L, sbyte R) => (T)(object)(sbyte)(L / R),
                 (ushort L, ushort R) => (T)(object)(ushort)(L / R),
                 (short L, short R) => (T)(object)(short)(L / R),
-                (uint L, uint R) => (T)(object)(uint)(L / R),
-                (int L, int R) => (T)(object)(int)(L / R),
-                (ulong L, ulong R) => (T)(object)(ulong)(L / R),
-                (long L, long R) => (T)(object)(long)(L / R),
+                (uint L, uint R) => (T)(object)(L / R),
+                (int L, int R) => (T)(object)(L / R),
+                (ulong L, ulong R) => (T)(object)(L / R),
+                (long L, long R) => (T)(object)(L / R),
                 (float L, float R) => (T)(object)(float)(L / R),
                 (double L, double R) => (T)(object)(double)(L / R),
                 _ => throw new NotSupportedException(typeof(T).Name)
@@ -159,10 +159,10 @@ namespace SimpleSimd
                 (sbyte L, sbyte R) => (T)(object)(sbyte)(L % R),
                 (ushort L, ushort R) => (T)(object)(ushort)(L % R),
                 (short L, short R) => (T)(object)(short)(L % R),
-                (uint L, uint R) => (T)(object)(uint)(L % R),
-                (int L, int R) => (T)(object)(int)(L % R),
-                (ulong L, ulong R) => (T)(object)(ulong)(L % R),
-                (long L, long R) => (T)(object)(long)(L % R),
+                (uint L, uint R) => (T)(object)(L % R),
+                (int L, int R) => (T)(object)(L % R),
+                (ulong L, ulong R) => (T)(object)(L % R),
+                (long L, long R) => (T)(object)(L % R),
                 (float L, float R) => (T)(object)(float)(L % R),
                 (double L, double R) => (T)(object)(double)(L % R),
                 _ => throw new NotSupportedException(typeof(T).Name)
@@ -178,10 +178,10 @@ namespace SimpleSimd
                 (sbyte L, sbyte R) => (T)(object)(sbyte)(L & R),
                 (ushort L, ushort R) => (T)(object)(ushort)(L & R),
                 (short L, short R) => (T)(object)(short)(L & R),
-                (uint L, uint R) => (T)(object)(uint)(L & R),
-                (int L, int R) => (T)(object)(int)(L & R),
-                (ulong L, ulong R) => (T)(object)(ulong)(L & R),
-                (long L, long R) => (T)(object)(long)(L & R),
+                (uint L, uint R) => (T)(object)(L & R),
+                (int L, int R) => (T)(object)(L & R),
+                (ulong L, ulong R) => (T)(object)(L & R),
+                (long L, long R) => (T)(object)(L & R),
                 _ => throw new NotSupportedException(typeof(T).Name)
             };
         }
@@ -196,9 +196,9 @@ namespace SimpleSimd
                 (ushort L, ushort R) => (T)(object)(ushort)(L | R),
                 (short L, short R) => (T)(object)(short)(L | R),
                 (uint L, uint R) => (T)(object)(L | R),
-                (int L, int R) => (T)(object)(int)(L | R),
-                (ulong L, ulong R) => (T)(object)(ulong)(L | R),
-                (long L, long R) => (T)(object)(long)(L | R),
+                (int L, int R) => (T)(object)(L | R),
+                (ulong L, ulong R) => (T)(object)(L | R),
+                (long L, long R) => (T)(object)(L | R),
                 _ => throw new NotSupportedException(typeof(T).Name)
             };
         }
@@ -212,10 +212,10 @@ namespace SimpleSimd
                 (sbyte L, sbyte R) => (T)(object)(sbyte)(L ^ R),
                 (ushort L, ushort R) => (T)(object)(ushort)(L ^ R),
                 (short L, short R) => (T)(object)(short)(L ^ R),
-                (uint L, uint R) => (T)(object)(uint)(L ^ R),
-                (int L, int R) => (T)(object)(int)(L ^ R),
-                (ulong L, ulong R) => (T)(object)(ulong)(L ^ R),
-                (long L, long R) => (T)(object)(long)(L ^ R),
+                (uint L, uint R) => (T)(object)(L ^ R),
+                (int L, int R) => (T)(object)(L ^ R),
+                (ulong L, ulong R) => (T)(object)(L ^ R),
+                (long L, long R) => (T)(object)(L ^ R),
                 _ => throw new NotSupportedException(typeof(T).Name)
             };
         }
