@@ -85,7 +85,7 @@ Benchmarked method was a ``Sum`` over an ``int[]``.
 |   SIMD | 100000 |   8,897.370 ns | 102.2559 ns |  95.6502 ns |  0.15 |
 
 ## Value Delegates
-This library uses the value delegate pattern. This pattern is used as a replacement for delegates.  
+This library uses the value delegate pattern. This pattern is used as a replacement for regular delegates.  
 Calling functions using this patten may feel unusual since it requires creation of structs to pass as arguments instead of delegates, but it is very beneficial performance-wise. 
 The performance difference makes using this pattern worthwhile in performance critical places.  
 Since the focus of this library is **pure performance**, we use this pattern wherever possible.
@@ -162,9 +162,9 @@ public static T Sum<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
 * Methods are not lazily evaluated as IEnumerable
 * Old hardware might not support SIMD
 * Supported collection types:
-  * ```T[] where T : unmanaged```
-  * ```Span<T> where T : unmanaged```
-  * ```ReadOnlySpan<T> where T : unmanaged```
+  * ```T[] where
+  * ```Span<T>
+  * ```ReadOnlySpan<T>
 * Supports only **Primitive Numeric Types** as array elements. Supported types are:
   * ```byte, sbyte```
   * ```short, ushort```

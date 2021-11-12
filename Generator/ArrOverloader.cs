@@ -1,5 +1,6 @@
-﻿using System.Text;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
+using System.Collections.Immutable;
+using System.Text;
 
 namespace Generator
 {
@@ -104,7 +105,7 @@ namespace Generator
 
         private string GetLengthArgument(IMethodSymbol methodSymbol)
         {
-            var parameterSymbols = methodSymbol.Parameters;
+            ImmutableArray<IParameterSymbol> parameterSymbols = methodSymbol.Parameters;
 
             for (int i = 0; i < parameterSymbols.Length - 1; i++)
             {

@@ -1,10 +1,10 @@
 ﻿global using System.Linq;
-
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Generator
 {
@@ -36,14 +36,14 @@ namespace Generator
                 return;
             }
 
-            var compilation = InjectAttribute(context);
+            Compilation compilation = InjectAttribute(context);
 
-            var methodSymbols = new List<IMethodSymbol>();
+            List<IMethodSymbol> methodSymbols = new();
 
-            foreach (var methodDeclarations in syntaxReciever.MethodCandidates)
+            foreach (MethodDeclarationSyntax methodDeclarations in syntaxReciever.MethodCandidates)
             {
-                var semanticModel = compilation.GetSemanticModel(methodDeclarations.SyntaxTree);
-                var methodSymbol = semanticModel.GetDeclaredSymbol(methodDeclarations);
+                SemanticModel semanticModel = compilation.GetSemanticModel(methodDeclarations.SyntaxTree);
+                IMethodSymbol? methodSymbol = semanticModel.GetDeclaredSymbol(methodDeclarations);
 
                 if (HasAttribute(methodSymbol, attributeSymbol))
                 {
@@ -51,9 +51,9 @@ namespace Generator
                 }
             }
 
-            var methodGroups = methodSymbols.GroupBy(M => M.ContainingSymbol, SymbolEqualityComparer.Default);
+            IEnumerable<IGrouping<ISymbol, IMethodSymbol>> methodGroups = methodSymbols.GroupBy(M => M.ContainingSymbol, SymbolEqualityComparer.Default);
 
-            foreach (var methodGroup in methodGroups)
+            foreach (IGrouping<ISymbol, IMethodSymbol> methodGroup in methodGroups)
             {
                 if (methodGroup.Key is not INamedTypeSymbol classSymbol)
                 {
@@ -90,9 +90,9 @@ namespace Generator
 
             var options = context.Compilation.SyntaxTrees.First().Options as CSharpParseOptions;
 
-            var Syntaxtree = CSharpSyntaxTree.ParseText(source, options);
+            SyntaxTree Syntaxtree = CSharpSyntaxTree.ParseText(source, options);
 
-            var compilation = context.Compilation.AddSyntaxTrees(Syntaxtree);
+            Compilation compilation = context.Compilation.AddSyntaxTrees(Syntaxtree);
 
             attributeSymbol = compilation.GetTypeByMetadataName($"{AttributeNamespace}.{AttributeName}");
 
@@ -106,7 +106,7 @@ namespace Generator
                 return false;
             }
 
-            foreach (var candidateSymbol in methodSymbol.GetAttributes().Select(A => A.AttributeClass))
+            foreach (INamedTypeSymbol? candidateSymbol in methodSymbol.GetAttributes().Select(A => A.AttributeClass))
             {
                 if (candidateSymbol?.Equals(attributeSymbol, SymbolEqualityComparer.Default) ?? false)
                 {
@@ -119,16 +119,16 @@ namespace Generator
 
         protected void ReportDiagnostic(string id, string title, string message, ISymbol? sourceSymbol)
         {
-            var descriptor = new DiagnosticDescriptor(id, title, message, $"SourceGenerator.{GetType().Name}", DiagnosticSeverity.Warning, true);
+            DiagnosticDescriptor descriptor = new(id, title, message, $"SourceGenerator.{GetType().Name}", DiagnosticSeverity.Warning, true);
 
-            var location = sourceSymbol?.DeclaringSyntaxReferences[0].GetSyntax().GetLocation();
+            Location? location = sourceSymbol?.DeclaringSyntaxReferences[0].GetSyntax().GetLocation();
 
             executionContext?.ReportDiagnostic(Diagnostic.Create(descriptor, location));
         }
 
         private string ProcessClass(INamedTypeSymbol classSymbol, IEnumerable<IMethodSymbol> classMethods)
         {
-            var namespaceSymbol = classSymbol.ContainingNamespace;
+            INamespaceSymbol namespaceSymbol = classSymbol.ContainingNamespace;
 
             if (namespaceSymbol is null)
             {
@@ -154,9 +154,9 @@ namespace Generator
                 return string.Empty;
             }
 
-            string generics = Generics(classSymbol);
+            string generics = GetGenerics(classSymbol);
 
-            var source = new StringBuilder(
+            StringBuilder source = new(
                 $@"
                 #nullable enable
                 namespace {namespaceSymbol.ToDisplayString()}
@@ -169,7 +169,7 @@ namespace Generator
                     {{
                 ");
 
-            foreach (var method in classMethods)
+            foreach (IMethodSymbol method in classMethods)
             {
                 ProcessMethod(source, method);
             }
@@ -186,7 +186,7 @@ namespace Generator
             return $"{name}_Generated.cs";
         }
 
-        private string Generics(INamedTypeSymbol classSymbol)
+        private string GetGenerics(INamedTypeSymbol classSymbol)
         {
             if (classSymbol.IsGenericType == false)
             {
@@ -236,9 +236,9 @@ namespace Generator
 
         protected virtual string GetConstraints(IMethodSymbol methodSymbol)
         {
-            var builder = new StringBuilder();
+            StringBuilder builder = new();
 
-            foreach (var typeSymbol in methodSymbol.TypeParameters)
+            foreach (ITypeParameterSymbol typeSymbol in methodSymbol.TypeParameters)
             {
                 builder.Append(GetConstraints(typeSymbol));
             }
@@ -248,7 +248,7 @@ namespace Generator
 
         protected string GetConstraints(ITypeParameterSymbol typeSymbol)
         {
-            var constraints = EnumerateConstraint(typeSymbol);
+            IEnumerable<string> constraints = EnumerateConstraints(typeSymbol);
 
             if (constraints.Any())
             {
@@ -258,7 +258,7 @@ namespace Generator
             return string.Empty;
         }
 
-        private IEnumerable<string> EnumerateConstraint(ITypeParameterSymbol typeSymbol)
+        private IEnumerable<string> EnumerateConstraints(ITypeParameterSymbol typeSymbol)
         {
             if (typeSymbol.HasNotNullConstraint)
             {
@@ -282,7 +282,7 @@ namespace Generator
                 yield return "new()";
             }
 
-            var names = typeSymbol.ConstraintTypes.Types();
+            IEnumerable<string> names = typeSymbol.ConstraintTypes.Types();
 
             foreach (string name in names)
             {

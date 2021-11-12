@@ -22,15 +22,15 @@ namespace SimpleSimd
                 Exceptions.InvalidCast(typeof(TRes).Name);
             }
 
-            ref var rSpan = ref GetRef(span);
-            ref var rResult = ref GetRef(result);
+            ref T rSpan = ref GetRef(span);
+            ref TRes rResult = ref GetRef(result);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                ref var vrSpan = ref AsVector(rSpan);
-                ref var vrResult = ref AsVector(rResult);
+                ref Vector<T> vrSpan = ref AsVector(rSpan);
+                ref Vector<TRes> vrResult = ref AsVector(rResult);
 
                 int length = span.Length / Vector<T>.Count;
 

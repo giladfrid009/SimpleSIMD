@@ -15,17 +15,17 @@ namespace SimpleSimd
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, T>
         {
-            var sum = NumOps<T>.Zero;
+            T sum = NumOps<T>.Zero;
 
-            ref var rSpan = ref GetRef(span);
+            ref T rSpan = ref GetRef(span);
 
             int i = 0;
 
             if (Vector.IsHardwareAccelerated)
             {
-                var vSum = Vector<T>.Zero;
+                Vector<T> vSum = Vector<T>.Zero;
 
-                ref var vrSpan = ref AsVector(rSpan);
+                ref Vector<T> vrSpan = ref AsVector(rSpan);
 
                 int length = span.Length / Vector<T>.Count;
 

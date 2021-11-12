@@ -1,6 +1,7 @@
-﻿using System.Text;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Generator
 {
@@ -45,7 +46,7 @@ namespace Generator
 
         protected override string GetGenerics(IMethodSymbol methodSymbol)
         {
-            var generics = methodSymbol.TypeParameters
+            IEnumerable<string> generics = methodSymbol.TypeParameters
                 .Where(P => !IsValueDelegate(P))
                 .Names();
 
@@ -56,9 +57,9 @@ namespace Generator
         {
             string parameters = base.GetParameters(methodSymbol);
 
-            foreach (var typeSymbol in methodSymbol.TypeParameters)
+            foreach (ITypeParameterSymbol typeSymbol in methodSymbol.TypeParameters)
             {
-                foreach (var constraintSymbol in typeSymbol.ConstraintTypes)
+                foreach (ITypeSymbol constraintSymbol in typeSymbol.ConstraintTypes)
                 {
                     if (constraintSymbol.Name == "IFunc")
                     {
@@ -82,9 +83,9 @@ namespace Generator
 
         protected override string GetConstraints(IMethodSymbol methodSymbol)
         {
-            var constraints = new StringBuilder();
+            StringBuilder constraints = new();
 
-            foreach (var typeSymbol in methodSymbol.TypeParameters)
+            foreach (ITypeParameterSymbol typeSymbol in methodSymbol.TypeParameters)
             {
                 if (IsValueDelegate(typeSymbol) == false)
                 {
@@ -97,7 +98,7 @@ namespace Generator
 
         protected bool IsValueDelegate(ITypeParameterSymbol typeSymbol)
         {
-            foreach (var C in typeSymbol.ConstraintTypes)
+            foreach (ITypeSymbol C in typeSymbol.ConstraintTypes)
             {
                 if (C.Name is "IAction" or "IFunc")
                 {
