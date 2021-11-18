@@ -8,7 +8,7 @@ namespace SimpleSimd
         [ArrOverload]
         [DelOverload]
         public static void Concat<TRes, F1, F2>(ReadOnlySpan<T> left, T right, F1 vCombiner, F2 combiner, Span<TRes> result)
-            where TRes : unmanaged
+            where TRes : struct
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
         {
@@ -53,7 +53,7 @@ namespace SimpleSimd
         [ArrOverload]
         [DelOverload]
         public static void Concat<TRes, F1, F2>(T left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, Span<TRes> result)
-            where TRes : unmanaged
+            where TRes : struct
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
         {
@@ -98,7 +98,7 @@ namespace SimpleSimd
         [ArrOverload]
         [DelOverload]
         public static void Concat<TRes, F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, Span<TRes> result)
-            where TRes : unmanaged
+            where TRes : struct
             where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, T, TRes>
         {

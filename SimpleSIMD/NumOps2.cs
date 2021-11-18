@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace SimpleSimd
 {
-    public static class NumOps<T, TRes> where T : unmanaged where TRes : unmanaged
+    public static class NumOps<T, TRes> where T : struct where TRes : struct
     {
         private static readonly Func<T, TRes> convFunc;
 

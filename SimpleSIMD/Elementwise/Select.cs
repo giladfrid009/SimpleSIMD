@@ -8,7 +8,7 @@ namespace SimpleSimd
         [ArrOverload]
         [DelOverload]
         public static void Select<TRes, F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector, Span<TRes> result)
-            where TRes : unmanaged
+            where TRes : struct
             where F1 : struct, IFunc<Vector<T>, Vector<TRes>>
             where F2 : struct, IFunc<T, TRes>
         {

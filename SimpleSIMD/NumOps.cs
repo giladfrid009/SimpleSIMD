@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace SimpleSimd
 {
-    public static class NumOps<T> where T : unmanaged
+    public static class NumOps<T> where T : struct
     {
         public static T Zero => default;
         public static T One { get; }
