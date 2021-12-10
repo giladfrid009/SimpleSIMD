@@ -135,7 +135,7 @@ the only difference is the argument types.
 
 ``` csharp
 // Delegate, baseline
-public static T Sum(Span<T> span, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector)
+public static T Sum(Span<T> span, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector);
 
 // ValueDelegate
 public static T Sum<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
