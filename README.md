@@ -135,7 +135,7 @@ the only difference is the argument types.
 
 ``` csharp
 // Delegate, baseline
-public static T Sum(Span<T> span, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector)
+public static T Sum(Span<T> span, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector);
 
 // ValueDelegate
 public static T Sum<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
@@ -162,9 +162,9 @@ public static T Sum<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
 * Methods are not lazily evaluated as IEnumerable
 * Old hardware might not support SIMD
 * Supported collection types:
-  * ```T[] where
-  * ```Span<T>
-  * ```ReadOnlySpan<T>
+  * ```T[]```
+  * ```Span<T>```
+  * ```ReadOnlySpan<T>```
 * Supports only **Primitive Numeric Types** as array elements. Supported types are:
   * ```byte, sbyte```
   * ```short, ushort```
