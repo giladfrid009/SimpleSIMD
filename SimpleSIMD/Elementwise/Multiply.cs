@@ -3,9 +3,9 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
-		private struct Multiply_VSelector : IFunc<Vector<T>, Vector<T>, Vector<T>>
+		private struct Multiply_VSelector<T> : IFunc<Vector<T>, Vector<T>, Vector<T>> where T : struct, INumber<T>
 		{
 			public Vector<T> Invoke(Vector<T> left, Vector<T> right)
 			{
@@ -13,24 +13,24 @@ namespace SimpleSimd
 			}
 		}
 
-		private struct Multiply_Selector : IFunc<T, T, T>
+		private struct Multiply_Selector<T> : IFunc<T, T, T> where T : struct, INumber<T>
 		{
 			public T Invoke(T left, T right)
 			{
-				return NumOps<T>.Multiply(left, right);
+				return left * right;
 			}
 		}
 
 		[ArrOverload]
-		public static void Multiply(ReadOnlySpan<T> left, T right, Span<T> result)
+		public static void Multiply<T>(ReadOnlySpan<T> left, T right, Span<T> result) where T : struct, INumber<T>
 		{
-			Concat(left, right, new Multiply_VSelector(), new Multiply_Selector(), result);
+			Concat(left, right, new Multiply_VSelector<T>(), new Multiply_Selector<T>(), result);
 		}
 
 		[ArrOverload]
-		public static void Multiply(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
+		public static void Multiply<T>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result) where T : struct, INumber<T>
 		{
-			Concat(left, right, new Multiply_VSelector(), new Multiply_Selector(), result);
+			Concat(left, right, new Multiply_VSelector<T>(), new Multiply_Selector<T>(), result);
 		}
 	}
 }

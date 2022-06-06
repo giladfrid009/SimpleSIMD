@@ -3,9 +3,9 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
-		private struct Not_VSelector : IFunc<Vector<T>, Vector<T>>
+		private struct Not_VSelector<T> : IFunc<Vector<T>, Vector<T>> where T : struct, IBinaryNumber<T>
 		{
 			public Vector<T> Invoke(Vector<T> vec)
 			{
@@ -13,18 +13,18 @@ namespace SimpleSimd
 			}
 		}
 
-		private struct Not_Selector : IFunc<T, T>
+		private struct Not_Selector<T> : IFunc<T, T> where T : struct, IBinaryNumber<T>
 		{
 			public T Invoke(T val)
 			{
-				return NumOps<T>.Not(val);
+				return ~val;
 			}
 		}
 
 		[ArrOverload]
-		public static void Not(ReadOnlySpan<T> span, Span<T> result)
+		public static void Not<T>(ReadOnlySpan<T> span, Span<T> result) where T : struct, IBinaryNumber<T>
 		{
-			Select(span, new Not_VSelector(), new Not_Selector(), result);
+			Select(span, new Not_VSelector<T>(), new Not_Selector<T>(), result);
 		}
 	}
 }

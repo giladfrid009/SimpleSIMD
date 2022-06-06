@@ -3,19 +3,20 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
-		public static T Min(ReadOnlySpan<T> span)
+		public static T Min<T>(ReadOnlySpan<T> span) where T : struct, INumber<T>, IMinMaxValue<T>
 		{
-			return Min(span, new ID_VSelector(), new ID_Selector());
+			return Min(span, new ID_VSelector<T>(), new ID_Selector<T>());
 		}
 
 		[DelOverload]
-		public static T Min<F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector)
+		public static T Min<T, F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector)
+			where T : struct, INumber<T>, IMinMaxValue<T>
 			where F1 : struct, IFunc<Vector<T>, Vector<T>>
 			where F2 : struct, IFunc<T, T>
 		{
-			T min = NumOps<T>.MaxValue;
+			T min = T.MaxValue;
 
 			ref T rSpan = ref GetRef(span);
 
@@ -36,7 +37,7 @@ namespace SimpleSimd
 
 				for (int j = 0; j < Vector<T>.Count; j++)
 				{
-					min = NumOps<T>.Min(min, vMin[j]);
+					min = T.Min(min, vMin[j]);
 				}
 
 				i *= Vector<T>.Count;
@@ -44,7 +45,7 @@ namespace SimpleSimd
 
 			for (; i < span.Length; i++)
 			{
-				min = NumOps<T>.Min(min, selector.Invoke(rSpan.Offset(i)));
+				min = T.Min(min, selector.Invoke(rSpan.Offset(i)));
 			}
 
 			return min;

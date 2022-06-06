@@ -1,10 +1,11 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
-		private struct ID_VSelector : IFunc<Vector<T>, Vector<T>>
+		private struct ID_VSelector<T> : IFunc<Vector<T>, Vector<T>> where T : struct, INumber<T>
 		{
 			public Vector<T> Invoke(Vector<T> vec)
 			{
@@ -12,7 +13,7 @@ namespace SimpleSimd
 			}
 		}
 
-		private struct ID_Selector : IFunc<T, T>
+		private struct ID_Selector<T> : IFunc<T, T> where T : struct, INumber<T>
 		{
 			public T Invoke(T val)
 			{

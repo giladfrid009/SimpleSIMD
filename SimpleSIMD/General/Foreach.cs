@@ -3,10 +3,11 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
 		[DelOverload]
-		public static void Foreach<F1, F2>(ReadOnlySpan<T> span, F1 vAction, F2 action)
+		public static void Foreach<T, F1, F2>(ReadOnlySpan<T> span, F1 vAction, F2 action)
+			where T : struct, INumber<T>
 			where F1 : struct, IAction<Vector<T>>
 			where F2 : struct, IAction<T>
 		{

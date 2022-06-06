@@ -3,10 +3,11 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
 		[DelOverload]
-		public static T Aggregate<F1, F2>(ReadOnlySpan<T> span, T seed, F1 vAccumulator, F2 accumulator)
+		public static T Aggregate<T, F1, F2>(ReadOnlySpan<T> span, T seed, F1 vAccumulator, F2 accumulator)
+			where T : struct, INumber<T>
 			where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<T>>
 			where F2 : struct, IFunc<T, T, T>
 		{

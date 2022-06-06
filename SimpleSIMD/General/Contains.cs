@@ -3,9 +3,9 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
-		public static bool Contains(ReadOnlySpan<T> span, T value)
+		public static bool Contains<T>(ReadOnlySpan<T> span, T value) where T : struct, INumber<T>
 		{
 			ref T rSpan = ref GetRef(span);
 
@@ -32,7 +32,7 @@ namespace SimpleSimd
 
 			for (; i < span.Length; i++)
 			{
-				if (NumOps<T>.Equal(rSpan.Offset(i), value))
+				if (rSpan.Offset(i) == value)
 				{
 					return true;
 				}

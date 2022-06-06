@@ -3,9 +3,9 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
-		private struct Less_VSelector : IFunc<Vector<T>, Vector<T>, bool>
+		private struct Less_VSelector<T> : IFunc<Vector<T>, Vector<T>, bool> where T : struct, INumber<T>
 		{
 			public bool Invoke(Vector<T> left, Vector<T> right)
 			{
@@ -13,22 +13,22 @@ namespace SimpleSimd
 			}
 		}
 
-		private struct Less_Selector : IFunc<T, T, bool>
+		private struct Less_Selector<T> : IFunc<T, T, bool> where T : struct, INumber<T>
 		{
 			public bool Invoke(T left, T right)
 			{
-				return NumOps<T>.Less(left, right);
+				return left < right;
 			}
 		}
 
-		public static bool Less(ReadOnlySpan<T> left, T right)
+		public static bool Less<T>(ReadOnlySpan<T> left, T right) where T : struct, INumber<T>
 		{
-			return All(left, right, new Less_VSelector(), new Less_Selector());
+			return All(left, right, new Less_VSelector<T>(), new Less_Selector<T>());
 		}
 
-		public static bool Less(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
+		public static bool Less<T>(ReadOnlySpan<T> left, ReadOnlySpan<T> right) where T : struct, INumber<T>
 		{
-			return All(left, right, new Less_VSelector(), new Less_Selector());
+			return All(left, right, new Less_VSelector<T>(), new Less_Selector<T>());
 		}
 	}
 }

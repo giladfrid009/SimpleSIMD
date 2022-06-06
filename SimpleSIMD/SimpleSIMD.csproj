@@ -1,26 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>SimpleSimd</RootNamespace>
     <nullable>enable</nullable>
+	  <EnablePreviewFeatures>true</EnablePreviewFeatures>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <Authors>Gilad Freidkin</Authors>
     <RepositoryUrl>https://github.com/giladfrid009/SimpleSIMD</RepositoryUrl>
     <PackageTags>SIMD, Library, Performance, Parallel, Math, Generic, Allocation, Array, Span</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Description>Easy to use SIMD accelerated span and array methods</Description>
+    <Description>Easy to use SIMD accelerated span and array methods
+Now each method in SimdOps is generic, instead of SimdOps&lt;T&gt;, 
+i.e SimdOps.Abs&lt;T&gt;() instead of SimdOps&lt;T&gt;.Abs().</Description>
     <Copyright>Copyright 2020-2021 (c) Gilad Freidkin, All rights reserved</Copyright>
-    <Version>3.3.1</Version>
+    <Version>4.5.0-alpha</Version>
     <PackageReleaseNotes>
-		Major bugfix in subtract operator
-</PackageReleaseNotes>
+		Using generic math features, with INumber interface instead of NumOps
+		Now each method in SimdOps is generic according to T, instead of SimdOps itself being generic
+    </PackageReleaseNotes>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,6 +38,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.Experimental" Version="6.0.2" />
   </ItemGroup>
 
   <ItemGroup>

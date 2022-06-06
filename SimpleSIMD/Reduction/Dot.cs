@@ -3,11 +3,11 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
-		public static T Dot(ReadOnlySpan<T> left, T right)
+		public static T Dot<T>(ReadOnlySpan<T> left, T right) where T : struct, INumber<T>
 		{
-			T dot = NumOps<T>.Zero;
+			T dot = T.Zero;
 
 			ref T rLeft = ref GetRef(left);
 
@@ -34,20 +34,20 @@ namespace SimpleSimd
 
 			for (; i < left.Length; i++)
 			{
-				dot = NumOps<T>.Add(dot, NumOps<T>.Multiply(rLeft.Offset(i), right));
+				dot += rLeft.Offset(i) * right;
 			}
 
 			return dot;
 		}
 
-		public static T Dot(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
+		public static T Dot<T>(ReadOnlySpan<T> left, ReadOnlySpan<T> right) where T : struct, INumber<T>
 		{
 			if (right.Length != left.Length)
 			{
 				Exceptions.ArgOutOfRange(nameof(right));
 			}
 
-			T dot = NumOps<T>.Zero;
+			T dot = T.Zero;
 
 			ref T rLeft = ref GetRef(left);
 			ref T rRight = ref GetRef(right);
@@ -75,7 +75,7 @@ namespace SimpleSimd
 
 			for (; i < left.Length; i++)
 			{
-				dot = NumOps<T>.Add(dot, NumOps<T>.Multiply(rLeft.Offset(i), rRight.Offset(i)));
+				dot += rLeft.Offset(i) * rRight.Offset(i);
 			}
 
 			return dot;

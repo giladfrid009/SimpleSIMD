@@ -1,34 +1,33 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd
+namespace SimpleSimd;
+
+public static partial class SimdOps
 {
-	public static partial class SimdOps<T>
+	private struct Equal_VSelector<T> : IFunc<Vector<T>, Vector<T>, bool> where T : struct, INumber<T>
 	{
-		private struct Equal_VSelector : IFunc<Vector<T>, Vector<T>, bool>
+		public bool Invoke(Vector<T> left, Vector<T> right)
 		{
-			public bool Invoke(Vector<T> left, Vector<T> right)
-			{
-				return Vector.EqualsAll(left, right);
-			}
+			return Vector.EqualsAll(left, right);
 		}
+	}
 
-		private struct Equal_Selector : IFunc<T, T, bool>
+	private struct Equal_Selector<T> : IFunc<T, T, bool> where T : struct, INumber<T>
+	{
+		public bool Invoke(T left, T right)
 		{
-			public bool Invoke(T left, T right)
-			{
-				return NumOps<T>.Equal(left, right);
-			}
+			return left == right;
 		}
+	}
 
-		public static bool Equal(ReadOnlySpan<T> left, T right)
-		{
-			return All(left, right, new Equal_VSelector(), new Equal_Selector());
-		}
+	public static bool Equal<T>(ReadOnlySpan<T> left, T right) where T : struct, INumber<T>
+	{
+		return All(left, right, new Equal_VSelector<T>(), new Equal_Selector<T>());
+	}
 
-		public static bool Equal(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
-		{
-			return All(left, right, new Equal_VSelector(), new Equal_Selector());
-		}
+	public static bool Equal<T>(ReadOnlySpan<T> left, ReadOnlySpan<T> right) where T : struct, INumber<T>
+	{
+		return All(left, right, new Equal_VSelector<T>(), new Equal_Selector<T>());
 	}
 }

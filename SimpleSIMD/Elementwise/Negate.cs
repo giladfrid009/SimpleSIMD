@@ -3,9 +3,9 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
-		private struct Negate_VSelector : IFunc<Vector<T>, Vector<T>>
+		private struct Negate_VSelector<T> : IFunc<Vector<T>, Vector<T>> where T : struct, INumber<T>
 		{
 			public Vector<T> Invoke(Vector<T> vec)
 			{
@@ -13,18 +13,18 @@ namespace SimpleSimd
 			}
 		}
 
-		private struct Negate_Selector : IFunc<T, T>
+		private struct Negate_Selector<T> : IFunc<T, T> where T : struct, INumber<T>
 		{
 			public T Invoke(T val)
 			{
-				return NumOps<T>.Negate(val);
+				return -val;
 			}
 		}
 
 		[ArrOverload]
-		public static void Negate(ReadOnlySpan<T> span, Span<T> result)
+		public static void Negate<T>(ReadOnlySpan<T> span, Span<T> result) where T : struct, INumber<T>
 		{
-			Select(span, new Negate_VSelector(), new Negate_Selector(), result);
+			Select(span, new Negate_VSelector<T>(), new Negate_Selector<T>(), result);
 		}
 	}
 }

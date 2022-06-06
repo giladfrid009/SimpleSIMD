@@ -1,36 +1,35 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd
+namespace SimpleSimd;
+
+public static partial class SimdOps
 {
-	public static partial class SimdOps<T>
+	private struct Xor_VSelector<T> : IFunc<Vector<T>, Vector<T>, Vector<T>> where T : struct, IBinaryNumber<T>
 	{
-		private struct Xor_VSelector : IFunc<Vector<T>, Vector<T>, Vector<T>>
+		public Vector<T> Invoke(Vector<T> left, Vector<T> right)
 		{
-			public Vector<T> Invoke(Vector<T> left, Vector<T> right)
-			{
-				return Vector.Xor(left, right);
-			}
+			return Vector.Xor(left, right);
 		}
+	}
 
-		private struct Xor_Selector : IFunc<T, T, T>
+	private struct Xor_Selector<T> : IFunc<T, T, T> where T : struct, IBinaryNumber<T>
+	{
+		public T Invoke(T left, T right)
 		{
-			public T Invoke(T left, T right)
-			{
-				return NumOps<T>.Xor(left, right);
-			}
+			return left ^ right;
 		}
+	}
 
-		[ArrOverload]
-		public static void Xor(ReadOnlySpan<T> left, T right, Span<T> result)
-		{
-			Concat(left, right, new Xor_VSelector(), new Xor_Selector(), result);
-		}
+	[ArrOverload]
+	public static void Xor<T>(ReadOnlySpan<T> left, T right, Span<T> result) where T : struct, IBinaryNumber<T>
+	{
+		Concat(left, right, new Xor_VSelector<T>(), new Xor_Selector<T>(), result);
+	}
 
-		[ArrOverload]
-		public static void Xor(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
-		{
-			Concat(left, right, new Xor_VSelector(), new Xor_Selector(), result);
-		}
+	[ArrOverload]
+	public static void Xor<T>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result) where T : struct, IBinaryNumber<T>
+	{
+		Concat(left, right, new Xor_VSelector<T>(), new Xor_Selector<T>(), result);
 	}
 }

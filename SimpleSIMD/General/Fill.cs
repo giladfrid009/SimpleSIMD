@@ -3,9 +3,9 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
-		public static void Fill(Span<T> span, T value)
+		public static void Fill<T>(Span<T> span, T value) where T : struct, INumber<T>
 		{
 			ref T rSpan = ref GetRef(span);
 
@@ -34,7 +34,8 @@ namespace SimpleSimd
 		}
 
 		[DelOverload]
-		public static void Fill<F1, F2>(Span<T> span, F1 vFunc, F2 func)
+		public static void Fill<T, F1, F2>(Span<T> span, F1 vFunc, F2 func)
+			where T : struct, INumber<T>
 			where F1 : struct, IFunc<Vector<T>>
 			where F2 : struct, IFunc<T>
 		{

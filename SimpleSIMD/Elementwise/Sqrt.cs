@@ -3,9 +3,9 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
-		private struct Sqrt_VSelector : IFunc<Vector<T>, Vector<T>>
+		private struct Sqrt_VSelector<T> : IFunc<Vector<T>, Vector<T>> where T : struct, IFloatingPoint<T>
 		{
 			public Vector<T> Invoke(Vector<T> vec)
 			{
@@ -13,18 +13,18 @@ namespace SimpleSimd
 			}
 		}
 
-		private struct Sqrt_Selector : IFunc<T, T>
+		private struct Sqrt_Selector<T> : IFunc<T, T> where T : struct, IFloatingPoint<T>
 		{
 			public T Invoke(T val)
 			{
-				return NumOps<double, T>.Convert(Math.Sqrt(NumOps<T, double>.Convert(val)));
+				return T.Sqrt(val);
 			}
 		}
 
 		[ArrOverload]
-		public static void Sqrt(ReadOnlySpan<T> span, Span<T> result)
+		public static void Sqrt<T>(ReadOnlySpan<T> span, Span<T> result) where T : struct, IFloatingPoint<T>
 		{
-			Select(span, new Sqrt_VSelector(), new Sqrt_Selector(), result);
+			Select(span, new Sqrt_VSelector<T>(), new Sqrt_Selector<T>(), result);
 		}
 	}
 }

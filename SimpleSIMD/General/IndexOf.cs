@@ -3,9 +3,9 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
-		public static int IndexOf(ReadOnlySpan<T> span, T value)
+		public static int IndexOf<T>(ReadOnlySpan<T> span, T value) where T : struct, INumber<T>
 		{
 			ref T rSpan = ref GetRef(span);
 
@@ -28,7 +28,7 @@ namespace SimpleSimd
 
 						for (; j < l; j++)
 						{
-							if (NumOps<T>.Equal(rSpan.Offset(j), value))
+							if (rSpan.Offset(j) == value)
 							{
 								return j;
 							}
@@ -41,7 +41,7 @@ namespace SimpleSimd
 
 			for (; i < span.Length; i++)
 			{
-				if (NumOps<T>.Equal(rSpan.Offset(i), value))
+				if (rSpan.Offset(i) == value)
 				{
 					return i;
 				}
@@ -51,7 +51,8 @@ namespace SimpleSimd
 		}
 
 		[DelOverload]
-		public static int IndexOf<F1, F2>(ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
+		public static int IndexOf<T, F1, F2>(ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
+			where T : struct, INumber<T>
 			where F1 : struct, IFunc<Vector<T>, bool>
 			where F2 : struct, IFunc<T, bool>
 		{

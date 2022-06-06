@@ -3,10 +3,11 @@ using System.Numerics;
 
 namespace SimpleSimd
 {
-	public static partial class SimdOps<T>
+	public static partial class SimdOps
 	{
 		[DelOverload]
-		public static bool All<F1, F2>(ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
+		public static bool All<T, F1, F2>(ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
+			where T : struct, INumber<T>
 			where F1 : struct, IFunc<Vector<T>, bool>
 			where F2 : struct, IFunc<T, bool>
 		{
@@ -43,7 +44,8 @@ namespace SimpleSimd
 		}
 
 		[DelOverload]
-		public static bool All<F1, F2>(ReadOnlySpan<T> left, T right, F1 vPredicate, F2 predicate)
+		public static bool All<T, F1, F2>(ReadOnlySpan<T> left, T right, F1 vPredicate, F2 predicate)
+			where T : struct, INumber<T>
 			where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>
 			where F2 : struct, IFunc<T, T, bool>
 		{
@@ -82,7 +84,8 @@ namespace SimpleSimd
 		}
 
 		[DelOverload]
-		public static bool All<F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vPredicate, F2 predicate)
+		public static bool All<T, F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vPredicate, F2 predicate)
+			where T : struct, INumber<T>
 			where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>
 			where F2 : struct, IFunc<T, T, bool>
 		{
