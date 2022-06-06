@@ -11,11 +11,9 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>Easy to use SIMD accelerated span and array methods</Description>
     <Copyright>Copyright 2020-2021 (c) Gilad Freidkin, All rights reserved</Copyright>
-    <Version>3.3</Version>
+    <Version>3.3.1</Version>
     <PackageReleaseNotes>
-		Added source generator to generate regular delegate overloads, for any method accepting value delegates.	
-        Removed wrappers as obsolete now - use generated methods instead.
-        Added source generator to generate functions that return T[] as result for any method accepting a result Span.
+		Major bugfix in subtract operator
 </PackageReleaseNotes>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReadmeFile>README.md</PackageReadmeFile>
