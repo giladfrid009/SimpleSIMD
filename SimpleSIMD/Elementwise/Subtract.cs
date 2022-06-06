@@ -9,7 +9,7 @@ namespace SimpleSimd
 		{
 			public Vector<T> Invoke(Vector<T> left, Vector<T> right)
 			{
-				return Vector.Divide(left, right);
+				return Vector.Subtract(left, right);
 			}
 		}
 
@@ -17,7 +17,7 @@ namespace SimpleSimd
 		{
 			public T Invoke(T left, T right)
 			{
-				return NumOps<T>.Divide(left, right);
+				return NumOps<T>.Subtract(left, right);
 			}
 		}
 
