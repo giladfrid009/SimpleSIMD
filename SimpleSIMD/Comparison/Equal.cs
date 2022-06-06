@@ -9,7 +9,7 @@ public static partial class SimdOps
 	{
 		public bool Invoke(Vector<T> left, Vector<T> right)
 		{
-			return Vector.EqualsAll(left, right);
+			return left == right;
 		}
 	}
 

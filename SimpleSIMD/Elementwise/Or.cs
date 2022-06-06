@@ -9,7 +9,7 @@ namespace SimpleSimd
 		{
 			public Vector<T> Invoke(Vector<T> left, Vector<T> right)
 			{
-				return Vector.BitwiseOr(left, right);
+				return left | right;
 			}
 		}
 

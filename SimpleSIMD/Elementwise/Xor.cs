@@ -9,7 +9,7 @@ public static partial class SimdOps
 	{
 		public Vector<T> Invoke(Vector<T> left, Vector<T> right)
 		{
-			return Vector.Xor(left, right);
+			return left ^ right;
 		}
 	}
 

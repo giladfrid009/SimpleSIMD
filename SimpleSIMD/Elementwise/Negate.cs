@@ -9,7 +9,7 @@ namespace SimpleSimd
 		{
 			public Vector<T> Invoke(Vector<T> vec)
 			{
-				return Vector.Negate(vec);
+				return -vec;
 			}
 		}
 
