@@ -6,7 +6,6 @@
     <nullable>enable</nullable>
 	  <EnablePreviewFeatures>true</EnablePreviewFeatures>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	  <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <Authors>Gilad Freidkin</Authors>
     <RepositoryUrl>https://github.com/giladfrid009/SimpleSIMD</RepositoryUrl>
     <PackageTags>SIMD, Library, Performance, Parallel, Math, Generic, Allocation, Array, Span</PackageTags>
@@ -23,6 +22,8 @@ i.e SimdOps.Abs&lt;T&gt;() instead of SimdOps&lt;T&gt;.Abs().</Description>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <NeutralLanguage>en</NeutralLanguage>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

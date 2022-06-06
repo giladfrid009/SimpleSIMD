@@ -1,49 +1,48 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd
+namespace SimpleSimd;
+
+public static partial class SimdOps
 {
-	public static partial class SimdOps
+	[DelOverload]
+	public static T Aggregate<T, F1, F2>(ReadOnlySpan<T> span, T seed, F1 vAccumulator, F2 accumulator)
+		where T : struct, INumber<T>
+		where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<T>>
+		where F2 : struct, IFunc<T, T, T>
 	{
-		[DelOverload]
-		public static T Aggregate<T, F1, F2>(ReadOnlySpan<T> span, T seed, F1 vAccumulator, F2 accumulator)
-			where T : struct, INumber<T>
-			where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<T>>
-			where F2 : struct, IFunc<T, T, T>
+		T res = seed;
+
+		ref T rSpan = ref GetRef(span);
+
+		int i = 0;
+
+		if (Vector.IsHardwareAccelerated)
 		{
-			T res = seed;
+			Vector<T> vRes = new(seed);
 
-			ref T rSpan = ref GetRef(span);
+			ref Vector<T> vrSpan = ref AsVector(rSpan);
 
-			int i = 0;
+			int length = span.Length / Vector<T>.Count;
 
-			if (Vector.IsHardwareAccelerated)
+			for (; i < length; i++)
 			{
-				Vector<T> vRes = new(seed);
-
-				ref Vector<T> vrSpan = ref AsVector(rSpan);
-
-				int length = span.Length / Vector<T>.Count;
-
-				for (; i < length; i++)
-				{
-					vRes = vAccumulator.Invoke(vRes, vrSpan.Offset(i));
-				}
-
-				for (int j = 0; j < Vector<T>.Count; j++)
-				{
-					res = accumulator.Invoke(res, vRes[j]);
-				}
-
-				i *= Vector<T>.Count;
+				vRes = vAccumulator.Invoke(vRes, vrSpan.Offset(i));
 			}
 
-			for (; i < span.Length; i++)
+			for (int j = 0; j < Vector<T>.Count; j++)
 			{
-				res = accumulator.Invoke(res, rSpan.Offset(i));
+				res = accumulator.Invoke(res, vRes[j]);
 			}
 
-			return res;
+			i *= Vector<T>.Count;
 		}
+
+		for (; i < span.Length; i++)
+		{
+			res = accumulator.Invoke(res, rSpan.Offset(i));
+		}
+
+		return res;
 	}
 }

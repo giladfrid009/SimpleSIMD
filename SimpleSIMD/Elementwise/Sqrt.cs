@@ -1,30 +1,29 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd
+namespace SimpleSimd;
+
+public static partial class SimdOps
 {
-	public static partial class SimdOps
+	private struct Sqrt_VSelector<T> : IFunc<Vector<T>, Vector<T>> where T : struct, IFloatingPoint<T>
 	{
-		private struct Sqrt_VSelector<T> : IFunc<Vector<T>, Vector<T>> where T : struct, IFloatingPoint<T>
+		public Vector<T> Invoke(Vector<T> vec)
 		{
-			public Vector<T> Invoke(Vector<T> vec)
-			{
-				return Vector.SquareRoot(vec);
-			}
+			return Vector.SquareRoot(vec);
 		}
+	}
 
-		private struct Sqrt_Selector<T> : IFunc<T, T> where T : struct, IFloatingPoint<T>
+	private struct Sqrt_Selector<T> : IFunc<T, T> where T : struct, IFloatingPoint<T>
+	{
+		public T Invoke(T val)
 		{
-			public T Invoke(T val)
-			{
-				return T.Sqrt(val);
-			}
+			return T.Sqrt(val);
 		}
+	}
 
-		[ArrOverload]
-		public static void Sqrt<T>(ReadOnlySpan<T> span, Span<T> result) where T : struct, IFloatingPoint<T>
-		{
-			Select(span, new Sqrt_VSelector<T>(), new Sqrt_Selector<T>(), result);
-		}
+	[ArrOverload]
+	public static void Sqrt<T>(ReadOnlySpan<T> span, Span<T> result) where T : struct, IFloatingPoint<T>
+	{
+		Select(span, new Sqrt_VSelector<T>(), new Sqrt_Selector<T>(), result);
 	}
 }

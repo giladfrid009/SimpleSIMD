@@ -1,151 +1,150 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd
+namespace SimpleSimd;
+
+public static partial class SimdOps
 {
-	public static partial class SimdOps
+	[ArrOverload]
+	[DelOverload]
+	public static void Concat<T, TRes, F1, F2>(ReadOnlySpan<T> left, T right, F1 vCombiner, F2 combiner, Span<TRes> result)
+		where T : struct, INumber<T>
+		where TRes : struct, INumber<TRes>
+		where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
+		where F2 : struct, IFunc<T, T, TRes>
 	{
-		[ArrOverload]
-		[DelOverload]
-		public static void Concat<T, TRes, F1, F2>(ReadOnlySpan<T> left, T right, F1 vCombiner, F2 combiner, Span<TRes> result)
-			where T : struct, INumber<T>
-			where TRes : struct, INumber<TRes>
-			where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
-			where F2 : struct, IFunc<T, T, TRes>
+		if (result.Length != left.Length)
 		{
-			if (result.Length != left.Length)
-			{
-				Exceptions.ArgOutOfRange(nameof(result));
-			}
-
-			if (Vector<TRes>.Count != Vector<T>.Count)
-			{
-				Exceptions.InvalidCast(typeof(TRes).Name);
-			}
-
-			ref T rLeft = ref GetRef(left);
-			ref TRes rResult = ref GetRef(result);
-
-			int i = 0;
-
-			if (Vector.IsHardwareAccelerated)
-			{
-				Vector<T> vRight = new(right);
-
-				ref Vector<T> vrLeft = ref AsVector(rLeft);
-				ref Vector<TRes> vrResult = ref AsVector(rResult);
-
-				int length = left.Length / Vector<T>.Count;
-
-				for (; i < length; i++)
-				{
-					vrResult.Offset(i) = vCombiner.Invoke(vrLeft.Offset(i), vRight);
-				}
-
-				i *= Vector<T>.Count;
-			}
-
-			for (; i < left.Length; i++)
-			{
-				rResult.Offset(i) = combiner.Invoke(rLeft.Offset(i), right);
-			}
+			Exceptions.ArgOutOfRange(nameof(result));
 		}
 
-		[ArrOverload]
-		[DelOverload]
-		public static void Concat<T, TRes, F1, F2>(T left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, Span<TRes> result)
-			where T : struct, INumber<T>
-			where TRes : struct, INumber<TRes>
-			where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
-			where F2 : struct, IFunc<T, T, TRes>
+		if (Vector<TRes>.Count != Vector<T>.Count)
 		{
-			if (result.Length != right.Length)
-			{
-				Exceptions.ArgOutOfRange(nameof(result));
-			}
-
-			if (Vector<TRes>.Count != Vector<T>.Count)
-			{
-				Exceptions.InvalidCast(typeof(TRes).Name);
-			}
-
-			ref T rRight = ref GetRef(right);
-			ref TRes rResult = ref GetRef(result);
-
-			int i = 0;
-
-			if (Vector.IsHardwareAccelerated)
-			{
-				Vector<T> vLeft = new(left);
-
-				ref Vector<T> vrRight = ref AsVector(rRight);
-				ref Vector<TRes> vrResult = ref AsVector(rResult);
-
-				int length = right.Length / Vector<T>.Count;
-
-				for (; i < length; i++)
-				{
-					vrResult.Offset(i) = vCombiner.Invoke(vLeft, vrRight.Offset(i));
-				}
-
-				i *= Vector<T>.Count;
-			}
-
-			for (; i < right.Length; i++)
-			{
-				rResult.Offset(i) = combiner.Invoke(left, rRight.Offset(i));
-			}
+			Exceptions.InvalidCast(typeof(TRes).Name);
 		}
 
-		[ArrOverload]
-		[DelOverload]
-		public static void Concat<T, TRes, F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, Span<TRes> result)
-			where T : struct, INumber<T>
-			where TRes : struct, INumber<TRes>
-			where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
-			where F2 : struct, IFunc<T, T, TRes>
+		ref T rLeft = ref GetRef(left);
+		ref TRes rResult = ref GetRef(result);
+
+		int i = 0;
+
+		if (Vector.IsHardwareAccelerated)
 		{
-			if (right.Length != left.Length)
+			Vector<T> vRight = new(right);
+
+			ref Vector<T> vrLeft = ref AsVector(rLeft);
+			ref Vector<TRes> vrResult = ref AsVector(rResult);
+
+			int length = left.Length / Vector<T>.Count;
+
+			for (; i < length; i++)
 			{
-				Exceptions.ArgOutOfRange(nameof(right));
+				vrResult.Offset(i) = vCombiner.Invoke(vrLeft.Offset(i), vRight);
 			}
 
-			if (result.Length != left.Length)
+			i *= Vector<T>.Count;
+		}
+
+		for (; i < left.Length; i++)
+		{
+			rResult.Offset(i) = combiner.Invoke(rLeft.Offset(i), right);
+		}
+	}
+
+	[ArrOverload]
+	[DelOverload]
+	public static void Concat<T, TRes, F1, F2>(T left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, Span<TRes> result)
+		where T : struct, INumber<T>
+		where TRes : struct, INumber<TRes>
+		where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
+		where F2 : struct, IFunc<T, T, TRes>
+	{
+		if (result.Length != right.Length)
+		{
+			Exceptions.ArgOutOfRange(nameof(result));
+		}
+
+		if (Vector<TRes>.Count != Vector<T>.Count)
+		{
+			Exceptions.InvalidCast(typeof(TRes).Name);
+		}
+
+		ref T rRight = ref GetRef(right);
+		ref TRes rResult = ref GetRef(result);
+
+		int i = 0;
+
+		if (Vector.IsHardwareAccelerated)
+		{
+			Vector<T> vLeft = new(left);
+
+			ref Vector<T> vrRight = ref AsVector(rRight);
+			ref Vector<TRes> vrResult = ref AsVector(rResult);
+
+			int length = right.Length / Vector<T>.Count;
+
+			for (; i < length; i++)
 			{
-				Exceptions.ArgOutOfRange(nameof(result));
+				vrResult.Offset(i) = vCombiner.Invoke(vLeft, vrRight.Offset(i));
 			}
 
-			if (Vector<TRes>.Count != Vector<T>.Count)
+			i *= Vector<T>.Count;
+		}
+
+		for (; i < right.Length; i++)
+		{
+			rResult.Offset(i) = combiner.Invoke(left, rRight.Offset(i));
+		}
+	}
+
+	[ArrOverload]
+	[DelOverload]
+	public static void Concat<T, TRes, F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vCombiner, F2 combiner, Span<TRes> result)
+		where T : struct, INumber<T>
+		where TRes : struct, INumber<TRes>
+		where F1 : struct, IFunc<Vector<T>, Vector<T>, Vector<TRes>>
+		where F2 : struct, IFunc<T, T, TRes>
+	{
+		if (right.Length != left.Length)
+		{
+			Exceptions.ArgOutOfRange(nameof(right));
+		}
+
+		if (result.Length != left.Length)
+		{
+			Exceptions.ArgOutOfRange(nameof(result));
+		}
+
+		if (Vector<TRes>.Count != Vector<T>.Count)
+		{
+			Exceptions.InvalidCast(typeof(TRes).Name);
+		}
+
+		ref T rLeft = ref GetRef(left);
+		ref T rRight = ref GetRef(right);
+		ref TRes rResult = ref GetRef(result);
+
+		int i = 0;
+
+		if (Vector.IsHardwareAccelerated)
+		{
+			ref Vector<T> vrLeft = ref AsVector(rLeft);
+			ref Vector<T> vrRight = ref AsVector(rRight);
+			ref Vector<TRes> vrResult = ref AsVector(rResult);
+
+			int length = left.Length / Vector<T>.Count;
+
+			for (; i < length; i++)
 			{
-				Exceptions.InvalidCast(typeof(TRes).Name);
+				vrResult.Offset(i) = vCombiner.Invoke(vrLeft.Offset(i), vrRight.Offset(i));
 			}
 
-			ref T rLeft = ref GetRef(left);
-			ref T rRight = ref GetRef(right);
-			ref TRes rResult = ref GetRef(result);
+			i *= Vector<T>.Count;
+		}
 
-			int i = 0;
-
-			if (Vector.IsHardwareAccelerated)
-			{
-				ref Vector<T> vrLeft = ref AsVector(rLeft);
-				ref Vector<T> vrRight = ref AsVector(rRight);
-				ref Vector<TRes> vrResult = ref AsVector(rResult);
-
-				int length = left.Length / Vector<T>.Count;
-
-				for (; i < length; i++)
-				{
-					vrResult.Offset(i) = vCombiner.Invoke(vrLeft.Offset(i), vrRight.Offset(i));
-				}
-
-				i *= Vector<T>.Count;
-			}
-
-			for (; i < left.Length; i++)
-			{
-				rResult.Offset(i) = combiner.Invoke(rLeft.Offset(i), rRight.Offset(i));
-			}
+		for (; i < left.Length; i++)
+		{
+			rResult.Offset(i) = combiner.Invoke(rLeft.Offset(i), rRight.Offset(i));
 		}
 	}
 }

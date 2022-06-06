@@ -1,100 +1,99 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd
+namespace SimpleSimd;
+
+public static partial class SimdOps
 {
-	public static partial class SimdOps
+	public static int IndexOf<T>(ReadOnlySpan<T> span, T value) where T : struct, INumber<T>
 	{
-		public static int IndexOf<T>(ReadOnlySpan<T> span, T value) where T : struct, INumber<T>
+		ref T rSpan = ref GetRef(span);
+
+		int i = 0;
+
+		if (Vector.IsHardwareAccelerated)
 		{
-			ref T rSpan = ref GetRef(span);
+			Vector<T> vValue = new(value);
 
-			int i = 0;
+			ref Vector<T> vrSpan = ref AsVector(rSpan);
 
-			if (Vector.IsHardwareAccelerated)
+			int length = span.Length / Vector<T>.Count;
+
+			for (; i < length; i++)
 			{
-				Vector<T> vValue = new(value);
-
-				ref Vector<T> vrSpan = ref AsVector(rSpan);
-
-				int length = span.Length / Vector<T>.Count;
-
-				for (; i < length; i++)
+				if (Vector.EqualsAny(vrSpan.Offset(i), vValue))
 				{
-					if (Vector.EqualsAny(vrSpan.Offset(i), vValue))
-					{
-						int j = i * Vector<T>.Count;
-						int l = j + Vector<T>.Count;
+					int j = i * Vector<T>.Count;
+					int l = j + Vector<T>.Count;
 
-						for (; j < l; j++)
+					for (; j < l; j++)
+					{
+						if (rSpan.Offset(j) == value)
 						{
-							if (rSpan.Offset(j) == value)
-							{
-								return j;
-							}
+							return j;
 						}
 					}
 				}
-
-				i *= Vector<T>.Count;
 			}
 
-			for (; i < span.Length; i++)
-			{
-				if (rSpan.Offset(i) == value)
-				{
-					return i;
-				}
-			}
-
-			return -1;
+			i *= Vector<T>.Count;
 		}
 
-		[DelOverload]
-		public static int IndexOf<T, F1, F2>(ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
-			where T : struct, INumber<T>
-			where F1 : struct, IFunc<Vector<T>, bool>
-			where F2 : struct, IFunc<T, bool>
+		for (; i < span.Length; i++)
 		{
-			ref T rSpan = ref GetRef(span);
-
-			int i = 0;
-
-			if (Vector.IsHardwareAccelerated)
+			if (rSpan.Offset(i) == value)
 			{
-				ref Vector<T> vrSpan = ref AsVector(rSpan);
+				return i;
+			}
+		}
 
-				int length = span.Length / Vector<T>.Count;
+		return -1;
+	}
 
-				for (; i < length; i++)
+	[DelOverload]
+	public static int IndexOf<T, F1, F2>(ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
+		where T : struct, INumber<T>
+		where F1 : struct, IFunc<Vector<T>, bool>
+		where F2 : struct, IFunc<T, bool>
+	{
+		ref T rSpan = ref GetRef(span);
+
+		int i = 0;
+
+		if (Vector.IsHardwareAccelerated)
+		{
+			ref Vector<T> vrSpan = ref AsVector(rSpan);
+
+			int length = span.Length / Vector<T>.Count;
+
+			for (; i < length; i++)
+			{
+				if (vPredicate.Invoke(vrSpan.Offset(i)))
 				{
-					if (vPredicate.Invoke(vrSpan.Offset(i)))
-					{
-						int j = i * Vector<T>.Count;
-						int l = j + Vector<T>.Count;
+					int j = i * Vector<T>.Count;
+					int l = j + Vector<T>.Count;
 
-						for (; j < l; j++)
+					for (; j < l; j++)
+					{
+						if (predicate.Invoke(rSpan.Offset(j)))
 						{
-							if (predicate.Invoke(rSpan.Offset(j)))
-							{
-								return j;
-							}
+							return j;
 						}
 					}
 				}
-
-				i *= Vector<T>.Count;
 			}
 
-			for (; i < span.Length; i++)
-			{
-				if (predicate.Invoke(rSpan.Offset(i)))
-				{
-					return i;
-				}
-			}
-
-			return -1;
+			i *= Vector<T>.Count;
 		}
+
+		for (; i < span.Length; i++)
+		{
+			if (predicate.Invoke(rSpan.Offset(i)))
+			{
+				return i;
+			}
+		}
+
+		return -1;
 	}
 }

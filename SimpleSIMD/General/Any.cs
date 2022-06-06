@@ -1,131 +1,130 @@
 ﻿using System;
 using System.Numerics;
 
-namespace SimpleSimd
+namespace SimpleSimd;
+
+public static partial class SimdOps
 {
-	public static partial class SimdOps
+	[DelOverload]
+	public static bool Any<T, F1, F2>(ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
+		where T : struct, INumber<T>
+		where F1 : struct, IFunc<Vector<T>, bool>
+		where F2 : struct, IFunc<T, bool>
 	{
-		[DelOverload]
-		public static bool Any<T, F1, F2>(ReadOnlySpan<T> span, F1 vPredicate, F2 predicate)
-			where T : struct, INumber<T>
-			where F1 : struct, IFunc<Vector<T>, bool>
-			where F2 : struct, IFunc<T, bool>
+		ref T rSpan = ref GetRef(span);
+
+		int i = 0;
+
+		if (Vector.IsHardwareAccelerated)
 		{
-			ref T rSpan = ref GetRef(span);
+			ref Vector<T> vrSpan = ref AsVector(rSpan);
 
-			int i = 0;
+			int length = span.Length / Vector<T>.Count;
 
-			if (Vector.IsHardwareAccelerated)
+			for (; i < length; i++)
 			{
-				ref Vector<T> vrSpan = ref AsVector(rSpan);
-
-				int length = span.Length / Vector<T>.Count;
-
-				for (; i < length; i++)
-				{
-					if (vPredicate.Invoke(vrSpan.Offset(i)))
-					{
-						return true;
-					}
-				}
-
-				i *= Vector<T>.Count;
-			}
-
-			for (; i < span.Length; i++)
-			{
-				if (predicate.Invoke(rSpan.Offset(i)))
+				if (vPredicate.Invoke(vrSpan.Offset(i)))
 				{
 					return true;
 				}
 			}
 
-			return false;
+			i *= Vector<T>.Count;
 		}
 
-		[DelOverload]
-		public static bool Any<T, F1, F2>(ReadOnlySpan<T> left, T right, F1 vPredicate, F2 predicate)
-			where T : struct, INumber<T>
-			where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>
-			where F2 : struct, IFunc<T, T, bool>
+		for (; i < span.Length; i++)
 		{
-			ref T rLeft = ref GetRef(left);
-
-			int i = 0;
-
-			if (Vector.IsHardwareAccelerated)
+			if (predicate.Invoke(rSpan.Offset(i)))
 			{
-				Vector<T> vRight = new(right);
-
-				ref Vector<T> vrLeft = ref AsVector(rLeft);
-
-				int length = left.Length / Vector<T>.Count;
-
-				for (; i < length; i++)
-				{
-					if (vPredicate.Invoke(vrLeft.Offset(i), vRight))
-					{
-						return true;
-					}
-				}
-
-				i *= Vector<T>.Count;
+				return true;
 			}
+		}
 
-			for (; i < left.Length; i++)
+		return false;
+	}
+
+	[DelOverload]
+	public static bool Any<T, F1, F2>(ReadOnlySpan<T> left, T right, F1 vPredicate, F2 predicate)
+		where T : struct, INumber<T>
+		where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>
+		where F2 : struct, IFunc<T, T, bool>
+	{
+		ref T rLeft = ref GetRef(left);
+
+		int i = 0;
+
+		if (Vector.IsHardwareAccelerated)
+		{
+			Vector<T> vRight = new(right);
+
+			ref Vector<T> vrLeft = ref AsVector(rLeft);
+
+			int length = left.Length / Vector<T>.Count;
+
+			for (; i < length; i++)
 			{
-				if (predicate.Invoke(rLeft.Offset(i), right))
+				if (vPredicate.Invoke(vrLeft.Offset(i), vRight))
 				{
 					return true;
 				}
 			}
 
-			return false;
+			i *= Vector<T>.Count;
 		}
 
-		[DelOverload]
-		public static bool Any<T, F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vPredicate, F2 predicate)
-			where T : struct, INumber<T>
-			where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>
-			where F2 : struct, IFunc<T, T, bool>
+		for (; i < left.Length; i++)
 		{
-			if (right.Length != left.Length)
+			if (predicate.Invoke(rLeft.Offset(i), right))
 			{
-				Exceptions.ArgOutOfRange(nameof(right));
+				return true;
 			}
+		}
 
-			ref T rLeft = ref GetRef(left);
-			ref T rRight = ref GetRef(right);
+		return false;
+	}
 
-			int i = 0;
+	[DelOverload]
+	public static bool Any<T, F1, F2>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, F1 vPredicate, F2 predicate)
+		where T : struct, INumber<T>
+		where F1 : struct, IFunc<Vector<T>, Vector<T>, bool>
+		where F2 : struct, IFunc<T, T, bool>
+	{
+		if (right.Length != left.Length)
+		{
+			Exceptions.ArgOutOfRange(nameof(right));
+		}
 
-			if (Vector.IsHardwareAccelerated)
+		ref T rLeft = ref GetRef(left);
+		ref T rRight = ref GetRef(right);
+
+		int i = 0;
+
+		if (Vector.IsHardwareAccelerated)
+		{
+			ref Vector<T> vrLeft = ref AsVector(rLeft);
+			ref Vector<T> vrRight = ref AsVector(rRight);
+
+			int length = left.Length / Vector<T>.Count;
+
+			for (; i < length; i++)
 			{
-				ref Vector<T> vrLeft = ref AsVector(rLeft);
-				ref Vector<T> vrRight = ref AsVector(rRight);
-
-				int length = left.Length / Vector<T>.Count;
-
-				for (; i < length; i++)
-				{
-					if (vPredicate.Invoke(vrLeft.Offset(i), vrRight.Offset(i)))
-					{
-						return true;
-					}
-				}
-
-				i *= Vector<T>.Count;
-			}
-
-			for (; i < left.Length; i++)
-			{
-				if (predicate.Invoke(rLeft.Offset(i), rRight.Offset(i)))
+				if (vPredicate.Invoke(vrLeft.Offset(i), vrRight.Offset(i)))
 				{
 					return true;
 				}
 			}
 
-			return false;
+			i *= Vector<T>.Count;
 		}
+
+		for (; i < left.Length; i++)
+		{
+			if (predicate.Invoke(rLeft.Offset(i), rRight.Offset(i)))
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
