@@ -17,7 +17,7 @@ public static partial class SimdOps
 	{
 		public T Invoke(T left, T right)
 		{
-			return  left & right;
+			return left & right;
 		}
 	}
 

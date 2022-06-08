@@ -7,12 +7,18 @@ public static partial class SimdOps
 {
 	private struct Abs_VSelector<T> : IFunc<Vector<T>, Vector<T>> where T : struct, INumber<T>
 	{
-		public Vector<T> Invoke(Vector<T> vec) => Vector.Abs(vec);
+		public Vector<T> Invoke(Vector<T> vec)
+		{
+			return Vector.Abs(vec);
+		}
 	}
 
 	private struct Abs_Selector<T> : IFunc<T, T> where T : struct, INumber<T>
 	{
-		public T Invoke(T val) => T.Abs(val);
+		public T Invoke(T val)
+		{
+			return T.Abs(val);
+		}
 	}
 
 	[ArrOverload]
