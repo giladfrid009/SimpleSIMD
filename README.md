@@ -108,7 +108,7 @@ namespace MyProgram
             int[] Data = GetData()
             
             // We need to create 2 structs which will serve as a replacement for delegates
-            SimdOps<int>.Sum(Data, new VecSelector(), new Selector());
+            SimdOps.Sum(Data, new VecSelector(), new Selector());
         }
     }             
     
