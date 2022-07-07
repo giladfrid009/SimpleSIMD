@@ -2,16 +2,14 @@ namespace Tests;
 
 public class Comparison_Tests
 {
-	static Random rnd = new(0);
-
-	static int len = 100;
-	static int lowerBound = -100;
-	static int middleBound = 100;
-	static int upperBound = 300;
-
-	int[] smallerArr;
-	int[] largerArr;
-	int[] constArr;
+	private static Random rnd = new(0);
+	private static int len = 100;
+	private static int lowerBound = -100;
+	private static int middleBound = 100;
+	private static int upperBound = 300;
+	private int[] smallerArr;
+	private int[] largerArr;
+	private int[] constArr;
 
 	public Comparison_Tests()
 	{

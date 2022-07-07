@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 
 namespace Tests;
 public class Elementwise_Tests
 {
-	static Random rnd = new(0);
-
-	static readonly int len = 100;
-	static readonly int lowerBound = -100;
-	static readonly int middleBound = 0;
-	static readonly int upperBound = 100;
-
-	readonly int[] negArr;
-	readonly int[] posArr;
-	readonly int[] zeroArr;
+	private static Random rnd = new(0);
+	private static readonly int len = 100;
+	private static readonly int lowerBound = -100;
+	private static readonly int middleBound = 0;
+	private static readonly int upperBound = 100;
+	private readonly int[] negArr;
+	private readonly int[] posArr;
+	private readonly int[] zeroArr;
 
 	public Elementwise_Tests()
 	{

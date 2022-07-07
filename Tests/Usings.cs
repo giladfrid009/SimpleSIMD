@@ -1,3 +1,2 @@
-global using Xunit;
 global using SimpleSimd;
-global using Generator;
+global using Xunit;

@@ -22,7 +22,10 @@ public abstract class BaseGenerator : ISourceGenerator
 		AttributeNamespace = attributeNamespace;
 	}
 
-	public void Initialize(GeneratorInitializationContext context) => context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
+	public void Initialize(GeneratorInitializationContext context)
+	{
+		context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
+	}
 
 	public void Execute(GeneratorExecutionContext context)
 	{
@@ -180,7 +183,10 @@ namespace {namespaceSymbol.ToDisplayString()};
 
 	protected abstract void ProcessMethod(StringBuilder source, IMethodSymbol methodSymbol);
 
-	private string ToFileName(string name) => $"{name}.g.cs";
+	private string ToFileName(string name)
+	{
+		return $"{name}.g.cs";
+	}
 
 	private string GetGenerics(INamedTypeSymbol classSymbol)
 	{
@@ -192,13 +198,25 @@ namespace {namespaceSymbol.ToDisplayString()};
 		return $"<{classSymbol.TypeParameters.Names().CommaSeperated()}>";
 	}
 
-	protected string GetAccessibility(ISymbol symbol) => SyntaxFacts.GetText(symbol.DeclaredAccessibility);
+	protected string GetAccessibility(ISymbol symbol)
+	{
+		return SyntaxFacts.GetText(symbol.DeclaredAccessibility);
+	}
 
-	protected string GetStaticModifier(ISymbol symbol) => symbol.IsStatic ? "static" : string.Empty;
+	protected string GetStaticModifier(ISymbol symbol)
+	{
+		return symbol.IsStatic ? "static" : string.Empty;
+	}
 
-	protected virtual string GetReturnType(IMethodSymbol methodSymbol) => methodSymbol.ReturnType.ToDisplayString();
+	protected virtual string GetReturnType(IMethodSymbol methodSymbol)
+	{
+		return methodSymbol.ReturnType.ToDisplayString();
+	}
 
-	protected virtual string GetArguments(IMethodSymbol methodSymbol) => methodSymbol.Parameters.Names().CommaSeperated();
+	protected virtual string GetArguments(IMethodSymbol methodSymbol)
+	{
+		return methodSymbol.Parameters.Names().CommaSeperated();
+	}
 
 	protected virtual string GetParameters(IMethodSymbol methodSymbol)
 	{
