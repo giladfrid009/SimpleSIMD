@@ -67,20 +67,20 @@ public abstract class BaseGenerator : ISourceGenerator
 	{
 		SourceText source = SourceText.From(
 			$@"
-                using System;
-                namespace {AttributeNamespace}
-                {{                    
-                    /// <summary>
-                    /// An attribute marking a method as a candidate for source generator.
-                    /// </summary>
-                    [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-                    public sealed class {AttributeName} : Attribute
-                    {{
-                        public {AttributeName}()
-                        {{
-                        }}
-                    }}
-                }}"
+using System;
+
+namespace {AttributeNamespace};
+                
+/// <summary>
+/// An attribute marking a method as a candidate for source generator.
+/// </summary>
+[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+public sealed class {AttributeName} : Attribute
+{{
+	public {AttributeName}()
+	{{
+	}}
+}}"
 			, Encoding.UTF8);
 
 		context.AddSource(ToFileName(AttributeName), source);
@@ -156,30 +156,31 @@ public abstract class BaseGenerator : ISourceGenerator
 
 		StringBuilder source = new(
 			$@"
-				using System;
-                using System.Numerics;
-                using System.Runtime.CompilerServices;
+#nullable enable
 
-                #nullable enable
-                namespace {namespaceSymbol.ToDisplayString()}
-                {{
-                    {accessibility} {staticModifier} partial class {classSymbol.Name} {generics}
-                    {{
-                ");
+using System;
+using System.Numerics;
+using System.Runtime.CompilerServices;
+
+namespace {namespaceSymbol.ToDisplayString()};
+
+{accessibility} {staticModifier} partial class {classSymbol.Name} {generics}
+{{
+");
 
 		foreach (IMethodSymbol method in classMethods)
 		{
 			ProcessMethod(source, method);
 		}
 
-		_ = source.Append("} }");
+		_ = source.AppendLine("}");
 
 		return source.ToString();
 	}
 
 	protected abstract void ProcessMethod(StringBuilder source, IMethodSymbol methodSymbol);
 
-	private string ToFileName(string name) => $"{name}_Generated.cs";
+	private string ToFileName(string name) => $"{name}.g.cs";
 
 	private string GetGenerics(INamedTypeSymbol classSymbol)
 	{

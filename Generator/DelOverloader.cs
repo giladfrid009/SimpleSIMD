@@ -39,7 +39,7 @@ public class DelOverloader : BaseGenerator
 		string generics = GetGenerics(methodSymbol);
 		string constraints = GetConstraints(methodSymbol);
 
-		_ = source.Append($"{accessibility} {staticModifier} {returnType} {methodName} {generics} ({parameters}) {constraints} {methodBody}");
+		_ = source.AppendLine($"\t{accessibility} {staticModifier} {returnType} {methodName} {generics} ({parameters}) {constraints}\n{methodBody}");
 	}
 
 	protected override string GetGenerics(IMethodSymbol methodSymbol)

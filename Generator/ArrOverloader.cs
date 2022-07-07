@@ -48,15 +48,15 @@ public class ArrOverloader : BaseGenerator
 		string generics = GetGenerics(methodSymbol);
 		string constraints = GetConstraints(methodSymbol);
 
-		_ = source.Append(
+		_ = source.AppendLine(
 			$@"
-                [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                {accessibility} {staticModifier} {returnType}[] {methodName} {generics} ({parameters}) {constraints}
-                {{
-                    {returnType} [] result = new {returnType} [{lengthArgument}.Length];
-                    {methodName} {generics} ({arguments}, result);
-                    return result;
-                }}"
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	{accessibility} {staticModifier} {returnType}[] {methodName} {generics} ({parameters}) {constraints}
+	{{
+		{returnType} [] result = new {returnType} [{lengthArgument}.Length];
+		{methodName} {generics} ({arguments}, result);
+		return result;
+	}}"
 			);
 	}
 
