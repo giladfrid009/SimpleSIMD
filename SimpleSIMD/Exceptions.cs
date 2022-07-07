@@ -5,13 +5,13 @@ namespace SimpleSimd;
 
 internal static class Exceptions
 {
-	[MethodImpl(Impl.NoInline)]
+	[MethodImpl(MethodImplOptions.NoInlining)]
 	internal static void ArgOutOfRange(string name)
 	{
 		throw new ArgumentOutOfRangeException(name);
 	}
 
-	[MethodImpl(Impl.NoInline)]
+	[MethodImpl(MethodImplOptions.NoInlining)]
 	internal static void InvalidCast(string name)
 	{
 		throw new InvalidCastException(name);
