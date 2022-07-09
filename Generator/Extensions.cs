@@ -19,6 +19,6 @@ internal static class Extensions
 
 	internal static string CommaSeperated(this IEnumerable<string>? strings)
 	{
-		return string.Join(", ", strings);
+		return strings != null ? string.Join(", ", strings) : string.Empty;
 	}
 }
