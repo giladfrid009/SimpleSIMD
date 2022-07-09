@@ -84,7 +84,7 @@ public class ArrOverloader : BaseGenerator
 			return string.Empty;
 		}
 
-		if (methodSymbol.Parameters[^1].Type is not INamedTypeSymbol resultParameter)
+		if (methodSymbol.Parameters[methodSymbol.Parameters.Length - 1].Type is not INamedTypeSymbol resultParameter)
 		{
 			return string.Empty;
 		}

@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>netstandard2.0</TargetFramework>
 		<DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
+		<LangVersion>preview</LangVersion>
 		<nullable>enable</nullable>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
