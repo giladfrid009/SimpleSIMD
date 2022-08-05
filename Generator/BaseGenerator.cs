@@ -69,21 +69,19 @@ public abstract class BaseGenerator : ISourceGenerator
 	private Compilation InjectAttribute(GeneratorExecutionContext context)
 	{
 		SourceText source = SourceText.From(
-			$@"
-using System;
+			$$"""
+			using System;
 
-namespace {AttributeNamespace};
-                
-/// <summary>
-/// An attribute marking a method as a candidate for source generator.
-/// </summary>
-[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-public sealed class {AttributeName} : Attribute
-{{
-	public {AttributeName}()
-	{{
-	}}
-}}"
+			namespace {{AttributeNamespace}};
+
+			/// <summary>
+			/// An attribute marking a method as a candidate for source generator.
+			/// </summary>
+			[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+			public sealed class {{AttributeName}} : Attribute
+			{
+			}
+			"""
 			, Encoding.UTF8);
 
 		context.AddSource(ToFileName(AttributeName), source);
@@ -158,18 +156,20 @@ public sealed class {AttributeName} : Attribute
 		string generics = GetGenerics(classSymbol);
 
 		StringBuilder source = new(
-			$@"
-#nullable enable
+			$$"""
+			#nullable enable
 
-using System;
-using System.Numerics;
-using System.Runtime.CompilerServices;
+			using System;
+			using System.Numerics;
+			using System.Runtime.CompilerServices;
 
-namespace {namespaceSymbol.ToDisplayString()};
+			namespace {{namespaceSymbol.ToDisplayString()}};
 
-{accessibility} {staticModifier} partial class {classSymbol.Name} {generics}
-{{
-");
+			{{accessibility}} {{staticModifier}} partial class {{classSymbol.Name}} {{generics}}
+			{
+
+			"""
+);
 
 		foreach (IMethodSymbol method in classMethods)
 		{
