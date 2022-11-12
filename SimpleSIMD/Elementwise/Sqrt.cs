@@ -5,7 +5,7 @@ namespace SimpleSimd;
 
 public static partial class SimdOps
 {
-	private struct Sqrt_VSelector<T> : IFunc<Vector<T>, Vector<T>> where T : struct, IFloatingPoint<T>
+	private struct Sqrt_VSelector<T> : IFunc<Vector<T>, Vector<T>> where T : struct, IFloatingPointIeee754<T>
 	{
 		public Vector<T> Invoke(Vector<T> vec)
 		{
@@ -13,7 +13,7 @@ public static partial class SimdOps
 		}
 	}
 
-	private struct Sqrt_Selector<T> : IFunc<T, T> where T : struct, IFloatingPoint<T>
+	private struct Sqrt_Selector<T> : IFunc<T, T> where T : struct, IFloatingPointIeee754<T>
 	{
 		public T Invoke(T val)
 		{
@@ -22,7 +22,7 @@ public static partial class SimdOps
 	}
 
 	[ArrOverload]
-	public static void Sqrt<T>(ReadOnlySpan<T> span, Span<T> result) where T : struct, IFloatingPoint<T>
+	public static void Sqrt<T>(ReadOnlySpan<T> span, Span<T> result) where T : struct, IFloatingPointIeee754<T>
 	{
 		Select(span, new Sqrt_VSelector<T>(), new Sqrt_Selector<T>(), result);
 	}

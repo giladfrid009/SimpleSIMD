@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>SimpleSimd</RootNamespace>
     <nullable>enable</nullable>
-	  <EnablePreviewFeatures>true</EnablePreviewFeatures>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Gilad Freidkin</Authors>
     <RepositoryUrl>https://github.com/giladfrid009/SimpleSIMD</RepositoryUrl>

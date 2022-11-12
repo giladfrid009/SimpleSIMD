@@ -21,6 +21,6 @@ public static partial class SimdOps
 
 	private static TDst Convert<TSrc, TDst>(TSrc val) where TSrc : INumber<TSrc> where TDst : INumber<TDst>
 	{
-		return TDst.Create(val);
+		return TDst.CreateSaturating(val);
 	}
 }
