@@ -1,7 +1,4 @@
-﻿using System;
-using System.Numerics;
-
-namespace SimpleSimd;
+﻿namespace SimpleSimd;
 
 public static partial class SimdOps
 {

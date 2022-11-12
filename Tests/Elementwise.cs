@@ -3,7 +3,7 @@
 namespace Tests;
 public class Elementwise_Tests
 {
-	private static Random rnd = new(0);
+	private static readonly Random rnd = new(0);
 	private static readonly int len = 100;
 	private static readonly int lowerBound = -100;
 	private static readonly int middleBound = 0;
@@ -197,7 +197,7 @@ public class Elementwise_Tests
 	{
 		int[] res = new int[len];
 
-		Vector<int> mask = new Vector<int>(1010);
+		Vector<int> mask = new(1010);
 
 		SimdOps.Select<int, int>(posArr, X => -X * 2 + X | mask, X => -X * 2 + X | 1010, res);
 		Assert.True(Enumerable.SequenceEqual(res, posArr.Select(X => -X * 2 + X | 1010)));
@@ -208,7 +208,7 @@ public class Elementwise_Tests
 	{
 		int[] res = new int[len];
 
-		Vector<int> mask = new Vector<int>(1010);
+		Vector<int> mask = new(1010);
 
 		SimdOps.Ternary(posArr, X => Vector.GreaterThan(X, new Vector<int>(50)), X => X > 50, 1, 0, res);
 		Assert.True(Enumerable.SequenceEqual(res, posArr.Select(X => X > 50 ? 1 : 0)));

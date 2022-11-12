@@ -2,18 +2,18 @@ namespace Tests;
 
 public class Comparison_Tests
 {
-	private static Random rnd = new(0);
-	private static int len = 100;
-	private static int lowerBound = -100;
-	private static int middleBound = 100;
-	private static int upperBound = 300;
-	private int[] smallerArr;
-	private int[] largerArr;
-	private int[] constArr;
+	private static readonly Random rnd = new(0);
+	private static readonly int len = 100;
+	private static readonly int lowerBound = -100;
+	private static readonly int middleBound = 100;
+	private static readonly int upperBound = 300;
+	private readonly int[] smallerArr;
+	private readonly int[] largerArr;
+	private readonly int[] constArr;
 
 	public Comparison_Tests()
 	{
-		smallerArr =Enumerable.Range(0, len).Select(X => rnd.Next(lowerBound, middleBound)).ToArray();
+		smallerArr = Enumerable.Range(0, len).Select(X => rnd.Next(lowerBound, middleBound)).ToArray();
 		largerArr = Enumerable.Range(0, len).Select(X => rnd.Next(middleBound, upperBound)).ToArray();
 		constArr = Enumerable.Repeat(middleBound, len).ToArray();
 	}

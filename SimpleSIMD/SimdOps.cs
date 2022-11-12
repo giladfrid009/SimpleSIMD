@@ -1,6 +1,5 @@
-﻿global using System.Numerics;
-
-using System;
+﻿global using System;
+global using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
