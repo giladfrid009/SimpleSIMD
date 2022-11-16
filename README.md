@@ -15,51 +15,62 @@ This approach could be combined with standard multithreading for massive perform
 * Performs less allocations compared to standard LINQ implementations
 
 ## Available Functions
-#### Comparison:
-* Equal
-* Greater
-* GreaterOrEqual
-* Less
-* LessOrEqual
 
-#### Elementwise:
-* Negate
-* Abs
-* Add
-* Divide
-* Multiply
-* Subtract
-* And
-* Or
-* Xor
-* Not
-* Select
-* Ternary (Conditional Select)
-* Concat
-* Sqrt
-
-#### Reduction:
-* Aggregate
-* Sum
-* Average
-* Max
-* Min
-* Dot
-
-#### General Purpose:
-* All
-* Any
-* Contains
-* IndexOf
-* Fill
-* Foreach
+<details>
+  <summary><h4>Comparison</h4></summary>
+  
+  * Equal
+  * Greater
+  * GreaterOrEqual
+  * Less
+  * LessOrEqual
+</details>
+<details>
+  <summary><h4>Elementwise</h4></summary>
+  
+  * Negate
+  * Abs
+  * Add
+  * Divide
+  * Multiply
+  * Subtract
+  * And
+  * AndNot
+  * Or
+  * Xor
+  * Not
+  * Select
+  * Ternary (Conditional Select)
+  * Concat
+  * Sqrt
+</details>
+<details>
+  <summary><h4>Reduction</h4></summary>
+  
+  * Aggregate
+  * Sum
+  * Average
+  * Max
+  * Min
+  * Dot
+</details>
+<details>
+  <summary><h4>General</h4></summary>
+  
+  * All
+  * Any
+  * Contains
+  * IndexOf
+  * Fill
+  * Foreach
+</details>
 
 ### Auto-Generated Functions
-For any of the ``Elementwise`` functions, an auto-generated overload is generated, which doesn't accept ```Span<T> result```, 
-and instead creates ```T[]``` internally and returns the result within this array.  
+For any of the ``Elementwise`` functions, an auto-generated overload is created, which doesn't accept ```Span<T> result```, 
+and instead returns ```T[]``` as the result.  
   
-For any of the functions with the Value Delagate pattern, an auto-generated overload is generated, which accepts regular delegates.
-Note that using this overload results in performence losses. Check `Value Delegates - Benchmark` section for more info.  
+For any of the functions with the Value Delagate pattern, an auto-generated overload is created, which accepts regular delegates.
+Note that using this overload results in performence losses. Check [Value Delegates](#value-delegates) section for more info.  
 
 ## Performance Benefits
 
@@ -87,13 +98,17 @@ Benchmarked method was a ``Sum`` over an ``int[]``.
 |   SIMD | 100000 |  7,325.734 ns | 156.6350 ns | 451.9279 ns |  7,138.866 ns |  0.19 |
 |  Naive | 100000 | 40,283.073 ns | 464.1261 ns | 434.1439 ns | 40,328.790 ns |  1.00 |
 
+<details>
+  <summary>Machine Details</summary>
+  
+  ```
+  BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
+  Intel Core i7-10510U CPU 1.80GHz, 1 CPU, 8 logical and 4 physical cores
+  .NET SDK=7.0.100
+    [Host]     : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+    DefaultJob : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
 ```
-BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
-Intel Core i7-10510U CPU 1.80GHz, 1 CPU, 8 logical and 4 physical cores
-.NET SDK=7.0.100
-  [Host]     : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
-  DefaultJob : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
-```
+</details>
 
 ## Value Delegates
 This library uses the value delegate pattern. This pattern is used as a replacement for regular delegates.  
@@ -176,6 +191,18 @@ public static T Sum<T, F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector)
 | ValueDelegate |  60000 |  3,715.645 ns |  72.8741 ns | 121.7563 ns |  3,689.114 ns |  0.22 |
 |      Delegate | 100000 | 27,357.138 ns | 534.2404 ns | 548.6255 ns | 27,176.126 ns |  1.00 |
 | ValueDelegate | 100000 |  7,485.716 ns | 150.0830 ns | 440.1676 ns |  7,313.833 ns |  0.27 |
+
+<details>
+  <summary>Machine Details</summary>
+  
+  ```
+  BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
+  Intel Core i7-10510U CPU 1.80GHz, 1 CPU, 8 logical and 4 physical cores
+  .NET SDK=7.0.100
+    [Host]     : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+    DefaultJob : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+```
+</details>
 
 ## Limitations
 * Methods are not lazily evaluated as IEnumerable
