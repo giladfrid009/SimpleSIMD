@@ -99,7 +99,7 @@ Benchmarked method was a ``Sum`` over an ``int[]``.
 |  Naive | 100000 | 40,283.073 ns | 464.1261 ns | 434.1439 ns | 40,328.790 ns |  1.00 |
 
 <details>
-  <summary>Machine Details</summary>
+  <summary>Benchmark Details</summary>
   
   ```
   BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
@@ -193,7 +193,7 @@ public static T Sum<T, F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector)
 | ValueDelegate | 100000 |  7,485.716 ns | 150.0830 ns | 440.1676 ns |  7,313.833 ns |  0.27 |
 
 <details>
-  <summary>Machine Details</summary>
+  <summary>Benchmark Details</summary>
   
   ```
   BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
