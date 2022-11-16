@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <RootNamespace>SimpleSimd</RootNamespace>
     <nullable>enable</nullable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -9,18 +9,29 @@
     <RepositoryUrl>https://github.com/giladfrid009/SimpleSIMD</RepositoryUrl>
     <PackageTags>SIMD, Library, Performance, Parallel, Math, Generic, Allocation, Array, Span</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Description>Easy to use SIMD accelerated span and array methods</Description>
+    <Description>Easy to use SIMD accelerated span and array methods
+Now each method in SimdOps is generic, instead of SimdOps&lt;T&gt;, 
+i.e SimdOps.Abs&lt;T&gt;() instead of SimdOps&lt;T&gt;.Abs().</Description>
     <Copyright>Copyright 2020-2021 (c) Gilad Freidkin, All rights reserved</Copyright>
-    <Version>3.3.1</Version>
-    <PackageReleaseNotes>
-		Major bugfix in subtract operator
-</PackageReleaseNotes>
+    <Version>4.6.0</Version>
+    <PackageReleaseNotes>1. Now using the latest .NET7
+2. Added AndNot vectorized method
+3. Select and Concat doesn't throw anymore whenever Vector&lt;Tres&gt;.Count != Vector&lt;T&gt;.Count
+4. Internal structural changes</PackageReleaseNotes>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <NeutralLanguage>en</NeutralLanguage>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <Title>SimpleSIMD</Title>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,6 +39,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.Experimental" Version="6.0.2" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,30 +1,26 @@
-﻿using System;
-using System.Numerics;
+﻿namespace SimpleSimd;
 
-namespace SimpleSimd
+public static partial class SimdOps
 {
-	public static partial class SimdOps<T>
+	[ArrOverload]
+	public static void Not<T>(ReadOnlySpan<T> span, Span<T> result) where T : struct, IBinaryNumber<T>
 	{
-		private struct Not_VSelector : IFunc<Vector<T>, Vector<T>>
-		{
-			public Vector<T> Invoke(Vector<T> vec)
-			{
-				return ~vec;
-			}
-		}
+		Select(span, new Not_VSelector<T>(), new Not_Selector<T>(), result);
+	}
+}
 
-		private struct Not_Selector : IFunc<T, T>
-		{
-			public T Invoke(T val)
-			{
-				return NumOps<T>.Not(val);
-			}
-		}
+file struct Not_VSelector<T> : IFunc<Vector<T>, Vector<T>> where T : struct, IBinaryNumber<T>
+{
+	public Vector<T> Invoke(Vector<T> vec)
+	{
+		return ~vec;
+	}
+}
 
-		[ArrOverload]
-		public static void Not(ReadOnlySpan<T> span, Span<T> result)
-		{
-			Select(span, new Not_VSelector(), new Not_Selector(), result);
-		}
+file struct Not_Selector<T> : IFunc<T, T> where T : struct, IBinaryNumber<T>
+{
+	public T Invoke(T val)
+	{
+		return ~val;
 	}
 }

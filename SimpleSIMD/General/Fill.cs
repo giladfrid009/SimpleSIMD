@@ -1,65 +1,62 @@
-﻿using System;
-using System.Numerics;
+﻿namespace SimpleSimd;
 
-namespace SimpleSimd
+public static partial class SimdOps
 {
-	public static partial class SimdOps<T>
+	public static void Fill<T>(Span<T> span, T value) where T : struct, INumber<T>
 	{
-		public static void Fill(Span<T> span, T value)
+		ref T rSpan = ref GetRef(span);
+
+		int i = 0;
+
+		if (Vector.IsHardwareAccelerated)
 		{
-			ref T rSpan = ref GetRef(span);
+			Vector<T> vValue = new(value);
 
-			int i = 0;
+			ref Vector<T> vrSpan = ref AsVector(rSpan);
 
-			if (Vector.IsHardwareAccelerated)
+			int length = span.Length / Vector<T>.Count;
+
+			for (; i < length; i++)
 			{
-				Vector<T> vValue = new(value);
-
-				ref Vector<T> vrSpan = ref AsVector(rSpan);
-
-				int length = span.Length / Vector<T>.Count;
-
-				for (; i < length; i++)
-				{
-					vrSpan.Offset(i) = vValue;
-				}
-
-				i *= Vector<T>.Count;
+				vrSpan.Offset(i) = vValue;
 			}
 
-			for (; i < span.Length; i++)
-			{
-				rSpan.Offset(i) = value;
-			}
+			i *= Vector<T>.Count;
 		}
 
-		[DelOverload]
-		public static void Fill<F1, F2>(Span<T> span, F1 vFunc, F2 func)
-			where F1 : struct, IFunc<Vector<T>>
-			where F2 : struct, IFunc<T>
+		for (; i < span.Length; i++)
 		{
-			ref T rSpan = ref GetRef(span);
+			rSpan.Offset(i) = value;
+		}
+	}
 
-			int i = 0;
+	[DelOverload]
+	public static void Fill<T, F1, F2>(Span<T> span, F1 vFunc, F2 func)
+		where T : struct, INumber<T>
+		where F1 : struct, IFunc<Vector<T>>
+		where F2 : struct, IFunc<T>
+	{
+		ref T rSpan = ref GetRef(span);
 
-			if (Vector.IsHardwareAccelerated)
+		int i = 0;
+
+		if (Vector.IsHardwareAccelerated)
+		{
+			ref Vector<T> vrSpan = ref AsVector(rSpan);
+
+			int length = span.Length / Vector<T>.Count;
+
+			for (; i < length; i++)
 			{
-				ref Vector<T> vrSpan = ref AsVector(rSpan);
-
-				int length = span.Length / Vector<T>.Count;
-
-				for (; i < length; i++)
-				{
-					vrSpan.Offset(i) = vFunc.Invoke();
-				}
-
-				i *= Vector<T>.Count;
+				vrSpan.Offset(i) = vFunc.Invoke();
 			}
 
-			for (; i < span.Length; i++)
-			{
-				rSpan.Offset(i) = func.Invoke();
-			}
+			i *= Vector<T>.Count;
+		}
+
+		for (; i < span.Length; i++)
+		{
+			rSpan.Offset(i) = func.Invoke();
 		}
 	}
 }

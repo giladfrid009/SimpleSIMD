@@ -1,34 +1,30 @@
-﻿using System;
-using System.Numerics;
+﻿namespace SimpleSimd;
 
-namespace SimpleSimd
+public static partial class SimdOps
 {
-	public static partial class SimdOps<T>
+	public static bool Greater<T>(ReadOnlySpan<T> left, T right) where T : struct, INumber<T>
 	{
-		private struct Greater_VSelector : IFunc<Vector<T>, Vector<T>, bool>
-		{
-			public bool Invoke(Vector<T> left, Vector<T> right)
-			{
-				return Vector.GreaterThanAll(left, right);
-			}
-		}
+		return All(left, right, new Greater_VSelector<T>(), new Greater_Selector<T>());
+	}
 
-		private struct Greater_Selector : IFunc<T, T, bool>
-		{
-			public bool Invoke(T left, T right)
-			{
-				return NumOps<T>.Greater(left, right);
-			}
-		}
+	public static bool Greater<T>(ReadOnlySpan<T> left, ReadOnlySpan<T> right) where T : struct, INumber<T>
+	{
+		return All(left, right, new Greater_VSelector<T>(), new Greater_Selector<T>());
+	}
+}
 
-		public static bool Greater(ReadOnlySpan<T> left, T right)
-		{
-			return All(left, right, new Greater_VSelector(), new Greater_Selector());
-		}
+file struct Greater_VSelector<T> : IFunc<Vector<T>, Vector<T>, bool> where T : struct, INumber<T>
+{
+	public bool Invoke(Vector<T> left, Vector<T> right)
+	{
+		return Vector.GreaterThanAll(left, right);
+	}
+}
 
-		public static bool Greater(ReadOnlySpan<T> left, ReadOnlySpan<T> right)
-		{
-			return All(left, right, new Greater_VSelector(), new Greater_Selector());
-		}
+file struct Greater_Selector<T> : IFunc<T, T, bool> where T : struct, INumber<T>
+{
+	public bool Invoke(T left, T right)
+	{
+		return left > right;
 	}
 }

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleSIMD", "SimpleSIMD\Si
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "Generator\Generator.csproj", "{6E73E13B-20BB-49DC-AEBB-BD7F32981153}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{90BA800F-925C-4220-9619-99B6C2425443}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6E73E13B-20BB-49DC-AEBB-BD7F32981153}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E73E13B-20BB-49DC-AEBB-BD7F32981153}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E73E13B-20BB-49DC-AEBB-BD7F32981153}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90BA800F-925C-4220-9619-99B6C2425443}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90BA800F-925C-4220-9619-99B6C2425443}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90BA800F-925C-4220-9619-99B6C2425443}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90BA800F-925C-4220-9619-99B6C2425443}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

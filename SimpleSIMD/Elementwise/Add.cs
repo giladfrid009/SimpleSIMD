@@ -1,36 +1,32 @@
-﻿using System;
-using System.Numerics;
+﻿namespace SimpleSimd;
 
-namespace SimpleSimd
+public static partial class SimdOps
 {
-	public static partial class SimdOps<T>
+	[ArrOverload]
+	public static void Add<T>(ReadOnlySpan<T> left, T right, Span<T> result) where T : struct, INumber<T>
 	{
-		private struct Add_VSelector : IFunc<Vector<T>, Vector<T>, Vector<T>>
-		{
-			public Vector<T> Invoke(Vector<T> left, Vector<T> right)
-			{
-				return Vector.Add(left, right);
-			}
-		}
+		Concat(left, right, new Add_VSelector<T>(), new Add_Selector<T>(), result);
+	}
 
-		private struct Add_Selector : IFunc<T, T, T>
-		{
-			public T Invoke(T left, T right)
-			{
-				return NumOps<T>.Add(left, right);
-			}
-		}
+	[ArrOverload]
+	public static void Add<T>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result) where T : struct, INumber<T>
+	{
+		Concat(left, right, new Add_VSelector<T>(), new Add_Selector<T>(), result);
+	}
+}
 
-		[ArrOverload]
-		public static void Add(ReadOnlySpan<T> left, T right, Span<T> result)
-		{
-			Concat(left, right, new Add_VSelector(), new Add_Selector(), result);
-		}
+file struct Add_VSelector<T> : IFunc<Vector<T>, Vector<T>, Vector<T>> where T : struct, INumber<T>
+{
+	public Vector<T> Invoke(Vector<T> left, Vector<T> right)
+	{
+		return left + right;
+	}
+}
 
-		[ArrOverload]
-		public static void Add(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
-		{
-			Concat(left, right, new Add_VSelector(), new Add_Selector(), result);
-		}
+file struct Add_Selector<T> : IFunc<T, T, T> where T : struct, INumber<T>
+{
+	public T Invoke(T left, T right)
+	{
+		return left + right;
 	}
 }

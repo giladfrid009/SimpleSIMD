@@ -1,44 +1,40 @@
-﻿using System;
-using System.Numerics;
+﻿namespace SimpleSimd;
 
-namespace SimpleSimd
+public static partial class SimdOps
 {
-	public static partial class SimdOps<T>
+	public static bool Contains<T>(ReadOnlySpan<T> span, T value) where T : struct, INumber<T>
 	{
-		public static bool Contains(ReadOnlySpan<T> span, T value)
+		ref T rSpan = ref GetRef(span);
+
+		int i = 0;
+
+		if (Vector.IsHardwareAccelerated)
 		{
-			ref T rSpan = ref GetRef(span);
+			Vector<T> vValue = new(value);
 
-			int i = 0;
+			ref Vector<T> vrSpan = ref AsVector(rSpan);
 
-			if (Vector.IsHardwareAccelerated)
+			int length = span.Length / Vector<T>.Count;
+
+			for (; i < length; i++)
 			{
-				Vector<T> vValue = new(value);
-
-				ref Vector<T> vrSpan = ref AsVector(rSpan);
-
-				int length = span.Length / Vector<T>.Count;
-
-				for (; i < length; i++)
-				{
-					if (Vector.EqualsAny(vrSpan.Offset(i), vValue))
-					{
-						return true;
-					}
-				}
-
-				i *= Vector<T>.Count;
-			}
-
-			for (; i < span.Length; i++)
-			{
-				if (NumOps<T>.Equal(rSpan.Offset(i), value))
+				if (Vector.EqualsAny(vrSpan.Offset(i), vValue))
 				{
 					return true;
 				}
 			}
 
-			return false;
+			i *= Vector<T>.Count;
 		}
+
+		for (; i < span.Length; i++)
+		{
+			if (rSpan.Offset(i) == value)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

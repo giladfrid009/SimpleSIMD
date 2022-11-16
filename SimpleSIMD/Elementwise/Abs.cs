@@ -1,30 +1,26 @@
-﻿using System;
-using System.Numerics;
+﻿namespace SimpleSimd;
 
-namespace SimpleSimd
+public static partial class SimdOps
 {
-	public static partial class SimdOps<T>
+	[ArrOverload]
+	public static void Abs<T>(ReadOnlySpan<T> span, Span<T> result) where T : struct, INumber<T>
 	{
-		private struct Abs_VSelector : IFunc<Vector<T>, Vector<T>>
-		{
-			public Vector<T> Invoke(Vector<T> vec)
-			{
-				return Vector.Abs(vec);
-			}
-		}
+		Select(span, new Abs_VSelector<T>(), new Abs_Selector<T>(), result);
+	}
+}
 
-		private struct Abs_Selector : IFunc<T, T>
-		{
-			public T Invoke(T val)
-			{
-				return NumOps<T>.Abs(val);
-			}
-		}
+file struct Abs_VSelector<T> : IFunc<Vector<T>, Vector<T>> where T : struct, INumber<T>
+{
+	public Vector<T> Invoke(Vector<T> vec)
+	{
+		return Vector.Abs(vec);
+	}
+}
 
-		[ArrOverload]
-		public static void Abs(ReadOnlySpan<T> span, Span<T> result)
-		{
-			Select(span, new Abs_VSelector(), new Abs_Selector(), result);
-		}
+file struct Abs_Selector<T> : IFunc<T, T> where T : struct, INumber<T>
+{
+	public T Invoke(T val)
+	{
+		return T.Abs(val);
 	}
 }

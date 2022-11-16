@@ -1,36 +1,32 @@
-﻿using System;
-using System.Numerics;
+﻿namespace SimpleSimd;
 
-namespace SimpleSimd
+public static partial class SimdOps
 {
-	public static partial class SimdOps<T>
+	[ArrOverload]
+	public static void And<T>(ReadOnlySpan<T> left, T right, Span<T> result) where T : struct, IBinaryNumber<T>
 	{
-		private struct And_VSelector : IFunc<Vector<T>, Vector<T>, Vector<T>>
-		{
-			public Vector<T> Invoke(Vector<T> left, Vector<T> right)
-			{
-				return Vector.BitwiseAnd(left, right);
-			}
-		}
+		Concat(left, right, new And_VSelector<T>(), new And_Selector<T>(), result);
+	}
 
-		private struct And_Selector : IFunc<T, T, T>
-		{
-			public T Invoke(T left, T right)
-			{
-				return NumOps<T>.And(left, right);
-			}
-		}
+	[ArrOverload]
+	public static void And<T>(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result) where T : struct, IBinaryNumber<T>
+	{
+		Concat(left, right, new And_VSelector<T>(), new And_Selector<T>(), result);
+	}
+}
 
-		[ArrOverload]
-		public static void And(ReadOnlySpan<T> left, T right, Span<T> result)
-		{
-			Concat(left, right, new And_VSelector(), new And_Selector(), result);
-		}
+file struct And_VSelector<T> : IFunc<Vector<T>, Vector<T>, Vector<T>> where T : struct, IBinaryNumber<T>
+{
+	public Vector<T> Invoke(Vector<T> left, Vector<T> right)
+	{
+		return left & right;
+	}
+}
 
-		[ArrOverload]
-		public static void And(ReadOnlySpan<T> left, ReadOnlySpan<T> right, Span<T> result)
-		{
-			Concat(left, right, new And_VSelector(), new And_Selector(), result);
-		}
+file struct And_Selector<T> : IFunc<T, T, T> where T : struct, IBinaryNumber<T>
+{
+	public T Invoke(T left, T right)
+	{
+		return left & right;
 	}
 }
