@@ -12,12 +12,7 @@ public static partial class SimdOps
 	{
 		if (result.Length != left.Length)
 		{
-			Exceptions.ArgOutOfRange(nameof(result));
-		}
-
-		if (Vector<TRes>.Count != Vector<T>.Count)
-		{
-			Exceptions.InvalidCast(typeof(TRes).Name);
+			ThrowArgOutOfRange(nameof(result));
 		}
 
 		ref T rLeft = ref GetRef(left);
@@ -58,12 +53,7 @@ public static partial class SimdOps
 	{
 		if (result.Length != right.Length)
 		{
-			Exceptions.ArgOutOfRange(nameof(result));
-		}
-
-		if (Vector<TRes>.Count != Vector<T>.Count)
-		{
-			Exceptions.InvalidCast(typeof(TRes).Name);
+			ThrowArgOutOfRange(nameof(result));
 		}
 
 		ref T rRight = ref GetRef(right);
@@ -104,17 +94,12 @@ public static partial class SimdOps
 	{
 		if (right.Length != left.Length)
 		{
-			Exceptions.ArgOutOfRange(nameof(right));
+			ThrowArgOutOfRange(nameof(right));
 		}
 
 		if (result.Length != left.Length)
 		{
-			Exceptions.ArgOutOfRange(nameof(result));
-		}
-
-		if (Vector<TRes>.Count != Vector<T>.Count)
-		{
-			Exceptions.InvalidCast(typeof(TRes).Name);
+			ThrowArgOutOfRange(nameof(result));
 		}
 
 		ref T rLeft = ref GetRef(left);

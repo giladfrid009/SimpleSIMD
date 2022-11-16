@@ -41,7 +41,7 @@ public static partial class SimdOps
 	{
 		if (right.Length != left.Length)
 		{
-			Exceptions.ArgOutOfRange(nameof(right));
+			ThrowArgOutOfRange(nameof(right));
 		}
 
 		T dot = T.Zero;

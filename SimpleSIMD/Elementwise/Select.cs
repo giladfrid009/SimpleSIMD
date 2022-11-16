@@ -12,12 +12,7 @@ public static partial class SimdOps
 	{
 		if (result.Length != span.Length)
 		{
-			Exceptions.ArgOutOfRange(nameof(result));
-		}
-
-		if (Vector<TRes>.Count != Vector<T>.Count)
-		{
-			Exceptions.InvalidCast(typeof(TRes).Name);
+			ThrowArgOutOfRange(nameof(result));
 		}
 
 		ref T rSpan = ref GetRef(span);

@@ -11,7 +11,7 @@ public static partial class SimdOps
 	{
 		if (result.Length != span.Length)
 		{
-			Exceptions.ArgOutOfRange(nameof(result));
+			ThrowArgOutOfRange(nameof(result));
 		}
 
 		ref T rSpan = ref GetRef(span);
@@ -56,7 +56,7 @@ public static partial class SimdOps
 	{
 		if (result.Length != span.Length)
 		{
-			Exceptions.ArgOutOfRange(nameof(result));
+			ThrowArgOutOfRange(nameof(result));
 		}
 
 		ref T rSpan = ref GetRef(span);

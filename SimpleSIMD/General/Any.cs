@@ -88,7 +88,7 @@ public static partial class SimdOps
 	{
 		if (right.Length != left.Length)
 		{
-			Exceptions.ArgOutOfRange(nameof(right));
+			ThrowArgOutOfRange(nameof(right));
 		}
 
 		ref T rLeft = ref GetRef(left);
