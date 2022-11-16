@@ -13,16 +13,17 @@
 Now each method in SimdOps is generic, instead of SimdOps&lt;T&gt;, 
 i.e SimdOps.Abs&lt;T&gt;() instead of SimdOps&lt;T&gt;.Abs().</Description>
     <Copyright>Copyright 2020-2021 (c) Gilad Freidkin, All rights reserved</Copyright>
-    <Version>4.5.0-alpha</Version>
-    <PackageReleaseNotes>
-		Using generic math features, with INumber interface instead of NumOps
-		Now each method in SimdOps is generic according to T, instead of SimdOps itself being generic
-    </PackageReleaseNotes>
+    <Version>4.6.0</Version>
+    <PackageReleaseNotes>1. Now using the latest .NET7
+2. Added AndNot vectorized method
+3. Select and Concat doesn't throw anymore whenever Vector&lt;Tres&gt;.Count != Vector&lt;T&gt;.Count
+4. Internal structural changes</PackageReleaseNotes>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <NeutralLanguage>en</NeutralLanguage>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <Title>SimpleSIMD</Title>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
