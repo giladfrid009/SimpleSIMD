@@ -170,6 +170,7 @@ public static T Sum<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
   * ```short, ushort```
   * ```int, uint```
   * ```long, ulong```
+  * ```nint, nuint```
   * ```float```
   * ```double```
 
