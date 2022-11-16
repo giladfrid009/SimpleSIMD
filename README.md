@@ -135,13 +135,14 @@ the only difference is the argument types.
 
 ``` csharp
 // Delegate, baseline
-public static T Sum<T>(Span<T> span, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector) where T : struct;
+public static T Sum<T>(ReadOnlySpan<T> span, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector) 
+            where T : struct;
 
 // ValueDelegate
-public static T Sum<T, F1, F2>(Span<T> span, F1 vSelector, F2 selector)
+public static T Sum<T, F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector)
             where T  : struct
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
-            where F2 : struct, IFunc<T, T> 
+            where F2 : struct, IFunc<T, T>;
 ```
 
 |        Method |   Length |             Mean |          Error |         StdDev | Ratio |
