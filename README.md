@@ -138,7 +138,7 @@ the only difference is the argument types.
 public static T Sum(Span<T> span, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector);
 
 // ValueDelegate
-public static T Sum<F1, F2>(in Span<T> span, F1 vSelector, F2 selector)
+public static T Sum<F1, F2>(Span<T> span, F1 vSelector, F2 selector)
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, T> 
 ```
