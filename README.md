@@ -66,23 +66,26 @@ Note that using this overload results in performence losses. Check `Value Delega
 A simple benchmark to demonstrate performance gains of using SIMD.  
 Benchmarked method was a ``Sum`` over an ``int[]``.
 
-| Method | Length |           Mean |       Error |      StdDev | Ratio |
-|------- |------- |---------------:|------------:|------------:|------:|
-|   LINQ |     10 |      58.428 ns |   1.1658 ns |   1.4743 ns |  9.65 |
-|  Naive |     10 |       6.138 ns |   0.1226 ns |   0.1087 ns |  1.00 |
-|   SIMD |     10 |       5.739 ns |   0.1397 ns |   0.1372 ns |  0.93 |
-|   LINQ |    100 |     475.290 ns |   9.3530 ns |  17.7951 ns |  7.36 |
-|  Naive |    100 |      65.447 ns |   0.8545 ns |   0.7575 ns |  1.00 |
-|   SIMD |    100 |      12.879 ns |   0.2039 ns |   0.1592 ns |  0.20 |
-|   LINQ |   1000 |   4,620.020 ns |  80.4166 ns |  71.2872 ns |  7.47 |
-|  Naive |   1000 |     617.992 ns |   7.6832 ns |   7.1869 ns |  1.00 |
-|   SIMD |   1000 |      78.865 ns |   0.7991 ns |   0.6673 ns |  0.13 |
-|   LINQ |  10000 |  43,103.800 ns | 700.6532 ns | 655.3915 ns |  6.99 |
-|  Naive |  10000 |   6,164.725 ns |  51.9217 ns |  48.5676 ns |  1.00 |
-|   SIMD |  10000 |     738.459 ns |  14.7266 ns |  32.3252 ns |  0.13 |
-|   LINQ | 100000 | 393,739.178 ns | 755.6571 ns | 631.0079 ns |  6.73 |
-|  Naive | 100000 |  58,510.310 ns |  58.0928 ns |  54.3400 ns |  1.00 |
-|   SIMD | 100000 |   8,897.370 ns | 102.2559 ns |  95.6502 ns |  0.15 |
+| Method | Length |          Mean |       Error |      StdDev |        Median | Ratio |
+|------- |------- |--------------:|------------:|------------:|--------------:|------:|
+|   SIMD |     10 |      3.556 ns |   0.0655 ns |   0.0581 ns |      3.537 ns |  0.66 |
+|  Naive |     10 |      5.357 ns |   0.0568 ns |   0.0531 ns |      5.348 ns |  1.00 |
+|   SIMD |    100 |      9.079 ns |   0.1948 ns |   0.1822 ns |      9.032 ns |  0.20 |
+|  Naive |    100 |     46.178 ns |   0.5255 ns |   0.4658 ns |     46.203 ns |  1.00 |
+|   SIMD |   1000 |     66.018 ns |   0.6931 ns |   0.6483 ns |     65.802 ns |  0.17 |
+|  Naive |   1000 |    388.244 ns |   3.0852 ns |   2.8859 ns |    389.093 ns |  1.00 |
+|   SIMD |   3000 |    185.507 ns |   1.3070 ns |   1.1587 ns |    185.375 ns |  0.16 |
+|  Naive |   3000 |  1,139.552 ns |  11.9608 ns |  11.1881 ns |  1,139.374 ns |  1.00 |
+|   SIMD |   6000 |    365.993 ns |   3.2114 ns |   3.0039 ns |    365.075 ns |  0.16 |
+|  Naive |   6000 |  2,274.374 ns |  14.2898 ns |  12.6675 ns |  2,271.185 ns |  1.00 |
+|   SIMD |  10000 |    585.275 ns |   5.2631 ns |   4.1091 ns |    586.638 ns |  0.15 |
+|  Naive |  10000 |  3,938.198 ns |  46.8599 ns |  43.8328 ns |  3,926.622 ns |  1.00 |
+|   SIMD |  30000 |  1,791.966 ns |  30.4379 ns |  48.2777 ns |  1,778.255 ns |  0.15 |
+|  Naive |  30000 | 11,848.767 ns | 184.5488 ns | 163.5977 ns | 11,773.515 ns |  1.00 |
+|   SIMD |  60000 |  3,612.872 ns |  71.7281 ns | 113.7683 ns |  3,580.606 ns |  0.15 |
+|  Naive |  60000 | 23,606.125 ns | 249.0765 ns | 232.9863 ns | 23,542.178 ns |  1.00 |
+|   SIMD | 100000 |  7,325.734 ns | 156.6350 ns | 451.9279 ns |  7,138.866 ns |  0.19 |
+|  Naive | 100000 | 40,283.073 ns | 464.1261 ns | 434.1439 ns | 40,328.790 ns |  1.00 |
 
 ## Value Delegates
 This library uses the value delegate pattern. This pattern is used as a replacement for regular delegates.  
