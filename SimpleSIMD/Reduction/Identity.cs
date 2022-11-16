@@ -1,20 +1,17 @@
 ﻿namespace SimpleSimd;
 
-public static partial class SimdOps
+internal struct ID_VSelector<T> : IFunc<Vector<T>, Vector<T>> where T : struct, INumber<T>
 {
-	private struct ID_VSelector<T> : IFunc<Vector<T>, Vector<T>> where T : struct, INumber<T>
+	public Vector<T> Invoke(Vector<T> vec)
 	{
-		public Vector<T> Invoke(Vector<T> vec)
-		{
-			return vec;
-		}
+		return vec;
 	}
+}
 
-	private struct ID_Selector<T> : IFunc<T, T> where T : struct, INumber<T>
+internal struct ID_Selector<T> : IFunc<T, T> where T : struct, INumber<T>
+{
+	public T Invoke(T val)
 	{
-		public T Invoke(T val)
-		{
-			return val;
-		}
+		return val;
 	}
 }
