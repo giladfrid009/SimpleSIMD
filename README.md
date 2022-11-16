@@ -105,7 +105,7 @@ namespace MyProgram
         {
             // Creating the data
             // Can be int[], Span<int>, ReadOnlySpan<int>
-            int[] Data = GetData()
+            int[] Data = GetData();
             
             // We need to create 2 structs which will serve as a replacement for delegates
             SimdOps.Sum(Data, new VecSelector(), new Selector());
@@ -113,14 +113,14 @@ namespace MyProgram
     }             
     
     // A struct which is used as Vector<int> selector
-    // Inheritence from IFunc is according to Sum() signature
+    // Inheritence from IFunc<Vector<T>, Vector<T>> is according to Sum() signature
     struct VecSelector : IFunc<Vector<int>, Vector<int>>
     {
         public Vector<int> Invoke(Vector<int> param) => param * 2;
     }
 
     // A struct which is used as int selector
-    // Inheritence from IFunc is according to Sum() signature
+    // Inheritence from IFunc<T, T> is according to Sum() signature
     struct Selector : IFunc<int, int>
     {
         public int Invoke(int param) => param * 2;
