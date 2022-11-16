@@ -87,6 +87,14 @@ Benchmarked method was a ``Sum`` over an ``int[]``.
 |   SIMD | 100000 |  7,325.734 ns | 156.6350 ns | 451.9279 ns |  7,138.866 ns |  0.19 |
 |  Naive | 100000 | 40,283.073 ns | 464.1261 ns | 434.1439 ns | 40,328.790 ns |  1.00 |
 
+```
+BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22621.819)
+Intel Core i7-10510U CPU 1.80GHz, 1 CPU, 8 logical and 4 physical cores
+.NET SDK=7.0.100
+  [Host]     : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.0 (7.0.22.51805), X64 RyuJIT AVX2
+```
+
 ## Value Delegates
 This library uses the value delegate pattern. This pattern is used as a replacement for regular delegates.  
 Calling functions using this patten may feel unusual since it requires creation of structs to pass as arguments instead of delegates, but it is very beneficial performance-wise. 
@@ -119,14 +127,14 @@ namespace MyProgram
     // Inheritence from IFunc<Vector<T>, Vector<T>> is according to Sum() signature
     struct VecSelector : IFunc<Vector<int>, Vector<int>>
     {
-        public Vector<int> Invoke(Vector<int> param) => param * 2;
+        public Vector<int> Invoke(Vector<int> param) => DoSomething(param);
     }
 
     // A struct which is used as int selector
     // Inheritence from IFunc<T, T> is according to Sum() signature
     struct Selector : IFunc<int, int>
     {
-        public int Invoke(int param) => param * 2;
+        public int Invoke(int param) => DoSomething(param);
     }   
 }
 ```
@@ -139,29 +147,35 @@ the only difference is the argument types.
 ``` csharp
 // Delegate, baseline
 public static T Sum<T>(ReadOnlySpan<T> span, Func<Vector<T>, Vector<T>> vSelector, Func<T, T> selector) 
-            where T : struct;
+            where T : struct, INumber<T>;
 
 // ValueDelegate
 public static T Sum<T, F1, F2>(ReadOnlySpan<T> span, F1 vSelector, F2 selector)
-            where T  : struct
+            where T  : struct, INumber<T>
             where F1 : struct, IFunc<Vector<T>, Vector<T>>
             where F2 : struct, IFunc<T, T>;
 ```
 
-|        Method |   Length |             Mean |          Error |         StdDev | Ratio |
-|-------------- |--------- |-----------------:|---------------:|---------------:|------:|
-|      Delegate |       10 |        10.697 ns |      0.0155 ns |      0.0145 ns |  1.00 |
-| ValueDelegate |       10 |         5.069 ns |      0.0206 ns |      0.0182 ns |  0.47 |
-|      Delegate |      100 |        40.812 ns |      0.0977 ns |      0.0913 ns |  1.00 |
-| ValueDelegate |      100 |        11.732 ns |      0.0149 ns |      0.0139 ns |  0.29 |
-|      Delegate |     1000 |       302.164 ns |      3.1291 ns |      2.6130 ns |  1.00 |
-| ValueDelegate |     1000 |        66.808 ns |      0.2692 ns |      0.2518 ns |  0.22 |
-|      Delegate |    10000 |     2,884.803 ns |      8.9309 ns |      7.4577 ns |  1.00 |
-| ValueDelegate |    10000 |       585.193 ns |      0.8926 ns |      0.6969 ns |  0.20 |
-|      Delegate |   100000 |    28,920.414 ns |    267.4154 ns |    250.1406 ns |  1.00 |
-| ValueDelegate |   100000 |     8,519.340 ns |     41.2833 ns |     38.6164 ns |  0.29 |
-|      Delegate |  1000000 |   304,228.749 ns |  1,995.9951 ns |  1,769.3976 ns |  1.00 |
-| ValueDelegate |  1000000 |    85,619.207 ns |    316.5366 ns |    280.6015 ns |  0.28 |
+|        Method | Length |          Mean |       Error |      StdDev |        Median | Ratio |
+|-------------- |------- |--------------:|------------:|------------:|--------------:|------:|
+|      Delegate |     10 |      9.477 ns |   0.0910 ns |   0.0851 ns |      9.467 ns |  1.00 |
+| ValueDelegate |     10 |      3.969 ns |   0.1078 ns |   0.1107 ns |      3.961 ns |  0.42 |
+|      Delegate |    100 |     37.747 ns |   0.6666 ns |   0.6236 ns |     37.698 ns |  1.00 |
+| ValueDelegate |    100 |      9.295 ns |   0.1697 ns |   0.1587 ns |      9.276 ns |  0.25 |
+|      Delegate |   1000 |    264.978 ns |   5.2711 ns |   4.9306 ns |    263.820 ns |  1.00 |
+| ValueDelegate |   1000 |     66.474 ns |   1.0799 ns |   1.0101 ns |     66.471 ns |  0.25 |
+|      Delegate |   3000 |    773.737 ns |  11.6963 ns |  10.9407 ns |    773.347 ns |  1.00 |
+| ValueDelegate |   3000 |    186.632 ns |   3.7407 ns |   4.1578 ns |    185.751 ns |  0.24 |
+|      Delegate |   6000 |  1,554.745 ns |  26.9752 ns |  25.2326 ns |  1,559.120 ns |  1.00 |
+| ValueDelegate |   6000 |    369.259 ns |   6.3982 ns |   5.6719 ns |    368.428 ns |  0.24 |
+|      Delegate |  10000 |  2,612.493 ns |  51.2703 ns |  47.9583 ns |  2,615.721 ns |  1.00 |
+| ValueDelegate |  10000 |    624.057 ns |  12.4864 ns |  16.2358 ns |    622.558 ns |  0.24 |
+|      Delegate |  30000 |  8,718.167 ns | 173.5442 ns | 170.4436 ns |  8,719.592 ns |  1.00 |
+| ValueDelegate |  30000 |  1,860.125 ns |  35.8075 ns |  47.8020 ns |  1,865.076 ns |  0.22 |
+|      Delegate |  60000 | 17,259.904 ns | 330.4238 ns | 429.6443 ns | 17,109.451 ns |  1.00 |
+| ValueDelegate |  60000 |  3,715.645 ns |  72.8741 ns | 121.7563 ns |  3,689.114 ns |  0.22 |
+|      Delegate | 100000 | 27,357.138 ns | 534.2404 ns | 548.6255 ns | 27,176.126 ns |  1.00 |
+| ValueDelegate | 100000 |  7,485.716 ns | 150.0830 ns | 440.1676 ns |  7,313.833 ns |  0.27 |
 
 ## Limitations
 * Methods are not lazily evaluated as IEnumerable
