@@ -10,13 +10,11 @@ public class Elementwise_Tests
 	private static readonly int upperBound = 100;
 	private readonly int[] negArr;
 	private readonly int[] posArr;
-	private readonly int[] zeroArr;
 
 	public Elementwise_Tests()
 	{
 		negArr = Enumerable.Range(0, len).Select(X => rnd.Next(lowerBound, middleBound - 1)).ToArray();
 		posArr = Enumerable.Range(0, len).Select(X => rnd.Next(middleBound + 1, upperBound)).ToArray();
-		zeroArr = Enumerable.Repeat(middleBound, len).ToArray();
 	}
 
 	[Fact]

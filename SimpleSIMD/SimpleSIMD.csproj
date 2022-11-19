@@ -26,14 +26,6 @@ i.e SimdOps.Abs&lt;T&gt;() instead of SimdOps&lt;T&gt;.Abs().</Description>
     <Title>SimpleSIMD</Title>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <WarningLevel>7</WarningLevel>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <WarningLevel>7</WarningLevel>
-  </PropertyGroup>
-
   <ItemGroup>
     <None Include="..\README.md">
       <Pack>True</Pack>
